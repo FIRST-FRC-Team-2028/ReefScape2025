@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -164,12 +164,16 @@ public final class Constants {
   public static final String kAbsEncoderMagnetOffsetKey = "kAbsEncoderMagnetOffsetKey";
   public static final double kDefaultAbsEncoderOffset = 0.0;
 
-// Units are meters per second
-public static final double kMaxTranslationalVelocity = 4.0; // 2023 Competion Robot // max 4.5
+  // Units are meters per second
+  public static final double kMaxTranslationalVelocity = 4.0; // 2023 Competion Robot // max 4.5
 
-// Units are radians per second
-public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
-public static final double kRotateToZero = -2;
+  // Units are radians per second
+  public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
+  public static final double kRotateToZero = -2;
+  public static final PIDConstants translationConstants = 
+    new PIDConstants(ModuleConstants.kDriveP, ModuleConstants.kDriveI, ModuleConstants.kDriveD);
+  public static final PIDConstants rotationConstants = 
+    new PIDConstants(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD);
 
   }
 

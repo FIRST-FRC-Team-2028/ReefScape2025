@@ -4,14 +4,21 @@
 
 package frc.robot.subsystems;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.util.PathPlannerLogging;
+
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -23,7 +30,7 @@ public class Drivetrain extends SubsystemBase {
   private final SwerveModule m_frontLeft =
       new SwerveModule(
           "FL",
-          DriveConstants.kFrontLeftDriveMotorPort,
+          Constants.DriveConstants.kFrontLeftDriveMotorPort,
           DriveConstants.kFrontLeftTurningMotorPort,
           DriveConstants.kFrontLeftAbsoluteEncoderPort);
   private final SwerveModule m_frontRight =
@@ -66,10 +73,45 @@ public class Drivetrain extends SubsystemBase {
       module.initializeAbsoluteTurningEncoder();
       module.initializeRelativeTurningEncoder();
     }
+    //Pathplanner Autobuilder
+    try{
+      RobotConfig config = RobotConfig.fromGUISettings();
+
+      // Configure AutoBuilder
+      AutoBuilder.configure(
+        this::getPose, 
+        this::resetPose, 
+        this::getChassisSpeeds, 
+        this::drive, 
+        new PPHolonomicDriveController(
+          DriveConstants.translationConstants,
+          DriveConstants.rotationConstants
+        ),
+        config,
+        () -> {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+        },
+        this
+      );
+      DriverStation.reportError("Success", null);
+    }catch(Exception e){
+      DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
+    }
+  
   }
+  
   
   @Override
   public void periodic() {
+    updateOdometry();
     // This method will be called once per scheduler run
   }
 
@@ -102,6 +144,10 @@ public class Drivetrain extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading().getDegrees());
   }
 
+  public ChassisSpeeds getChassisSpeeds() {
+    return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+  }
+
   public void drive(ChassisSpeeds chassisSpeeds) {
     var swerveModuleStates =
         DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -121,7 +167,7 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setDesiredState(desiredStates[2]);
     m_backRight.setDesiredState(desiredStates[3]);
   }
-
+/**Updates the odometry location using swerve module position */
   public void updateOdometry() {
     m_odometry.update(
         m_gyro.getRotation2d(),
@@ -132,4 +178,63 @@ public class Drivetrain extends SubsystemBase {
           m_backRight.getPosition()
         });
   }
+  public SwerveModulePosition[] getModulePositions() {
+    return new SwerveModulePosition[] {
+      m_frontLeft.getPosition(),
+      m_frontRight.getPosition(),
+      m_backLeft.getPosition(),
+      m_backRight.getPosition()
+    };
+  }
+  public SwerveModuleState[] getModuleStates() {
+    return new SwerveModuleState[] {
+      m_frontLeft.getState(),
+      m_frontRight.getState(),
+      m_backLeft.getState(),
+      m_backRight.getState()
+    };
+  }
+/** Position of robot with x and y in meters */
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
+  }
+  public void resetPose(Pose2d pose) {
+    System.out.println(pose);
+    m_odometry.resetPosition(getHeading(), getModulePositions(), pose);
+  } 
+
+  //Pathplanner Autobuilder
+  /*try{
+      RobotConfig config = RobotConfig.fromGUISettings();
+
+      // Configure AutoBuilder
+      AutoBuilder.configure(
+        this::getPose, 
+        this::resetPose, 
+        this::getChassisSpeeds, 
+        this::drive, 
+        new PPHolonomicDriveController(
+          DriveConstants.translationConstants,
+          DriveConstants.rotationConstants
+        ),
+        config,
+        () -> {
+            // Boolean supplier that controls when the path will be mirrored for the red alliance
+            // This will flip the path being followed to the red side of the field.
+            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+            var alliance = DriverStation.getAlliance();
+            if (alliance.isPresent()) {
+                return alliance.get() == DriverStation.Alliance.Red;
+            }
+            return false;
+        },
+        this
+      );
+      DriverStation.reportError("Success", null);
+    }catch(Exception e){
+      DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
+    }*/
+  
+  
 }
