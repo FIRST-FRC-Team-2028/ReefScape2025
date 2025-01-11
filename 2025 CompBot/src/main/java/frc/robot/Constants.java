@@ -9,16 +9,19 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+/** Table of Contents
+ * Availbilty of Subsystems
+ * Module Constants
+ * Drive Constants
+ * Handler Constants
+ * CANIDS
+ * OI Constants
+ * Robot Constants
+ * Field Constants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = true;
+  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean HANDLER_AVAILABLE = true;
 
 
 
@@ -177,19 +180,29 @@ public final class Constants {
 
   }
 
+  public static class CANIDS {
+
+    //Handler
+    public static final int coralL = 41;
+    public static final int coralR = 31;
+  }
+
   public static class OIConstants {
-    public static final int kDriverControllerPort  = 0;
-    public static final int kMechControllerPort = 1; 
-    public static final int kMechControllerPort2 =2;
+    public static final int kDriverControllerPort  =     0;
+    public static final int kMechControllerPort =        1; 
+    public static final int kMechControllerPort2 =       2;
     //Driver Axis (Includes triggers)
-    public static final int kDriverYAxis = 0;
-    public static final int kDriverXAxis = 1;
-    public static final int kFineControlAxis = 2;
-    public static final int kFastControlAxis = 3;
-    public static final int kDriverRotAxis = 4;
+    public static final int kDriverYAxis =               0;
+    public static final int kDriverXAxis =               1;
+    public static final int kFineControlAxis =           2;
+    public static final int kFastControlAxis =           3;
+    public static final int kDriverRotAxis =             4;
     //Driver Buttons
-    public static final int kResetGyro = 1;
+    public static final int kResetGyro =                 1;
     public static final int kDriverRobotOrientedButton = 6;
+
+    //Gamemech Buttons
+    public static final int kL1shoot =                   5; //Left Bumper
 
 
     public static final double kDeadband = 0.075;
@@ -204,4 +217,6 @@ public final class Constants {
     public static final double robotWidth = Units.inchesToMeters(29.25) ; //inches
     public static final double handlerThickness = Units.inchesToMeters(6.); //inches
   }
+
+
 }
