@@ -8,6 +8,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.L1Shoot;
+import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
@@ -29,6 +30,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Handler handlerSubsystem;
+  private final AprilCamera april;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -43,6 +45,9 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
+    if (Constants.CAMERA_AVAILABLE){
+      april = new AprilCamera();
+    } else april = null;
 
     // Configure the trigger bindings
     configureButtonBindings();
@@ -61,7 +66,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(driverJoytick, OIConstants.kResetGyro)
       .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-    new JoystickButton(driverJoytick, OIConstants.kL1shoot)
+
+    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
       .onTrue(new L1Shoot(handlerSubsystem));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
@@ -81,5 +87,13 @@ public class RobotContainer {
 
   public Drivetrain getDrivetrain(){
     return driveSubsystem;
+  }
+
+  public Handler getHandler(){
+    return handlerSubsystem;
+  }
+
+  public AprilCamera getApril(){
+    return april;
   }
 }

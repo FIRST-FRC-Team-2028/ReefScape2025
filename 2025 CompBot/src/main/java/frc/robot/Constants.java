@@ -10,18 +10,20 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 /** Table of Contents
- * Availbilty of Subsystems
- * Module Constants
- * Drive Constants
- * Handler Constants
- * CANIDS
- * OI Constants
- * Robot Constants
- * Field Constants
+ *  Availbilty of Subsystems
+ *  ModuleConstants
+ *  DriveConstants
+ *  HandlerConstants
+ *  CANIDS
+ *  OIConstants
+ *  CamConstants
+ *  RobotConstants
+ *  FieldConstants
  */
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = true;
+  public static final  boolean CAMERA_AVAILABLE = true;
 
 
 
@@ -206,6 +208,20 @@ public final class Constants {
 
 
     public static final double kDeadband = 0.075;
+
+  }
+
+  public static class CamConstants {
+      //public static final double camera_Height_Meters = Units.inchesToMeters(7.);
+      //public static final double target_Height_Meters = Units.inchesToMeters(78.);
+
+      public static final int followDistance = 1; //Meters
+      public static final double camera_Height_Meters = Units.inchesToMeters(7);
+      public static final double target_Height_Meters = Units.inchesToMeters(12);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
+      public static final double tag_Follow_P = 1.75;
+      public static final double tag_Follow_D = 0.5;
+      public static final double drive_Range_Meters = 1;
 
   }
 
