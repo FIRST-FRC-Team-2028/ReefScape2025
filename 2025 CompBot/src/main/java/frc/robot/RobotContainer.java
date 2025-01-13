@@ -18,6 +18,7 @@ import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.L1Shoot;
+import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
@@ -45,6 +46,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Handler handlerSubsystem;
+  private final AprilCamera april;
   private final SendableChooser<Command> autoChooser;
 
   // Joysticks
@@ -60,6 +62,9 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
+    if (Constants.CAMERA_AVAILABLE){
+      april = new AprilCamera()
+    } else april = null;
 
     NamedCommands.registerCommand("Test 1", Commands.print("Test 1 Print"));
     NamedCommands.registerCommand("Test 2", Commands.print("Test 2 Print"));
@@ -91,7 +96,8 @@ public class RobotContainer {
     }
 
     if (Constants.HANDLER_AVAILABLE) {
-      new JoystickButton(driverJoytick, OIConstants.kL1shoot)
+  
+    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new L1Shoot(handlerSubsystem));
       }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
@@ -112,5 +118,13 @@ public class RobotContainer {
 
   public Drivetrain getDrivetrain(){
     return driveSubsystem;
+  }
+
+  public Handler getHandler(){
+    return handlerSubsystem;
+  }
+
+  public AprilCamera getApril(){
+    return april;
   }
 }
