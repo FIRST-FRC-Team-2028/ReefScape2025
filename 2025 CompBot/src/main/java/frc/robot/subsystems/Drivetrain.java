@@ -73,8 +73,9 @@ public class Drivetrain extends SubsystemBase {
       module.initializeAbsoluteTurningEncoder();
       module.initializeRelativeTurningEncoder();
     }
+    
     //Pathplanner Autobuilder
-    try{
+    try {
       RobotConfig config = RobotConfig.fromGUISettings();
 
       // Configure AutoBuilder
@@ -101,10 +102,13 @@ public class Drivetrain extends SubsystemBase {
         },
         this
       );
-      DriverStation.reportError("Success", null);
+      System.out.println("IF I SEE THIS LINE THAT MEANS THAT THE TRY PART OF THE TRY CATCH IS WORKING AND THERE ISN'T AN ERROR INSIDE THE TRY");
     }catch(Exception e){
       DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
+      e.printStackTrace();
     }
+    
+  
   
   }
   
@@ -199,7 +203,7 @@ public class Drivetrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
   public void resetPose(Pose2d pose) {
-    System.out.println(pose);
+    //System.out.println(pose);
     m_odometry.resetPosition(getHeading(), getModulePositions(), pose);
   } 
 

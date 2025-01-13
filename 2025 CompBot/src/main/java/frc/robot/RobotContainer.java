@@ -4,15 +4,31 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.L1Shoot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -29,8 +45,9 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Handler handlerSubsystem;
+  private final SendableChooser<Command> autoChooser;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
     private final Joystick mechJoytick1 = new Joystick(OIConstants.kMechControllerPort);
     private final Joystick mechJoytick2 = new Joystick(OIConstants.kMechControllerPort2);
@@ -44,6 +61,15 @@ public class RobotContainer {
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
 
+    NamedCommands.registerCommand("Test 1", Commands.print("Test 1 Print"));
+    NamedCommands.registerCommand("Test 2", Commands.print("Test 2 Print"));
+    //autoChooser = AutoBuilder.buildAutoChooser();
+    //If competition is true, only autos that start with comp will appear
+    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+      (stream) -> PathPlannerConstants.isCompetition
+        ? stream.filter(auto -> auto.getName().startsWith("comp"))
+        : stream);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     // Configure the trigger bindings
     configureButtonBindings();
   }
@@ -59,10 +85,15 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driverJoytick, OIConstants.kResetGyro)
-      .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-    new JoystickButton(driverJoytick, OIConstants.kL1shoot)
-      .onTrue(new L1Shoot(handlerSubsystem));
+    if (Constants.DRIVE_AVAILABLE) {
+      new JoystickButton(driverJoytick, OIConstants.kResetGyro)
+        .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
+    }
+
+    if (Constants.HANDLER_AVAILABLE) {
+      new JoystickButton(driverJoytick, OIConstants.kL1shoot)
+        .onTrue(new L1Shoot(handlerSubsystem));
+      }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
@@ -76,7 +107,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.getSelected();
   }
 
   public Drivetrain getDrivetrain(){

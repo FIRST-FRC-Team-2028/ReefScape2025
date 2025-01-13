@@ -17,11 +17,13 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * CANIDS
  * OI Constants
  * Robot Constants
+ * Pathplanner Constants
  * Field Constants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
-  public static final boolean HANDLER_AVAILABLE = true;
+  public static final boolean DRIVE_AVAILABLE = true;
+  public static final boolean HANDLER_AVAILABLE = false;
+  //public static final boolean SPEW_DRIVE = false;
 
 
 
@@ -216,6 +218,10 @@ public final class Constants {
     public static final double robotLength = Units.inchesToMeters(34.5); //inches
     public static final double robotWidth = Units.inchesToMeters(29.25) ; //inches
     public static final double handlerThickness = Units.inchesToMeters(6.); //inches
+  }
+
+  public static final class PathPlannerConstants {
+    public static final boolean isCompetition = true;
   }
 
 
