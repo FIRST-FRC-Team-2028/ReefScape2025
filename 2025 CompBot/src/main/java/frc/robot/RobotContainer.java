@@ -63,7 +63,7 @@ public class RobotContainer {
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
     if (Constants.CAMERA_AVAILABLE){
-      april = new AprilCamera()
+      april = new AprilCamera();
     } else april = null;
 
     NamedCommands.registerCommand("Test 1", Commands.print("Test 1 Print"));

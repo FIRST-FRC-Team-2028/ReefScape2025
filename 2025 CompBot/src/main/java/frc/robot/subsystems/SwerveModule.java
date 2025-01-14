@@ -187,11 +187,12 @@ public class SwerveModule {
   /**
    * @param desiredState The desired state for the module, with speed and angle.
    */
-  public void setDesiredState(SwerveModuleState desiredState) {
+  public void setDesiredState(SwerveModuleState state) {
     var encoderRotation = getRelativeTurningPosition();
 
     // Optimize the reference state to avoid spinning further than 90 degrees
-    SwerveModuleState state = SwerveModuleState.optimize(desiredState, encoderRotation);
+    state.optimize( encoderRotation);
+    
     
     
 
@@ -240,20 +241,20 @@ public class SwerveModule {
 
   /**
    * @param waitPeriod Period to wait for up-to-date status signal value
-   * @return The absolute turning angle of the module
+   * @return The absolute turning angle of the module in rotations
    */
   public Rotation2d getAbsTurningPosition(double waitPeriod) {
     Angle absPositonRotations;
     
     if (waitPeriod > 0.0) {
       absPositonRotations =
-          m_turningAbsEncoder.getAbsolutePosition().waitForUpdate(waitPeriod).getValue();
+          m_turningAbsEncoder.getAbsolutePosition().waitForUpdate(waitPeriod).getValue();  // rootations
     } else {
       absPositonRotations = m_turningAbsEncoder.getAbsolutePosition().getValue();
     }
     
 
-    return Rotation2d.fromDegrees(absPositonRotations.magnitude());
+    return Rotation2d.fromRotations(absPositonRotations.magnitude());
   }
 
   /**
