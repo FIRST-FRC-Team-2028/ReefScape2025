@@ -41,13 +41,15 @@ public class AprilCamera extends SubsystemBase {
   Transform3d robotToCam;
   PhotonPoseEstimator photonPoseEstimator;
   private Drivetrain drivetrain;
+  Optional<Pose3d> targetPose;
+  Pose3d truePose;
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
   /** Creates a new AprilTags. */
   public AprilCamera() {
 
-    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
+    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
     // Change to 2025 AprilTag Field Layout TODO
@@ -96,11 +98,17 @@ public class AprilCamera extends SubsystemBase {
   public double getTimestampSeconds(){
     return 0;
   }
+  public double getHeight(){
+    targetPose = aprilTagFieldLayout.getTagPose(target.fiducialId);
+    truePose = targetPose.get();
+    return truePose.getZ();
+    
+  }
 
 
   public double getDistanceToTarget(){
     return PhotonUtils.calculateDistanceToTargetMeters(CamConstants.camera_Height_Meters,
-                                                      CamConstants.target_Height_Meters,
+                                                      getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
                                                       Units.degreesToRadians(target.getPitch()));
           
@@ -115,7 +123,8 @@ public class AprilCamera extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(aprilTagFieldLayout.getTagPose(target.fiducialId));
+    
+
 
 
     photonPoseEstimator.update(camera.getLatestResult());
@@ -140,5 +149,6 @@ public class AprilCamera extends SubsystemBase {
       SmartDashboard.putNumber("Get Yaw", 999.);
       SmartDashboard.putNumber("Get Distance", 999.);
     }
+  
   }
 }
