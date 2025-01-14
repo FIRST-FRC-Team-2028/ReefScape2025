@@ -25,7 +25,7 @@ public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = false;
   //public static final boolean SPEW_DRIVE = false;
-  public static final  boolean CAMERA_AVAILABLE = true;
+  public static final  boolean CAMERA_AVAILABLE = false;
 
 
 
@@ -237,7 +237,7 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = true;
+    public static final boolean isCompetition = false;
   }
 
 
