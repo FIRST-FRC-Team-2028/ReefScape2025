@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -11,6 +14,8 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,6 +34,8 @@ import frc.robot.Constants.RobotConstants;
 public class Drivetrain extends SubsystemBase {
   static double kMaxSpeed = Constants.DriveConstants.kMaxTranslationalVelocity;
   static double kMaxAngularSpeed = Constants.DriveConstants.kMaxRotationalVelocity;
+  private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
+  AprilCamera aprilSubsystem = new AprilCamera();
   private final SwerveModule m_frontLeft =
       new SwerveModule(
           "FL",
@@ -65,6 +73,20 @@ public class Drivetrain extends SubsystemBase {
             m_backLeft.getPosition(),
             m_backRight.getPosition()
           });
+  
+  private final SwerveDrivePoseEstimator m_poseEstimator =
+    new SwerveDrivePoseEstimator(
+        m_kinematics,
+        m_gyro.getRotation2d(),
+        new SwerveModulePosition[] {
+          m_frontLeft.getPosition(),
+          m_frontRight.getPosition(),
+          m_backLeft.getPosition(),                                                                 
+          m_backRight.getPosition()
+         },
+        new Pose2d(),
+        VecBuilder.fill(0.05, 0.05, Units.degreesToRadians(5)),
+        VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -82,8 +104,8 @@ public class Drivetrain extends SubsystemBase {
 
       // Configure AutoBuilder
       AutoBuilder.configure(
-        this::getPose, 
-        this::resetPose, 
+        this::getPoseEstimatorPose, 
+        this::resetPoseEstimatorPose, 
         this::getChassisSpeeds, 
         this::drive, 
         new PPHolonomicDriveController(
@@ -112,13 +134,15 @@ public class Drivetrain extends SubsystemBase {
     
   
   }
-  
-  
   @Override
   public void periodic() {
     updateOdometry();
+    updatePoseEstimator();
     // This method will be called once per scheduler run
   }
+
+
+
 
   public void BreakMode() {
     m_frontLeft.BreakMode();
@@ -183,6 +207,29 @@ public class Drivetrain extends SubsystemBase {
           m_backRight.getPosition()
         });
   }
+
+  public void updatePoseEstimator() {
+    m_poseEstimator.update(m_gyro.getRotation2d(),
+                          new SwerveModulePosition[] {                                  
+                          m_frontLeft.getPosition(),
+                          m_frontRight.getPosition(),
+                          m_backLeft.getPosition(),
+                          m_backRight.getPosition()
+    });
+    if(Constants.CAMERA_AVAILABLE){
+      var res = aprilSubsystem.getLatestResult();
+      if (res.hasTargets()) {
+        var imageCaptureTime = res.getTimestampSeconds();
+        //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
+        //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
+        m_poseEstimator.addVisionMeasurement(
+                  aprilSubsystem.camPose().getReferencePose().toPose2d(), imageCaptureTime);
+        SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+        SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+          }
+    }
+  }
+
   public SwerveModulePosition[] getModulePositions() {
     return new SwerveModulePosition[] {
       m_frontLeft.getPosition(),
@@ -200,13 +247,20 @@ public class Drivetrain extends SubsystemBase {
     };
   }
 /** Position of robot with x and y in meters */
-  public Pose2d getPose() {
+  public Pose2d getOdomentryPose() {
     return m_odometry.getPoseMeters();
   }
-  public void resetPose(Pose2d pose) {
+  public void resetOdomentryPose(Pose2d pose) {
     //System.out.println(pose);
     m_odometry.resetPosition(getHeading(), getModulePositions(), pose);
   } 
+
+  public Pose2d getPoseEstimatorPose() {
+    return m_poseEstimator.getEstimatedPosition();
+  }
+  public void resetPoseEstimatorPose(Pose2d pose) {
+    m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
+  }
 
   //Pathplanner Autobuilder
   /*try{
