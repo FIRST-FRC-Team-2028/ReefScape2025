@@ -7,7 +7,10 @@ package frc.robot;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PausePlay;
+import frc.robot.commands.VarySpeed;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -26,6 +30,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
+  private final Elevator elevatorSubsystem;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -37,9 +42,11 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
+      elevatorSubsystem = new Elevator();
     // Configure the trigger bindings
     configureButtonBindings();
   }
+
 
 
   /**
@@ -54,6 +61,19 @@ public class RobotContainer {
   private void configureButtonBindings() {
     new JoystickButton(driverJoytick, OIConstants.kResetGyro)
       .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
+    new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+      .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem, 5))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+      .onTrue(new PausePlay(elevatorSubsystem, 2)
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 4))
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 3))
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 1)));
+    
+
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,

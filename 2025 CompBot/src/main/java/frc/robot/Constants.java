@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = true;
+  public static final boolean DRIVE_AVAILABLE = false;
 
 
 
@@ -185,6 +185,8 @@ public static final double kRotateToZero = -2;
     public static final int kDriverRotAxis = 4;
     //Driver Buttons
     public static final int kResetGyro = 1;
+    public static final int kFirstButton = 2;
+    public static final int kSecondButton = 3;
     public static final int kDriverRobotOrientedButton = 6;
 
 
