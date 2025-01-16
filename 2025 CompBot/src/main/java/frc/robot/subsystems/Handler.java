@@ -8,6 +8,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,9 +24,9 @@ public class Handler extends SubsystemBase {
     algaePivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
     algaeEncoder = algaePivot.getEncoder();
     algaeController = algaePivot.getClosedLoopController();
-  }
-
-  /*TODO: what kind of sensor might we want to help us control this subsystem 
+    SparkMaxConfig algaeConfig = new SparkMaxConfig(){};
+      algaeConfig.closedLoop.pid(1.0,1.0,1.0);
+  }    /*TODO: what kind of sensor might we want to help us control this subsystem 
     when Human eyes are not good enough, or quick enough?
     ie have we acquired a coral or algae,
        have we shot/deployed the coral or algae
@@ -49,9 +50,7 @@ public class Handler extends SubsystemBase {
 
   public void algaeGrab(){
 
-  }
-
-  @Override
+  } @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
