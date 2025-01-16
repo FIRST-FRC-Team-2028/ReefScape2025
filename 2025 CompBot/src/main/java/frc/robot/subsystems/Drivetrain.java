@@ -227,9 +227,10 @@ public class Drivetrain extends SubsystemBase {
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         m_poseEstimator.addVisionMeasurement(
                   aprilSubsystem.camPose().getReferencePose().toPose2d(), imageCaptureTime);
-        SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
-          }
+      }
+      SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+      SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+          
     }
   }
 
