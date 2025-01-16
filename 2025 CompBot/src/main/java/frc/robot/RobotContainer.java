@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -12,10 +16,11 @@ import com.pathplanner.lib.path.GoalEndState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
+import com.pathplanner.lib.util.FileVersionException;
 
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
-import frc.robot.commands.Autos;
+import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.L1Shoot;
 import frc.robot.subsystems.AprilCamera;
@@ -66,8 +71,10 @@ public class RobotContainer {
       april = new AprilCamera();
     } else april = null;
 
-    NamedCommands.registerCommand("Test 1", Commands.print("Test 1 Print"));
-    NamedCommands.registerCommand("Test 2", Commands.print("Test 2 Print"));
+    new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
+    NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
+    NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
+    NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
     //autoChooser = AutoBuilder.buildAutoChooser();
     //If competition is true, only autos that start with comp will appear
     autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -93,6 +100,14 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
+      new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
+        .onTrue(new InstantCommand(() -> {
+          try {
+            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("Top Coral Station"));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }));
     }
 
     if (Constants.HANDLER_AVAILABLE) {

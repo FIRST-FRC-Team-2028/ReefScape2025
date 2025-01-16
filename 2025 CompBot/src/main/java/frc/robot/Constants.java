@@ -4,6 +4,8 @@
 
 package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.path.PathConstraints;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
@@ -203,6 +205,7 @@ public final class Constants {
     public static final int kDriverRotAxis =             4;
     //Driver Buttons
     public static final int kResetGyro =                 1;
+    public static final int kpathfindTopCoralStation =   4;
     public static final int kDriverRobotOrientedButton = 6;
 
     //Gamemech Buttons
@@ -237,7 +240,11 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = false;
+    public static final boolean isCompetition = true;
+    public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
+                          DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
+                          DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
+                          DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
   }
 
 

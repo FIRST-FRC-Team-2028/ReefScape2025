@@ -1,0 +1,66 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.2503787878787875,
+        "y": 5.366666666666666
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.156705715372836,
+        "y": 5.427709108155417
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.983775252525252,
+        "y": 5.153219696969697
+      },
+      "prevControl": {
+        "x": 6.333425463423535,
+        "y": 5.292122032641665
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Score 1 Pose"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Raise Elevator L4",
+      "waypointRelativePos": 0.901090342679131,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 324.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.7448812969422
+  },
+  "reversed": false,
+  "folder": "3 Coral Auto",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

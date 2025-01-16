@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.243371212121212,
+        "y": 7.145391414141414
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8686545736938962,
+        "y": 6.733853907827342
+      },
+      "isLocked": false,
+      "linkedName": "Pickup Pose"
+    },
+    {
+      "anchor": {
+        "x": 4.038510101010101,
+        "y": 5.193876262626263
+      },
+      "prevControl": {
+        "x": 3.4418051564826744,
+        "y": 5.624994723290644
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Raise Elevator L4",
+      "waypointRelativePos": 0.95,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 324.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.85861444792462
+  },
+  "reversed": false,
+  "folder": "3 Coral Auto",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -56.76828893202065
+  },
+  "useDefaultConstraints": true
+}

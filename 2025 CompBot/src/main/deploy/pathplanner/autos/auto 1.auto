@@ -7,7 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "path 1"
+            "pathName": "Test Path 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Print Auto 1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Test Path 2"
           }
         }
       ]

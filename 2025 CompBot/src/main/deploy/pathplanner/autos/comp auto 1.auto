@@ -7,7 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "path 1"
+            "pathName": "Test Path 1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Print Comp Auto 1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Test Path 2"
           }
         }
       ]
