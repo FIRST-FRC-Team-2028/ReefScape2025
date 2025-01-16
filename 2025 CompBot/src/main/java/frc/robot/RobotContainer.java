@@ -4,16 +4,32 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.events.EventTrigger;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
+
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PausePlay;
 import frc.robot.commands.VarySpeed;
+import frc.robot.commands.L1Shoot;
+import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Handler;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -31,18 +47,37 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Elevator elevatorSubsystem;
+  private final Handler handlerSubsystem;
+  private final AprilCamera april;
+  private final SendableChooser<Command> autoChooser;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
+  // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
     private final Joystick mechJoytick1 = new Joystick(OIConstants.kMechControllerPort);
     private final Joystick mechJoytick2 = new Joystick(OIConstants.kMechControllerPort2);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    if (Constants.HANDLER_AVAILABLE){
+      handlerSubsystem = new Handler();
+    } else handlerSubsystem = null;
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
       elevatorSubsystem = new Elevator();
+    if (Constants.CAMERA_AVAILABLE){
+      april = new AprilCamera();
+    } else april = null;
+
+    NamedCommands.registerCommand("Test 1", Commands.print("Test 1 Print"));
+    NamedCommands.registerCommand("Test 2", Commands.print("Test 2 Print"));
+    //autoChooser = AutoBuilder.buildAutoChooser();
+    //If competition is true, only autos that start with comp will appear
+    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+      (stream) -> PathPlannerConstants.isCompetition
+        ? stream.filter(auto -> auto.getName().startsWith("comp"))
+        : stream);
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     // Configure the trigger bindings
     configureButtonBindings();
   }
@@ -74,6 +109,16 @@ public class RobotContainer {
       .andThen(new PausePlay(elevatorSubsystem, 1)));
     
 
+    if (Constants.DRIVE_AVAILABLE) {
+      new JoystickButton(driverJoytick, OIConstants.kResetGyro)
+        .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
+    }
+
+    if (Constants.HANDLER_AVAILABLE) {
+  
+    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+        .onTrue(new L1Shoot(handlerSubsystem));
+      }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
@@ -87,10 +132,18 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.getSelected();
   }
 
   public Drivetrain getDrivetrain(){
     return driveSubsystem;
+  }
+
+  public Handler getHandler(){
+    return handlerSubsystem;
+  }
+
+  public AprilCamera getApril(){
+    return april;
   }
 }

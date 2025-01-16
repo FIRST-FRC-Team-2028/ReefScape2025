@@ -3,22 +3,26 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+import com.pathplanner.lib.config.PIDConstants;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
 
-/**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
- * globally (i.e. public static). Do not put anything functional in this class.
- *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+/** Table of Contents
+ *  Availbilty of Subsystems
+ *  ModuleConstants
+ *  DriveConstants
+ *  HandlerConstants
+ *  CANIDS
+ *  OIConstants
+ *  CamConstants
+ *  RobotConstants
+ *  PathPlannerConstants
+ *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = true;
 
 
 
@@ -164,33 +168,59 @@ public final class Constants {
   public static final String kAbsEncoderMagnetOffsetKey = "kAbsEncoderMagnetOffsetKey";
   public static final double kDefaultAbsEncoderOffset = 0.0;
 
-// Units are meters per second
-public static final double kMaxTranslationalVelocity = 4.0; // 2023 Competion Robot // max 4.5
+  // Units are meters per second
+  public static final double kMaxTranslationalVelocity = 4.0; // 2023 Competion Robot // max 4.5
 
-// Units are radians per second
-public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
-public static final double kRotateToZero = -2;
+  // Units are radians per second
+  public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
+  public static final double kRotateToZero = -2;
+  public static final PIDConstants translationConstants = 
+    new PIDConstants(ModuleConstants.kDriveP, ModuleConstants.kDriveI, ModuleConstants.kDriveD);
+  public static final PIDConstants rotationConstants = 
+    new PIDConstants(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD);
 
   }
 
+  public static class CANIDS {
+
+    //Handler
+    public static final int coralL = 41;
+    public static final int coralR = 31;
+  }
+
   public static class OIConstants {
-    public static final int kDriverControllerPort  = 0;
-    public static final int kMechControllerPort = 1; 
-    public static final int kMechControllerPort2 =2;
+    public static final int kDriverControllerPort  =     0;
+    public static final int kMechControllerPort =        1; 
+    public static final int kMechControllerPort2 =       2;
     //Driver Axis (Includes triggers)
-    public static final int kDriverYAxis = 0;
-    public static final int kDriverXAxis = 1;
-    public static final int kFineControlAxis = 2;
-    public static final int kFastControlAxis = 3;
-    public static final int kDriverRotAxis = 4;
+    public static final int kDriverYAxis =               0;
+    public static final int kDriverXAxis =               1;
+    public static final int kFineControlAxis =           2;
+    public static final int kFastControlAxis =           3;
+    public static final int kDriverRotAxis =             4;
     //Driver Buttons
     public static final int kResetGyro = 1;
-    public static final int kFirstButton = 2;
-    public static final int kSecondButton = 3;
     public static final int kDriverRobotOrientedButton = 6;
+
+    //Gamemech Buttons
+    public static final int kL1shoot =                   5; //Left Bumper
 
 
     public static final double kDeadband = 0.075;
+
+  }
+
+  public static class CamConstants {
+      //public static final double camera_Height_Meters = Units.inchesToMeters(7.);
+      //public static final double target_Height_Meters = Units.inchesToMeters(78.);
+
+      public static final int followDistance = 1; //Meters
+      public static final double camera_Height_Meters = Units.inchesToMeters(7);
+      public static final double target_Height_Meters = Units.inchesToMeters(12);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
+      public static final double tag_Follow_P = 1.75;
+      public static final double tag_Follow_D = 0.5;
+      public static final double drive_Range_Meters = 1;
 
   }
 
@@ -202,4 +232,10 @@ public static final double kRotateToZero = -2;
     public static final double robotWidth = Units.inchesToMeters(29.25) ; //inches
     public static final double handlerThickness = Units.inchesToMeters(6.); //inches
   }
+
+  public static final class PathPlannerConstants {
+    public static final boolean isCompetition = false;
+  }
+
+
 }
