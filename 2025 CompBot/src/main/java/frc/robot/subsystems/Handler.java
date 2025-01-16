@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
@@ -11,27 +13,29 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Handler extends SubsystemBase {
-  SparkMax coralL;
-  SparkMax coralR;
+  SparkMax coralShoot;
+  SparkMax algaePivot;
+  RelativeEncoder algaeEncoder;
+  SparkClosedLoopController algaeController;
   /** Creates a new Handler. */
   public Handler() {
-    coralL = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
-    coralR = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
-    this.coralL = coralL;
-    this.coralR = coralR;
+    coralShoot = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
+    algaePivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
+    algaeEncoder = algaePivot.getEncoder();
+    algaeController = algaePivot.getClosedLoopController();
   }
 
-  public void lShoot(double leftOutputSpeed){
-    coralL.set(leftOutputSpeed);
-  }
-
-  public void rShoot(double rightOutputSpeed){
-    coralR.set(rightOutputSpeed);
+  public void Shoot(double leftOutputSpeed){
+    coralShoot.set(leftOutputSpeed);
   }
   
+  
   public void stop(){
-    lShoot(0);
-    rShoot(0);
+    Shoot(0);
+  }
+
+  public void algaeGrab(){
+
   }
   @Override
   public void periodic() {
