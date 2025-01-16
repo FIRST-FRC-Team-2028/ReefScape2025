@@ -25,6 +25,19 @@ public class Handler extends SubsystemBase {
     algaeController = algaePivot.getClosedLoopController();
   }
 
+  /*TODO: what kind of sensor might we want to help us control this subsystem 
+    when Human eyes are not good enough, or quick enough?
+    ie have we acquired a coral or algae,
+       have we shot/deployed the coral or algae
+       is the handler in the appropriate position
+       can we help aim?
+       */
+     
+  //TODO: Please add javadocs
+
+  /**Run Handler to  shoot coral
+   * @param leftOutputSpeed  how hard to spew (in what units or what range)
+  */
   public void Shoot(double leftOutputSpeed){
     coralShoot.set(leftOutputSpeed);
   }
@@ -37,6 +50,7 @@ public class Handler extends SubsystemBase {
   public void algaeGrab(){
 
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
