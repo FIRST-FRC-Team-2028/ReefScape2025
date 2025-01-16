@@ -6,7 +6,10 @@ package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -14,15 +17,23 @@ public class Elevator extends SubsystemBase {
   
   private final SparkMax m_elevatorMotor;
   private final RelativeEncoder m_elevatorEncoder;
+  private final SparkClosedLoopController m_ClosedLoopController;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
   private double Vector = 0;
 
   public Elevator() {
-    m_elevatorMotor = new SparkMax(41, MotorType.kBrushless);
+    m_elevatorMotor = new SparkMax(57, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
     m_elevatorEncoder.setPosition(0.0);
-
+    m_ClosedLoopController = m_elevatorMotor.getClosedLoopController();
+    m_ClosedLoopController.setReference(5, ControlType.kPosition);
+    SparkFlexConfig config = new SparkFlexConfig();
+    config.closedLoop
+        .p(1)
+        .i(0)
+        .d(0)
+        .outputRange(0, 1);
   }
 
   @Override
@@ -35,11 +46,12 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+
+  public void PIDController() {
+    
+  }
   public void setElevatorSpeed(double speed) {
     m_elevatorMotor.set(speed);
-  }
-  public void startElevator() {
-    m_elevatorMotor.set(.1);
   }
   public void stopElevator() {
     m_elevatorMotor.stopMotor();
