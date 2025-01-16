@@ -23,8 +23,7 @@ public class L1Shoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    handler.lShoot(.5);
-    handler.rShoot(.2);
+    handler.Shoot(.3);
     time.start();
    
   }

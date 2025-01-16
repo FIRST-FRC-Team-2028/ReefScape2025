@@ -187,8 +187,8 @@ public final class Constants {
   public static class CANIDS {
 
     //Handler
-    public static final int coralL = 41;
-    public static final int coralR = 31;
+    public static final int coralL = 50;
+    public static final int coralR = 57;
   }
 
   public static class OIConstants {
