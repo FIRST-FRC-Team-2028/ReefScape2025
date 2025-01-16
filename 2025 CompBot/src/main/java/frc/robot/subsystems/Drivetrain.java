@@ -10,6 +10,8 @@ import org.photonvision.PhotonPoseEstimator;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -29,6 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.Constants.RobotConstants;
 
 public class Drivetrain extends SubsystemBase {
@@ -260,6 +263,11 @@ public class Drivetrain extends SubsystemBase {
   }
   public void resetPoseEstimatorPose(Pose2d pose) {
     m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
+  }
+
+  public void pathfindToPath(PathPlannerPath path) {
+    AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+    
   }
 
   //Pathplanner Autobuilder
