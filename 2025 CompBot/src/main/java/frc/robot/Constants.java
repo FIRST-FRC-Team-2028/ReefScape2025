@@ -23,9 +23,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean HANDLER_AVAILABLE = false;
-  //public static final boolean SPEW_DRIVE = false;
-  public static final  boolean CAMERA_AVAILABLE = false;
+  public static final boolean CAMERA_AVAILABLE = true;
+  public static final boolean HANDLER_AVAILABLE = true;
 
 
 
@@ -202,7 +201,9 @@ public final class Constants {
     public static final int kFastControlAxis =           3;
     public static final int kDriverRotAxis =             4;
     //Driver Buttons
-    public static final int kResetGyro =                 1;
+    public static final int kResetGyro = 1;
+    public static final int kFirstButton = 2;
+    public static final int kSecondButton = 3;
     public static final int kDriverRobotOrientedButton = 6;
 
     //Gamemech Buttons

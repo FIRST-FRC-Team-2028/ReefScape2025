@@ -17,14 +17,14 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PausePlay;
+import frc.robot.commands.VarySpeed;
 import frc.robot.commands.L1Shoot;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,6 +46,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
+  private final Elevator elevatorSubsystem;
   private final Handler handlerSubsystem;
   private final AprilCamera april;
   private final SendableChooser<Command> autoChooser;
@@ -62,6 +64,7 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
+      elevatorSubsystem = new Elevator();
     if (Constants.CAMERA_AVAILABLE){
       april = new AprilCamera();
     } else april = null;
@@ -80,6 +83,7 @@ public class RobotContainer {
   }
 
 
+
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
    * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
@@ -90,6 +94,21 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureButtonBindings() {
+    new JoystickButton(driverJoytick, OIConstants.kResetGyro)
+      .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
+    new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+      .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem, 5))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+      .onTrue(new PausePlay(elevatorSubsystem, 2)
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 4))
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 3))
+      .andThen(new WaitCommand(2.0))
+      .andThen(new PausePlay(elevatorSubsystem, 1)));
+    
+
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
