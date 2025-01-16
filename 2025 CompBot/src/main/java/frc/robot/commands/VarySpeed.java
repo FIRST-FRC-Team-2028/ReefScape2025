@@ -29,18 +29,17 @@ public class VarySpeed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.setElevatorSpeed(joystick.getRawAxis(3));
+    elevator.setElevatorSpeed(joystick.getRawAxis(1) / 2);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevator.stopElevator();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.Finished(Destination);
+    return false;
   }
 }

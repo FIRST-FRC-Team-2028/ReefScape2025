@@ -8,10 +8,10 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.revrobotics.spark.config.SoftLimitConfig;
 
 public class Elevator extends SubsystemBase {
   
@@ -26,16 +26,15 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotor = new SparkMax(57, MotorType.kBrushless);
     // TODO make the CAN id a constant; see what Ethan did in Handler
     m_elevatorEncoder = m_elevatorMotor.getEncoder();
-    m_elevatorEncoder.setPosition(0.0);
     m_ClosedLoopController = m_elevatorMotor.getClosedLoopController();
     //m_ClosedLoopController.setReference(5, ControlType.kPosition);  MrG says do not start the PID controller here
     SparkFlexConfig config = new SparkFlexConfig();
     config.closedLoop
         .p(1)  // 
         .i(0)
-        .d(0)
-        .outputRange(0, 1);  // TODO the motor can't go down?
-    // TODO  make the motor use this configuration
+        .d(0);  
+        // TODO the motor can't go down?
+        // TODO  make the motor use this configuration
   }
 
   @Override
@@ -43,8 +42,9 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
     CurrentPosition = m_elevatorEncoder.getPosition();
     SmartDashboard.putNumber("Position", CurrentPosition);
-    System.out.println("To Stop: " + ((Destination - CurrentPosition) * (Vector)));
-    System.out.println("Vector: " + Vector);
+    System.out.println("Position: " + CurrentPosition);
+    // System.out.println("To Stop: " + ((Destination - CurrentPosition) * (Vector)));
+    // System.out.println("Vector: " + Vector);
     Finished(Destination);  //TODO Since periodic runs even outside any control loop,
                             //      hould it have the capability to shutdown the motor?
                             //  The answer is NO!
@@ -68,15 +68,20 @@ public class Elevator extends SubsystemBase {
   }
 
   /** Run the elevator motor.
-   * @param speed sets vbus speed, Positive is up.
+   * @param speed sets motor speed. Variable between -1, 1. Positive is up and negative is down.
   */
   public void setElevatorSpeed(double speed) {
     m_elevatorMotor.set(speed);
   }
 
-  /** */
+  /** Stop the elevator motor. */
   public void stopElevator() {
     m_elevatorMotor.stopMotor();
+  }
+
+  /** Resets the current position to 0 */
+  public void resetPosition() {
+    CurrentPosition = m_elevatorEncoder.getPosition();
   }
 
   /**Open-loop control of the elevator motor  
@@ -88,15 +93,16 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotor.set(Math.copySign(.1, (Destination - CurrentPosition)));
   }
 
-  /**check whether elevator has attained the target height. Stop if it has.
+  /**Check whether elevator has attained the target height. Stop if it has.
    * 
-   * @param Destination is the intended position
-   * @return true if target attained; false otherwise
+   * @param Destination: Target Height
+   * @return <b>True</b> if the motor is at the target height
+   * <li><b>False</b> if the motor is not at the target height </li>
    */
   public boolean Finished(double Destination) {
     if (((Destination - CurrentPosition) * (Vector)) <= 0) {
       stopElevator();
-      return true;
+      return false;
     }
     return false;
   }
