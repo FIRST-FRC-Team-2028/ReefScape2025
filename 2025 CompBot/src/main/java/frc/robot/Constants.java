@@ -185,6 +185,14 @@ public final class Constants {
 
   }
 
+  public static class HandlerConstants{
+    public static double algaeP = 1;
+    public static double algaeI = 1;
+    public static double algaeD = 1;
+    public static final int grabSensorPort = 0;
+    public static final double algaeCurrentLimit = 30;
+
+  }
   public static class CANIDS {
 
     //Handler
