@@ -54,7 +54,7 @@ public final class Constants {
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
-    public static final double kTurnGearRatio = 12.8; // 2023 Competion Robot
+    public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ration
     public static final double kTurnPositionConversionFactor = 1.0 / kTurnGearRatio;
 
     // By default, the drive encoder in position mode measures rotations at the drive motor
@@ -141,10 +141,10 @@ public final class Constants {
 
 
         //Encoder Inversions
-  public static final boolean kFrontLeftTurningEncoderReversed  = true;
-  public static final boolean kBackLeftTurningEncoderReversed   = true;
-  public static final boolean kFrontRightTurningEncoderReversed = true;
-  public static final boolean kBackRightTurningEncoderReversed  = true;
+  public static final boolean kFrontLeftTurningEncoderReversed  = true;  //true
+  public static final boolean kBackLeftTurningEncoderReversed   = true; //true
+  public static final boolean kFrontRightTurningEncoderReversed = true;  //true
+  public static final boolean kBackRightTurningEncoderReversed  = true;  //true
 
   public static final boolean kFrontLeftDriveEncoderReversed  = false;
   public static final boolean kBackLeftDriveEncoderReversed   = false;
