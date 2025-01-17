@@ -209,6 +209,7 @@ public class SwerveModule {
 
   public void BreakMode() {
     m_driveConfig.idleMode(IdleMode.kBrake);
+
   }
 
   public void CoastMode() {

@@ -69,22 +69,26 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem = new Drivetrain();
     } else driveSubsystem = null;
+    if (Constants.ELEVATOR_AVALIBLE){
       elevatorSubsystem = new Elevator();
+    } else elevatorSubsystem = null;
     if (Constants.CAMERA_AVAILABLE){
       april = new AprilCamera();
     } else april = null;
 
-    new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
-    NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
-    NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
-    NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
-    //autoChooser = AutoBuilder.buildAutoChooser();
-    //If competition is true, only autos that start with comp will appear
-    autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
-      (stream) -> PathPlannerConstants.isCompetition
-        ? stream.filter(auto -> auto.getName().startsWith("comp"))
-        : stream);
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    if (Constants.DRIVE_AVAILABLE){
+      new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
+      NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
+      NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
+      NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+      //autoChooser = AutoBuilder.buildAutoChooser();
+      //If competition is true, only autos that start with comp will appear
+      autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+        (stream) -> PathPlannerConstants.isCompetition
+          ? stream.filter(auto -> auto.getName().startsWith("comp"))
+          : stream);
+      SmartDashboard.putData("Auto Chooser", autoChooser);
+    } else autoChooser=null;
     // Configure the trigger bindings
     configureButtonBindings();
   }
@@ -101,19 +105,19 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(driverJoytick, OIConstants.kResetGyro)
-      .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-    new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-      .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem, 5))
-      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-      .onTrue(new PausePlay(elevatorSubsystem, 2)
-      .andThen(new WaitCommand(2.0))
-      .andThen(new PausePlay(elevatorSubsystem, 4))
-      .andThen(new WaitCommand(2.0))
-      .andThen(new PausePlay(elevatorSubsystem, 3))
-      .andThen(new WaitCommand(2.0))
-      .andThen(new PausePlay(elevatorSubsystem, 1)));
+    if (Constants.ELEVATOR_AVALIBLE){
+      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem, 5))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+        .onTrue(new PausePlay(elevatorSubsystem, 2)
+        .andThen(new WaitCommand(2.0))
+        .andThen(new PausePlay(elevatorSubsystem, 4))
+        .andThen(new WaitCommand(2.0))
+        .andThen(new PausePlay(elevatorSubsystem, 3))
+        .andThen(new WaitCommand(2.0))
+        .andThen(new PausePlay(elevatorSubsystem, 1)));
+    }
     
 
     if (Constants.DRIVE_AVAILABLE) {
@@ -129,7 +133,7 @@ public class RobotContainer {
         }));
     }
 
-    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVAILABLE) {
+    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
       new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
