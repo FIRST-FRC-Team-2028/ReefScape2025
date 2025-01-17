@@ -24,7 +24,7 @@ import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PausePlay;
 import frc.robot.commands.VarySpeed;
-import frc.robot.commands.L1Shoot;
+import frc.robot.commands.Shoot;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -133,10 +133,16 @@ public class RobotContainer {
         }));
     }
 
-    if (Constants.HANDLER_AVAILABLE) {
-  
-    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-        .onTrue(new L1Shoot(handlerSubsystem));
+    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+      new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
+        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+      new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+      new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+      
       }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 

@@ -4,22 +4,25 @@
 
 package frc.robot.subsystems;
 
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HandlerConstants;
 
 public class Handler extends SubsystemBase {
   SparkMax coralShoot;
-  SparkMax algaePivot;
-  RelativeEncoder algaeEncoder;
-  SparkClosedLoopController algaeController;
+  SparkMax pivot;
+  RelativeEncoder pivotEncoder;
+  SparkClosedLoopController pivotController;
   DigitalInput grabSensor;
   double[] currentHist = {0.,0.,0.,0.,0.};
   int currP = 0;
@@ -28,9 +31,9 @@ public class Handler extends SubsystemBase {
   /** Creates a new Handler. */
   public Handler() {
     coralShoot = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
-    algaePivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
-    algaeEncoder = algaePivot.getEncoder();
-    algaeController = algaePivot.getClosedLoopController();
+    pivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
+    pivotEncoder = pivot.getEncoder();
+    pivotController = pivot.getClosedLoopController();
     SparkMaxConfig algaeConfig = new SparkMaxConfig(){};
       algaeConfig.closedLoop.pid(HandlerConstants.algaeP,
                                  HandlerConstants.algaeI, 
@@ -48,10 +51,10 @@ public class Handler extends SubsystemBase {
   //TODO: Please add javadocs
 
   /**Run Handler to  shoot coral
-   * @param leftOutputSpeed  how hard to spew (in what units or what range)
+   * @param outputSpeed  how hard to spew (in what units or what range)
   */
-  public void Shoot(double leftOutputSpeed){
-    coralShoot.set(leftOutputSpeed);
+  public void Shoot(double outputSpeed){
+    coralShoot.set(outputSpeed);
   }
   
   /** Stops the coral shooter */
@@ -59,16 +62,39 @@ public class Handler extends SubsystemBase {
     Shoot(0);
   }
 
-  public void algaeGrab(){
+  /** Pivots the handlers to the position to control an algae */
+  public void grabPos(){
+    if (pivotSaftey) {
+      pivotController.setReference(HandlerConstants.usePos, ControlType.kPosition);
+    }
+  }
+  /** Pivots the handlers to the position to score and grab coral 
+   * 
+  */
+  public void restPos(){
+    if (pivotSaftey) {
+    pivotController.setReference(HandlerConstants.restPos, ControlType.kPosition);
+    }
+  }
 
-  } 
-  
+  /** Runs the motor to grab 
+   * @param outputSpeed how hard to spew (in what units or what range)
+  */
+  public void algaeGrab(double outputSpeed){
+    Shoot(outputSpeed);
+
+  }
+
+  /** Gets the current of the motor that contols the handlers pivot
+   * @return current of the Pivot motor
+   */
   public double getAlgaeCurrent(){
-    return algaePivot.getOutputCurrent();
+    return pivot.getOutputCurrent();
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putBoolean("Algae Current limit", pivotSaftey);
     double currentCurrent = getAlgaeCurrent();
 
     avgCurrent += currentCurrent/5. - currentHist[currP]/5.;
