@@ -7,15 +7,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
 
 
-public class L1Shoot extends Command {
+public class Shoot extends Command {
   Handler handler;
+  Elevator elevator;
+  boolean L1;
+  double position;
   Timer time;
   /** Uses the handler to shoot on L1 */
-  public L1Shoot(Handler handler) {
+  public Shoot(Handler handler, Elevator elevator, double position) {
     addRequirements(handler);
+    addRequirements(elevator);
     time = new Timer();
     this.handler = handler;
   }
@@ -23,8 +28,9 @@ public class L1Shoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    handler.Shoot(.3);
     time.start();
+    elevator.moveToPose(position);
+
    
   }
 

@@ -27,6 +27,7 @@ public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = true;
+  public static final boolean ELEVATOR_AVAILABLE = true;
 
 
 
@@ -191,6 +192,8 @@ public final class Constants {
     public static double algaeD = 1;
     public static final int grabSensorPort = 0;
     public static final double algaeCurrentLimit = 30;
+    public static final double restPos = 0;
+    public static final double usePos = 90;
 
   }
   public static class CANIDS {
@@ -218,7 +221,10 @@ public final class Constants {
     public static final int kDriverRobotOrientedButton = 6;
 
     //Gamemech Buttons
-    public static final int kL1shoot =                   5; //Left Bumper
+    public static final int kL1shoot =                   4; //Left Bumper
+    public static final int kL2shoot =                   3;
+    public static final int kL3shoot =                   2;
+    public static final int kL4shoot =                   1;
 
 
     public static final double kDeadband = 0.075;

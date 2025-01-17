@@ -38,6 +38,10 @@ public class Elevator extends SubsystemBase {
     // TODO  make the motor use this configuration
   }
 
+  public void moveToPose(double position){
+    m_ClosedLoopController.setReference(position, ControlType.kPosition);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
