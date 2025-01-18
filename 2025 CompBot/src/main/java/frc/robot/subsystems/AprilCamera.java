@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.List;
 import java.util.Optional;
 
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
@@ -43,6 +44,9 @@ public class AprilCamera extends SubsystemBase {
   private Drivetrain drivetrain;
   Optional<Pose3d> targetPose;
   Pose3d truePose;
+  Optional<EstimatedRobotPose> poseEstimate;
+  EstimatedRobotPose poseEstimateTrue;
+  Pose3d lastPose;
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
@@ -83,6 +87,10 @@ public class AprilCamera extends SubsystemBase {
   public void print() {
     System.out.println(getRobotPosition());
   }
+
+  /**
+   * @return the photonPoseEstimator
+   */
   public PhotonPoseEstimator camPose() {
     return photonPoseEstimator;
   }
@@ -101,6 +109,7 @@ public class AprilCamera extends SubsystemBase {
   public double getHeight(){
     targetPose = aprilTagFieldLayout.getTagPose(target.fiducialId);
     truePose = targetPose.get();
+    
     return truePose.getZ();
     
   }
@@ -115,6 +124,19 @@ public class AprilCamera extends SubsystemBase {
     
   }
 
+  public Optional<EstimatedRobotPose> update(){
+    poseEstimate = photonPoseEstimator.update(getLatestResult());
+    return poseEstimate;
+  }
+
+  public EstimatedRobotPose getPoseTrue(){
+  photonPoseEstimator.setReferencePose(truePose);
+  poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
+    return poseEstimateTrue;
+  }
+
+
+
   //public void showYaw() {
   //  SmartDashboard.putNumber("YE Yaw", target.getYaw());         IF DONT HAVE TARGET, DONT RUN SHOWYAW
   //}
@@ -127,22 +149,26 @@ public class AprilCamera extends SubsystemBase {
 
 
 
-    photonPoseEstimator.update(camera.getLatestResult());
+    update();
     var result = camera.getLatestResult();
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
       target = result.getBestTarget();
+      
+
+      
 
       //robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
       //          aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();
 
-      //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
-      SmartDashboard.putString("Robot Pose 2", photonPoseEstimator.toString());
+      SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
+      SmartDashboard.putString("Robot Pose 2", poseEstimate.toString());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
       SmartDashboard.putNumber("Get Distance", getDistanceToTarget());
+
       // This method will be called once per scheduler run
     } else {
       SmartDashboard.putNumber("April Tag X", 999.);

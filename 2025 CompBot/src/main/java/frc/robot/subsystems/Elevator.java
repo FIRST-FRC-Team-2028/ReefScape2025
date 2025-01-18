@@ -7,37 +7,56 @@ package frc.robot.subsystems;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkFlexConfig;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.revrobotics.spark.config.SoftLimitConfig;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
   
-  private final SparkMax m_elevatorMotor;
+  private final SparkMax m_elevatorMotorL;
+  private final SparkMax m_elevatorMotorR;
   private final RelativeEncoder m_elevatorEncoder;
   private final SparkClosedLoopController m_ClosedLoopController;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
-  private double Vector = 0;
 
   public Elevator() {
-    m_elevatorMotor = new SparkMax(57, MotorType.kBrushless);
-    // TODO make the CAN id a constant; see what Ethan did in Handler
-    m_elevatorEncoder = m_elevatorMotor.getEncoder();
-    m_ClosedLoopController = m_elevatorMotor.getClosedLoopController();
-    //m_ClosedLoopController.setReference(5, ControlType.kPosition);  MrG says do not start the PID controller here
-    SparkFlexConfig config = new SparkFlexConfig();
-    config.closedLoop
-        .p(1)  // 
-        .i(0)
-        .d(0);  
-        // TODO the motor can't go down?
-        // TODO  make the motor use this configuration
+    m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
+    m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
+    m_elevatorEncoder = m_elevatorMotorL.getEncoder();
+    m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
+    SparkMaxConfig configL = new SparkMaxConfig();
+    SparkMaxConfig configR = new SparkMaxConfig();
+
+    configL.idleMode(IdleMode.kBrake)
+          .inverted(false);
+    configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
+                    .forwardSoftLimitEnabled(true)
+                    .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
+                    .reverseSoftLimitEnabled(true);
+    configR.follow(Constants.CANIDS.elevatorL, true);
+
+    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   // config.closedLoop
+   //    .p(1)  // 
+   //     .i(0)
+   //     .d(0);
+        m_elevatorEncoder.setPosition(0.);  // initialize encoder position at startup
   }
 
+  /** closed- loop control
+   * @param position desired, inches
+   */
   public void moveToPose(double position){
     m_ClosedLoopController.setReference(position, ControlType.kPosition);
   }
@@ -48,22 +67,10 @@ public class Elevator extends SubsystemBase {
     CurrentPosition = m_elevatorEncoder.getPosition();
     SmartDashboard.putNumber("Position", CurrentPosition);
     System.out.println("Position: " + CurrentPosition);
-    // System.out.println("To Stop: " + ((Destination - CurrentPosition) * (Vector)));
-    // System.out.println("Vector: " + Vector);
-    Finished(Destination);  //TODO Since periodic runs even outside any control loop,
-                            //      hould it have the capability to shutdown the motor?
-                            //  The answer is NO!
   }
 
   /**Closed loop control of the elevator
    * TODO MrG says Calibrate the system before use:
-   *   1 ensure positive control make the elevator go up; if not, invert it (see config)
-   *   2 find the range of motion of the mechanism
-   *   3 set the encoder conversion factor (see config)
-   *   4 pick a convenient position at which to reset 
-   *       (Can this process be automated
-   *        or must it be a manual setup step prior to each match?)
-   *   5 set soft limits
    *   6 determine kp
    * 
    * @param target is the desired position (inches) for the elevator
@@ -76,17 +83,17 @@ public class Elevator extends SubsystemBase {
    * @param speed sets motor speed. Variable between -1, 1. Positive is up and negative is down.
   */
   public void setElevatorSpeed(double speed) {
-    m_elevatorMotor.set(speed);
+    m_elevatorMotorL.set(speed);
   }
 
   /** Stop the elevator motor. */
   public void stopElevator() {
-    m_elevatorMotor.stopMotor();
+    m_elevatorMotorL.stopMotor();
   }
 
   /** Resets the current position to 0 */
   public void resetPosition() {
-    CurrentPosition = m_elevatorEncoder.getPosition();
+    m_elevatorEncoder.setPosition(0.);
   }
 
   /**Open-loop control of the elevator motor  
@@ -94,8 +101,7 @@ public class Elevator extends SubsystemBase {
   */
   public void Vroom(double Tim) {
     Destination = Tim;
-    Vector = Math.copySign(1, (Destination - CurrentPosition));
-    m_elevatorMotor.set(Math.copySign(.1, (Destination - CurrentPosition)));
+    m_elevatorMotorL.set(Math.copySign(.1, (Destination - CurrentPosition)));
   }
 
   /**Check whether elevator has attained the target height. Stop if it has.
@@ -105,10 +111,6 @@ public class Elevator extends SubsystemBase {
    * <li><b>False</b> if the motor is not at the target height </li>
    */
   public boolean Finished(double Destination) {
-    if (((Destination - CurrentPosition) * (Vector)) <= 0) {
-      stopElevator();
-      return false;
-    }
     return false;
   }
 }
