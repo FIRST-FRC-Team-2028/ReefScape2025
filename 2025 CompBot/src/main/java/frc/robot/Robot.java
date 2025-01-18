@@ -188,7 +188,7 @@ public class Robot extends TimedRobot {
             // System.out.println("Encoder: " + frontleftsteerencoder.getPosition());
 
             drivetrain.drive(chassisSpeeds);
-            // MrG recommends looking at swerveSubsystem.driveIt TODO
+            // MrG recommends looking at swerveSubsystem.driveIt 
 
             // 5. Convert chassis speeds to individual module states
             // SwerveModuleState[] moduleStates =
