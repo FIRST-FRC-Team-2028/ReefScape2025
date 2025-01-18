@@ -207,10 +207,10 @@ public class Drivetrain extends SubsystemBase {
     m_backLeft.setDesiredState(swerveModuleStates[2]);
     m_backRight.setDesiredState(swerveModuleStates[3]);*/
   }
-
+  
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     for (SwerveModuleState state:desiredStates){
-      state.angle= new Rotation2d(-state.angle.getRadians());
+      state.angle= new Rotation2d(-state.angle.getRadians()); //The encoder won't let us invert it 
     }
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(desiredStates[0]);

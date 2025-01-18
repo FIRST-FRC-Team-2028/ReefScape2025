@@ -197,6 +197,8 @@ public final class Constants {
     public static final double algaeHoldSpeed = .05;
     public static final double algaeShootSpeed = -0.5;
     public static final double outputSpeed = .5;
+    public static final double grabCoralSpeed = .3;
+    public static final double pivotEncoderConversionFactor = 1;
 
 
     //PID positions
@@ -246,6 +248,7 @@ public final class Constants {
     public static final int kNudgeUp =                   6;
     public static final int kNudgeDown =                 7;
 
+    //Gamemech2 Buttons
 
     public static final double kDeadband = 0.075;
 

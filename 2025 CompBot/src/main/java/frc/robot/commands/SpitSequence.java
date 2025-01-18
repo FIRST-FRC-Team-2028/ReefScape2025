@@ -15,8 +15,7 @@ import frc.robot.subsystems.Handler;
 public class SpitSequence extends SequentialCommandGroup {
   /** Sequence to move to position to spit out */
   public SpitSequence(Handler handlerSubsystem, Elevator elevatorSubsystem, double positionP, double positionE) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+
     addCommands(new InstantCommand(() -> elevatorSubsystem.moveToPose(positionE)),
                 new InstantCommand(() -> handlerSubsystem.moveHandler(positionP)),
                 new Spit(handlerSubsystem));

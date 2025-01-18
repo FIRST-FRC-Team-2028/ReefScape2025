@@ -32,6 +32,7 @@ public class Handler extends SubsystemBase {
   int currP = 0;
   double avgCurrent = 0;
   boolean pivotSaftey = true;
+  boolean doIHaveIt = false;
 
   double[] currentHista = {0.,0.,0.,0.,0.};
   int currPa = 0;
@@ -48,14 +49,42 @@ public class Handler extends SubsystemBase {
       pivotConfig.closedLoop.pid(HandlerConstants.pivotP,
                                  HandlerConstants.pivotI, 
                                  HandlerConstants.pivotD);
-      pivotConfig.encoder.positionConversionFactor(360);
+      pivotConfig.encoder.positionConversionFactor(HandlerConstants.pivotEncoderConversionFactor);
       pivotConfig.softLimit.reverseSoftLimit(HandlerConstants.reverseSoftLimit);
       pivotConfig.softLimit.forwardSoftLimit(HandlerConstants.forwardSoftLimit);
       pivotConfig.idleMode(IdleMode.kBrake);
     pivot.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }    
 
-     
+  /**
+   * Runs the handler depending on the speed needed to grab the coral
+   * @return true, If the handler has a coral ready to be scored
+   */
+  public boolean intake(){
+    double speed;
+    speed = HandlerConstants.grabCoralSpeed;
+    // Runs the handler spitting motor until the sensor detects that it has a coral.
+    // Then it switches to a lower speed until the other sensor detects that it has cleared the passive loader.
+    if(grabSensor.get()){
+      speed = HandlerConstants.grabCoralSpeed/2;
+    }
+    /* if(clearSensor.get()){
+      speed = 0
+      doIHaveIt = true;
+    }
+    */
+    
+    Shoot(speed);
+    return doIHaveIt;
+  }
+
+  public void resetIntake(){
+    doIHaveIt = false;
+  }
+
+  public void moveHandlerSpeed(double hSpeed){
+    pivot.set(hSpeed);
+  }
 
   /**Run Handler to  shoot coral
    * @param outputSpeed  how hard to spew (in what units or what range)
@@ -78,9 +107,7 @@ public class Handler extends SubsystemBase {
     }
   }
 
-  /** Runs the motor to grab 
-   * @param outputSpeed how hard to spew (in what units or what range)
-  */
+  /** Runs the motor to grab an algae*/
   public void algaeGrab(){
     if(algaeCaptureCurrentLimit){
     Shoot(HandlerConstants.grabAlgaeSpeed);
@@ -114,13 +141,15 @@ public class Handler extends SubsystemBase {
   public double getAlgaeCurrent(){
     return coralShoot.getOutputCurrent();
   }
-
+  
+  /**Resets the pivot safety to true */
   public void rePivot(){
     pivotSaftey = true;
   }
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
     SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();
 
