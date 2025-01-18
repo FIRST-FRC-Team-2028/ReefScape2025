@@ -51,7 +51,7 @@ public class AprilCamera extends SubsystemBase {
 
     camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
-    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo);
+    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
     // Change to 2025 AprilTag Field Layout TODO
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
      // and 0.1778 meters of elevation (off floor)            on project X
