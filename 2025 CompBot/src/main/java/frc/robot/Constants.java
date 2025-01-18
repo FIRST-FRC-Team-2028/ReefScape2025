@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  ModuleConstants
  *  DriveConstants
  *  HandlerConstants
+ *  ElevatorConstants
  *  CANIDS
  *  OIConstants
  *  CamConstants
@@ -27,7 +28,7 @@ public final class Constants {
   public static final boolean DRIVE_AVAILABLE = false;
   public static final boolean CAMERA_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = false;
+  public static final boolean ELEVATOR_AVALIBLE = true;
 
 
 
@@ -215,11 +216,21 @@ public final class Constants {
     public static final double reverseSoftLimit = -20;
   }
 
+  public final static class ElevatorConstants {
+    public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
+    public static final double SOFTLIMITREVERSE = -5.; //    but dumb REVRobotics API won't allow inversion
+    public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
+  }
+
   public static class CANIDS {
 
     //Handler
     public static final int coralL = 50;
     public static final int coralR = 57;
+
+    //Elevator
+    public static final int elevatorL = 50;
+    public static final int elevatorR = 57;  // TODO reset when hardware available
   }
 
   public static class OIConstants {
