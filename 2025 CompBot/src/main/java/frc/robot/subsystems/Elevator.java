@@ -43,22 +43,13 @@ public class Elevator extends SubsystemBase {
                     .forwardSoftLimitEnabled(true)
                     .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
                     .reverseSoftLimitEnabled(true);
+    configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-   // config.closedLoop
-   //    .p(1)  // 
-   //     .i(0)
-   //     .d(0);
-        m_elevatorEncoder.setPosition(0.);  // initialize encoder position at startup
-  }
 
-  /** closed- loop control
-   * @param position desired, inches
-   */
-  public void moveToPose(double position){
-    m_ClosedLoopController.setReference(position, ControlType.kPosition);
+    m_elevatorEncoder.setPosition(0.);
   }
 
   @Override
@@ -76,7 +67,7 @@ public class Elevator extends SubsystemBase {
    * @param target is the desired position (inches) for the elevator
    */
   public void PIDController(double target) {
-    //m_ClosedLoopController.setReference(target,ControlType.kPosition);
+    m_ClosedLoopController.setReference(target, ControlType.kPosition);
   }
 
   /** Run the elevator motor.
@@ -89,11 +80,6 @@ public class Elevator extends SubsystemBase {
   /** Stop the elevator motor. */
   public void stopElevator() {
     m_elevatorMotorL.stopMotor();
-  }
-
-  /** Resets the current position to 0 */
-  public void resetPosition() {
-    m_elevatorEncoder.setPosition(0.);
   }
 
   /**Open-loop control of the elevator motor  

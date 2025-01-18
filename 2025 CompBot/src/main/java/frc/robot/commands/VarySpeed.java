@@ -12,12 +12,10 @@ import frc.robot.subsystems.Elevator;
 public class VarySpeed extends Command {
   private final Joystick joystick;
   private final Elevator elevator;
-  private final double Destination;
   /** Creates a new VarySpeed. */
-  public VarySpeed(Joystick joystick, Elevator elevator, double Destination) {
+  public VarySpeed(Joystick joystick, Elevator elevator) {
     this.joystick = joystick;
     this.elevator = elevator;
-    this.Destination = Destination;
     addRequirements(elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
