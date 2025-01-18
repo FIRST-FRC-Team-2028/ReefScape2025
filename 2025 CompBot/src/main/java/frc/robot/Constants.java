@@ -24,8 +24,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean CAMERA_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean CAMERA_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = false;
   public static final boolean ELEVATOR_AVALIBLE = false;
 
