@@ -38,7 +38,9 @@ public class Drivetrain extends SubsystemBase {
   static double kMaxSpeed = Constants.DriveConstants.kMaxTranslationalVelocity;
   static double kMaxAngularSpeed = Constants.DriveConstants.kMaxRotationalVelocity;
   private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
-  AprilCamera aprilSubsystem = new AprilCamera();
+
+  private final AprilCamera aprilSubsystem;
+
   private final SwerveModule m_frontLeft =
       new SwerveModule(
           "FL",
@@ -93,6 +95,9 @@ public class Drivetrain extends SubsystemBase {
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
+    if (Constants.CAMERA_AVAILABLE){
+      aprilSubsystem = new AprilCamera();
+    }else aprilSubsystem = null;
     resetGyro();
     for (SwerveModule module : modules) {
       module.resetDriveEncoder();
@@ -186,6 +191,8 @@ public class Drivetrain extends SubsystemBase {
             ChassisSpeeds.discretize(chassisSpeeds, RobotConstants.kPeriod));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, kMaxSpeed);
     setModuleStates(swerveModuleStates);
+    
+    SmartDashboard.putNumber("Module Turning Real", m_frontLeft.getRelativeTurningPosition().getRotations());
     /*m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
@@ -198,6 +205,7 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setDesiredState(desiredStates[1]);
     m_backLeft.setDesiredState(desiredStates[2]);
     m_backRight.setDesiredState(desiredStates[3]);
+    SmartDashboard.putNumber("Module Turnin Target", desiredStates[0].angle.getRotations());
   }
 /**Updates the odometry location using swerve module position */
   public void updateOdometry() {
