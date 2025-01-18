@@ -12,6 +12,7 @@ import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.config.ClosedLoopConfig;
+import com.revrobotics.spark.config.EncoderConfig;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.configs.MagnetSensorConfigs;
@@ -95,6 +96,7 @@ public class SwerveModule {
         .inverted(false);
     m_turningConfig.encoder
         .positionConversionFactor(ModuleConstants.kTurnPositionConversionFactor);
+        
     m_turningConfig.closedLoop
         .positionWrappingEnabled(true)
         .positionWrappingMaxInput(0.5)
@@ -255,7 +257,7 @@ public class SwerveModule {
     }
     
 
-    return Rotation2d.fromRotations(absPositonRotations.magnitude());
+    return Rotation2d.fromRotations(-absPositonRotations.magnitude());    //CANCoders are inverted of relative encoder
   }
 
   /**

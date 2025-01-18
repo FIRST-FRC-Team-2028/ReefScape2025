@@ -146,6 +146,14 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
+    SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());
+    SmartDashboard.putNumber("front right abs", m_frontRight.getAbsTurningPosition(0.1).getDegrees());
+    SmartDashboard.putNumber("front right rel", m_frontRight.getRelativeTurningPosition().getDegrees());
+    //SmartDashboard.putNumber("back left abs", m_backLeft.getAbsTurningPosition(0.1).getDegrees());
+    //SmartDashboard.putNumber("back left rel", m_backLeft.getRelativeTurningPosition().getDegrees());
+    //SmartDashboard.putNumber("back right abs", m_backRight.getAbsTurningPosition(0.1).getDegrees());
+    //SmartDashboard.putNumber("back right rel", m_backRight.getRelativeTurningPosition().getDegrees());
     // This method will be called once per scheduler run
   }
 
@@ -190,9 +198,10 @@ public class Drivetrain extends SubsystemBase {
         DriveConstants.kDriveKinematics.toSwerveModuleStates(
             ChassisSpeeds.discretize(chassisSpeeds, RobotConstants.kPeriod));
     SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, kMaxSpeed);
+    
     setModuleStates(swerveModuleStates);
     
-    SmartDashboard.putNumber("Module Turning Real", m_frontLeft.getRelativeTurningPosition().getRotations());
+    //SmartDashboard.putNumber("Module Turning Real", m_frontLeft.getRelativeTurningPosition().getRotations());
     /*m_frontLeft.setDesiredState(swerveModuleStates[0]);
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_backLeft.setDesiredState(swerveModuleStates[2]);
@@ -200,12 +209,15 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
+    for (SwerveModuleState state:desiredStates){
+      state.angle= new Rotation2d(-state.angle.getRadians());
+    }
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
     m_backLeft.setDesiredState(desiredStates[2]);
     m_backRight.setDesiredState(desiredStates[3]);
-    SmartDashboard.putNumber("Module Turnin Target", desiredStates[0].angle.getRotations());
+    //SmartDashboard.putNumber("Module Turnin Target", desiredStates[0].angle.getRotations());
   }
 /**Updates the odometry location using swerve module position */
   public void updateOdometry() {

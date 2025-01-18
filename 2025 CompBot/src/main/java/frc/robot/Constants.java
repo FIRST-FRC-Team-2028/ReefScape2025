@@ -35,8 +35,8 @@ public final class Constants {
     public static final int kDriveMotorCurrentLimit = 80;
     public static final int kTurningMotorCurrentLimit = 80;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(3.75);
-    public static final double kDriveMotorGearRatio = 1 / 6.75;
-    public static final double kTurningMotorGearRatio = 1 / 12.8;
+    public static final double kDriveMotorGearRatio = 1 / 5.36;
+    public static final double kTurningMotorGearRatio = 1 / 18.75;
     public static final double kDriveEncoderRot2Meter = kDriveMotorGearRatio * Math.PI * kWheelDiameterMeters;
    // Theoraticlly maybe; in practice from measurements
     //public static final double kDriveEncoderRot2Meter = Units.inchesToMeters(1)/41.2;
@@ -50,16 +50,16 @@ public final class Constants {
     public static final double kDriveFF = 0.255; // 2023 Competition Robot
 
     public static final double kPTurning = 0.5;
-    public static final double kTurningP = 0.75; // 2023 Competition Robot
+    public static final double kTurningP = 0.75; // 2023 Competition Robot   0.75
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
-    public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ration
+    public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ratio
     public static final double kTurnPositionConversionFactor = 1.0 / kTurnGearRatio;
 
     // By default, the drive encoder in position mode measures rotations at the drive motor
     // Convert to meters at the wheel
-    public static final double kDriveGearRatio = 6.75; // 2023 Competion Robot
+    public static final double kDriveGearRatio = 5.36; // 2025 Competion Robot
     public static final double kDrivePositionConversionFactor =
       (kWheelDiameterMeters * Math.PI) / kDriveGearRatio;
 
