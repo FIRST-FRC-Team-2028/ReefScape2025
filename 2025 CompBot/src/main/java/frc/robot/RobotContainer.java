@@ -18,13 +18,15 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FileVersionException;
 
+import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PausePlay;
 import frc.robot.commands.VarySpeed;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.Spit;
+import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -135,14 +137,23 @@ public class RobotContainer {
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
       new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, 0));
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, 0));
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, 0));
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-        .onTrue(new Shoot(handlerSubsystem, elevatorSubsystem, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, 0));
       
+      }
+
+      if (Constants.HANDLER_AVAILABLE) {
+        new JoystickButton(mechJoytick1, OIConstants.kRePivot)
+          .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
+        new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
+          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
+        new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
+          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
       }
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 

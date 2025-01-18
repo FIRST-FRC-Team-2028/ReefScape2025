@@ -187,15 +187,32 @@ public final class Constants {
   }
 
   public static class HandlerConstants{
-    public static double algaeP = 1;
-    public static double algaeI = 1;
-    public static double algaeD = 1;
+    public static double pivotP = 1;
+    public static double pivotI = 0;
+    public static double pivotD = 0;
     public static final int grabSensorPort = 0;
-    public static final double algaeCurrentLimit = 30;
-    public static final double restPos = 0;
-    public static final double usePos = 90;
+    public static final double pivotCurrentLimit = 30;
+    public static final double grabAlgaeSpeed = .5;
+    public static final double grabAlgaeCurrent = 30;
+    public static final double algaeHoldSpeed = .05;
+    public static final double algaeShootSpeed = -0.5;
+    public static final double outputSpeed = .5;
 
+
+    //PID positions
+    public static final double L4Position = 100;
+    public static final double L2Position = 15;
+    public static final double intake = 0;
+    public static final double algae = 180;
+    public static final double barge = -15;
+    public static final double nudgeUp = 2;
+    public static final double nudgeDown = -2;
+
+    // Soft Limits
+    public static final double forwardSoftLimit = 185;
+    public static final double reverseSoftLimit = -20;
   }
+
   public static class CANIDS {
 
     //Handler
@@ -221,10 +238,13 @@ public final class Constants {
     public static final int kDriverRobotOrientedButton = 6;
 
     //Gamemech Buttons
-    public static final int kL1shoot =                   4; //Left Bumper
+    public static final int kL1shoot =                   4;
     public static final int kL2shoot =                   3;
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
+    public static final int kRePivot =                   5;
+    public static final int kNudgeUp =                   6;
+    public static final int kNudgeDown =                 7;
 
 
     public static final double kDeadband = 0.075;
