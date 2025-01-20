@@ -18,6 +18,7 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FileVersionException;
 
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
@@ -109,16 +110,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem, 5))
+        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
         new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new PausePlay(elevatorSubsystem, 2)
-        .andThen(new WaitCommand(2.0))
-        .andThen(new PausePlay(elevatorSubsystem, 4))
-        .andThen(new WaitCommand(2.0))
-        .andThen(new PausePlay(elevatorSubsystem, 3))
-        .andThen(new WaitCommand(2.0))
-        .andThen(new PausePlay(elevatorSubsystem, 1)));
+        .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
+        new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+        .onTrue(new PausePlay(elevatorSubsystem, 0));
     }
     
 
