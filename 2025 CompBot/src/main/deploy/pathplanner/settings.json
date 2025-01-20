@@ -6,7 +6,9 @@
     "3 Coral Auto",
     "Pathfind To Paths"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "Top Side Autos"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 4.0,
   "defaultMaxAngVel": 270.0,

@@ -291,38 +291,7 @@ public class Drivetrain extends SubsystemBase {
     
   }
 
-  //Pathplanner Autobuilder
-  /*try{
-      RobotConfig config = RobotConfig.fromGUISettings();
-
-      // Configure AutoBuilder
-      AutoBuilder.configure(
-        this::getPose, 
-        this::resetPose, 
-        this::getChassisSpeeds, 
-        this::drive, 
-        new PPHolonomicDriveController(
-          DriveConstants.translationConstants,
-          DriveConstants.rotationConstants
-        ),
-        config,
-        () -> {
-            // Boolean supplier that controls when the path will be mirrored for the red alliance
-            // This will flip the path being followed to the red side of the field.
-            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
-        },
-        this
-      );
-      DriverStation.reportError("Success", null);
-    }catch(Exception e){
-      DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
-    }*/
+  
   
   
 }

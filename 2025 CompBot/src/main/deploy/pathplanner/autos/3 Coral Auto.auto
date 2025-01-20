@@ -55,7 +55,7 @@
       ]
     }
   },
-  "resetOdom": true,
-  "folder": null,
+  "resetOdom": false,
+  "folder": "Top Side Autos",
   "choreoAuto": false
 }
