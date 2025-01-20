@@ -256,7 +256,7 @@ public class SwerveModule {
       absPositonRotations = m_turningAbsEncoder.getAbsolutePosition().getValue();
     }
     
-
+    
     return Rotation2d.fromRotations(-absPositonRotations.magnitude());    //CANCoders are inverted of relative encoder
   }
 

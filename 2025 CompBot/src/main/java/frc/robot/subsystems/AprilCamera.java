@@ -130,7 +130,7 @@ public class AprilCamera extends SubsystemBase {
   }
 
   public EstimatedRobotPose getPoseTrue(){
-  photonPoseEstimator.setReferencePose(truePose);
+  //photonPoseEstimator.setReferencePose(truePose);
   poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
     return poseEstimateTrue;
   }
@@ -159,11 +159,11 @@ public class AprilCamera extends SubsystemBase {
 
       
 
-      //robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
-      //          aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
+      robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
+                aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();
 
-      SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
+      //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
       SmartDashboard.putString("Robot Pose 2", poseEstimate.toString());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
