@@ -47,6 +47,10 @@ public class AprilCamera extends SubsystemBase {
   Optional<EstimatedRobotPose> poseEstimate;
   EstimatedRobotPose poseEstimateTrue;
   Pose3d lastPose;
+  Pose3d estimatedPose3d;
+  boolean poseEstimated;
+  EstimatedRobotPose estimatedPose;
+  double estimatedPoseTime;
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
@@ -67,9 +71,7 @@ public class AprilCamera extends SubsystemBase {
 
   }
 
-  public PhotonPipelineResult getLatestResult(){
-    return camera.getLatestResult();
-  }
+
 
   /*public void aprilTagsOn() {
     blue.set(true);
@@ -81,31 +83,30 @@ public class AprilCamera extends SubsystemBase {
 
 
   public Pose3d getRobotPosition() {
-    return robotPose;
+    if (hasTargets) return robotPose;
+    else return new Pose3d(-999., 999., -999., new Rotation3d(999, -999, -1000));
   }
-  public void print() {
+  void print() {
     System.out.println(getRobotPosition());
   }
 
-  /**
-   * @return the photonPoseEstimator
-   */
-  public PhotonPoseEstimator camPose() {
-    return photonPoseEstimator;
-  }
   public double tagYaw() {
+    if (hasTargets){
     return target.getYaw();
+    } else return -999;
   }
   public boolean generalTarget() {
     return hasTargets;
   }
   public double tagArea(){
+    if (hasTargets){
     return target.getArea();
+    }else return -999;
   }
   public double getTimestampSeconds(){
     return 0;
   }
-  public double getHeight(){
+   double getHeight(){
     targetPose = aprilTagFieldLayout.getTagPose(target.fiducialId);
     truePose = targetPose.get();
     
@@ -114,7 +115,7 @@ public class AprilCamera extends SubsystemBase {
   }
 
 
-  public double getDistanceToTarget(){
+   double getDistanceToTarget(){
     return PhotonUtils.calculateDistanceToTargetMeters(CamConstants.camera_Height_Meters,
                                                       getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
@@ -123,11 +124,18 @@ public class AprilCamera extends SubsystemBase {
     
   }
 
-  public Optional<EstimatedRobotPose> update(){
+ /* public Optional<EstimatedRobotPose> update(){
     poseEstimate = photonPoseEstimator.update(getLatestResult());
     return poseEstimate;
+  } */
+
+  public Pose3d getPose3d(){
+    return estimatedPose3d;
   }
 
+  public boolean isPoseEstimated(){
+    return poseEstimated;
+  }
  /* public EstimatedRobotPose getPoseTrue(){
   poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
     return poseEstimateTrue;
@@ -146,15 +154,21 @@ public class AprilCamera extends SubsystemBase {
     
 
 
-
     var result = camera.getLatestResult();
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
       target = result.getBestTarget();
       
+      poseEstimate = photonPoseEstimator.update(result);
+      if (poseEstimate.isPresent()){
+      estimatedPose = poseEstimate.get();
+      estimatedPoseTime = estimatedPose.timestampSeconds;
+      estimatedPose3d = estimatedPose.estimatedPose;
+      poseEstimated = true;
+      } else poseEstimated = false; //estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
+  
 
-      
 
       robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
                 aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
@@ -162,13 +176,9 @@ public class AprilCamera extends SubsystemBase {
 
       //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
       //SmartDashboard.putString("Robot Pose 2", photonPoseEstimator.update(result).toString());
-      poseEstimate = photonPoseEstimator.update(result);
-      Pose3d estimatedPose3d;
-      if (poseEstimate.isPresent()){
-      estimatedPose3d = poseEstimate.get().estimatedPose;
-      } else estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
-      SmartDashboard.putNumber("Robot Pose X", estimatedPose3d.getX());
-      SmartDashboard.putNumber("Robot Pose Y", estimatedPose3d.getY());
+     
+      SmartDashboard.putNumber("Robot Pose X", getPose3d().getX());
+      SmartDashboard.putNumber("Robot Pose Y", getPose3d().getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
       SmartDashboard.putNumber("Get Distance", getDistanceToTarget());
@@ -178,6 +188,8 @@ public class AprilCamera extends SubsystemBase {
       SmartDashboard.putNumber("April Tag X", 999.);
       SmartDashboard.putNumber("Get Yaw", 999.);
       SmartDashboard.putNumber("Get Distance", 999.);
+      estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
+      poseEstimated = false;
     }
     
   

@@ -239,19 +239,18 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
-    /*if(Constants.CAMERA_AVAILABLE){
-      var res = aprilSubsystem.getLatestResult();
-      if (res.hasTargets()) {
-        var imageCaptureTime = res.getTimestampSeconds();
+    if(Constants.CAMERA_AVAILABLE){
+      if (aprilSubsystem.isPoseEstimated()) {
+
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getRobotPosition().toPose2d(), imageCaptureTime);  //TODO Can't go from 3d to 2d when Pose3d is null
+                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);  //TODO Can't go from 3d to 2d when Pose3d is null
       }
       SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
       SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
           
-    }*/
+    }
   }
 
   public SwerveModulePosition[] getModulePositions() {
