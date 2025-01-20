@@ -83,9 +83,11 @@ public class RobotContainer {
     } else april = null;
 
     if (Constants.DRIVE_AVAILABLE){
+      
       field = new Field2d();
-      SmartDashboard.putData(field);
       field.setRobotPose(driveSubsystem.getPoseEstimatorPose());
+      SmartDashboard.putData(field);
+
       /*PathPlannerLogging.setLogCurrentPoseCallback((pose)-> {
         field.setRobotPose(pose);
       });*/
@@ -139,6 +141,8 @@ public class RobotContainer {
             e.printStackTrace();
           }
         }));
+      new JoystickButton(driverJoytick, 4)
+        .onTrue(new InstantCommand(() -> field.setRobotPose(driveSubsystem.getPoseEstimatorPose())));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
