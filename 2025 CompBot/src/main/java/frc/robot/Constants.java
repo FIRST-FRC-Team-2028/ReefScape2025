@@ -82,9 +82,9 @@ public final class Constants {
 
         // Distance between right and left wheels
         // Distance between front and back wheels
-        public static final double kTrackWidth = Units.inchesToMeters(16.5);
+        public static final double kTrackWidth = Units.inchesToMeters(20.75);
         //
-        public static final double kWheelBase = Units.inchesToMeters(22.5);
+        public static final double kWheelBase = Units.inchesToMeters(26.75);
         // 
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
@@ -220,6 +220,8 @@ public final class Constants {
     public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
     public static final double SOFTLIMITREVERSE = -6.; //    but dumb REVRobotics API won't allow inversion
     public static final double L1 = -5.;
+    public static final double L2 = -4.;
+    public static final double L3 = -1.;
     public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
   }
 

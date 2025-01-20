@@ -113,8 +113,12 @@ public class RobotContainer {
         .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
         new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
-        new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
+        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L2));
+        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L3));
+      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
         .onTrue(new PausePlay(elevatorSubsystem, 0));
     }
     
