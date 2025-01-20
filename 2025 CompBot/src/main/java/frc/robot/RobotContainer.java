@@ -17,6 +17,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FileVersionException;
+import com.pathplanner.lib.util.PathPlannerLogging;
 
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.HandlerConstants;
@@ -34,6 +35,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -58,6 +60,7 @@ public class RobotContainer {
   private final Handler handlerSubsystem;
   private final AprilCamera april;
   private final SendableChooser<Command> autoChooser;
+  private final Field2d field;
 
   // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -80,6 +83,12 @@ public class RobotContainer {
     } else april = null;
 
     if (Constants.DRIVE_AVAILABLE){
+      field = new Field2d();
+      SmartDashboard.putData(field);
+      field.setRobotPose(driveSubsystem.getPoseEstimatorPose());
+      /*PathPlannerLogging.setLogCurrentPoseCallback((pose)-> {
+        field.setRobotPose(pose);
+      });*/
       new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
       NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
       NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
