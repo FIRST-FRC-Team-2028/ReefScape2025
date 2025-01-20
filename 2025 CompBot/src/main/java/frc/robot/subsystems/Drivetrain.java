@@ -209,9 +209,9 @@ public class Drivetrain extends SubsystemBase {
   }
   
   public void setModuleStates(SwerveModuleState[] desiredStates) {
-    for (SwerveModuleState state:desiredStates){
-      state.angle= new Rotation2d(-state.angle.getRadians()); //The encoder won't let us invert it 
-    }
+    /*for (SwerveModuleState state:desiredStates){
+      state.angle= new Rotation2d(state.angle.getRadians()); //The encoder won't let us invert it 
+    }*/
     SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, DriveConstants.kPhysicalMaxSpeedMetersPerSecond);
     m_frontLeft.setDesiredState(desiredStates[0]);
     m_frontRight.setDesiredState(desiredStates[1]);
@@ -239,7 +239,7 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
-    if(Constants.CAMERA_AVAILABLE){
+    /*if(Constants.CAMERA_AVAILABLE){
       var res = aprilSubsystem.getLatestResult();
       if (res.hasTargets()) {
         var imageCaptureTime = res.getTimestampSeconds();
@@ -251,7 +251,7 @@ public class Drivetrain extends SubsystemBase {
       SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
       SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
           
-    }
+    }*/
   }
 
   public SwerveModulePosition[] getModulePositions() {
