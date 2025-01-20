@@ -246,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.camPose().getReferencePose().toPose2d(), imageCaptureTime);
+                  aprilSubsystem.getRobotPosition().toPose2d(), imageCaptureTime);  //TODO Can't go from 3d to 2d when Pose3d is null
       }
       SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
       SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());

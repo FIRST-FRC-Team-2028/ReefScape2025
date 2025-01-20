@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean ELEVATOR_AVALIBLE = false;
 
 
 
@@ -55,12 +55,12 @@ public final class Constants {
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
-    public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ratio
+    public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ratio      12.8 on project X
     public static final double kTurnPositionConversionFactor = 1.0 / kTurnGearRatio;
 
     // By default, the drive encoder in position mode measures rotations at the drive motor
     // Convert to meters at the wheel
-    public static final double kDriveGearRatio = 5.36; // 2025 Competion Robot
+    public static final double kDriveGearRatio = 5.36; // 2025 Competion Robot            6.75 on Project X
     public static final double kDrivePositionConversionFactor =
       (kWheelDiameterMeters * Math.PI) / kDriveGearRatio;
 
@@ -82,9 +82,9 @@ public final class Constants {
 
         // Distance between right and left wheels
         // Distance between front and back wheels
-        public static final double kTrackWidth = Units.inchesToMeters(20.75);
+        public static final double kTrackWidth = Units.inchesToMeters(20.75);  //16.5     2025COMP
         //
-        public static final double kWheelBase = Units.inchesToMeters(26.75);
+        public static final double kWheelBase = Units.inchesToMeters(26.75);   //22.5        2025COMP
         // 
         public static final SwerveDriveKinematics kDriveKinematics =
         new SwerveDriveKinematics(
