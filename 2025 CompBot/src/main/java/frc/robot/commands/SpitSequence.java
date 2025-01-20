@@ -16,7 +16,7 @@ public class SpitSequence extends SequentialCommandGroup {
   /** Sequence to move to position to spit out */
   public SpitSequence(Handler handlerSubsystem, Elevator elevatorSubsystem, double positionP, double positionE) {
 
-    addCommands(new InstantCommand(() -> elevatorSubsystem.moveToPose(positionE)),
+    addCommands(new InstantCommand(() -> elevatorSubsystem.PIDController(positionE)),
                 new InstantCommand(() -> handlerSubsystem.moveHandler(positionP)),
                 new Spit(handlerSubsystem));
   }

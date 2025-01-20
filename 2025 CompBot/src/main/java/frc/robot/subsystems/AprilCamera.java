@@ -156,8 +156,8 @@ public class AprilCamera extends SubsystemBase {
 
       
 
-      //robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
-      //          aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
+      robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
+                aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();
 
       //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
