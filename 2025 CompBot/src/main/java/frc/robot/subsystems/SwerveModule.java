@@ -251,13 +251,13 @@ public class SwerveModule {
     
     if (waitPeriod > 0.0) {
       absPositonRotations =
-          m_turningAbsEncoder.getAbsolutePosition().waitForUpdate(waitPeriod).getValue();  // rootations
+          m_turningAbsEncoder.getAbsolutePosition().waitForUpdate(waitPeriod).getValue();  // rotations
     } else {
       absPositonRotations = m_turningAbsEncoder.getAbsolutePosition().getValue();
     }
     
     
-    return Rotation2d.fromRotations(-absPositonRotations.magnitude());    //CANCoders are inverted of relative encoder
+    return Rotation2d.fromRotations(absPositonRotations.magnitude());
   }
 
   /**
