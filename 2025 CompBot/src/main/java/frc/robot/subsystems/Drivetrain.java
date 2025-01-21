@@ -8,6 +8,7 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.PathfindingCommand;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathConstraints;
@@ -28,6 +29,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -285,9 +288,25 @@ public class Drivetrain extends SubsystemBase {
     m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
   }
 
-  public void pathfindToPath(PathPlannerPath path) {
-    AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+  public Command pathfindToPath(String pathName) {
+    PathPlannerPath path;
+    try{
+      path = PathPlannerPath.fromPathFile(pathName);
+      return AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+    }catch (Exception e){
+      e.getStackTrace();
+      return new InstantCommand(()-> System.out.println("FAIL"));
+    }
+    //Command followPath = AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+    //SmartDashboard.putData("Pathfind To Path", followPath);
     
+    
+  }
+
+  public Command pathfindToPose(double x, double y, double degree ) {
+    Rotation2d rotation = new Rotation2d().fromDegrees(degree);
+    Pose2d targetPose = new Pose2d(x, y, rotation);
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0);
   }
 
   

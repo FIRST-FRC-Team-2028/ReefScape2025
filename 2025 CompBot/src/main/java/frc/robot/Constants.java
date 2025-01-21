@@ -291,11 +291,15 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = true;
-    public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
+    public static final boolean isCompetition = false;
+    /*public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
-                          DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+                          DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);*/
+    public static final PathConstraints pathConstraints = new PathConstraints(1,
+                          0.5,
+                          2,
+                          1);
   }
 
 
