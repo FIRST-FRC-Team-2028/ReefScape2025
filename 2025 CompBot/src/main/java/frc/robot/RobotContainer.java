@@ -24,6 +24,7 @@ import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PausePlay;
 import frc.robot.commands.VarySpeed;
@@ -83,7 +84,7 @@ public class RobotContainer {
     } else april = null;
 
     if (Constants.DRIVE_AVAILABLE){
-      
+      driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
       field = new Field2d();
       field.setRobotPose(driveSubsystem.getPoseEstimatorPose());
       SmartDashboard.putData(field);

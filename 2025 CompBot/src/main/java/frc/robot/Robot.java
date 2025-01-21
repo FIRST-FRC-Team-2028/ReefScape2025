@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (Constants.DRIVE_AVAILABLE) {
+    /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs
             double xSpeed = -driverJoytick.getRawAxis(OIConstants.kDriverXAxis); // Negative values go forward
             double ySpeed = -driverJoytick.getRawAxis(OIConstants.kDriverYAxis);
@@ -133,16 +133,16 @@ public class Robot extends TimedRobot {
                     - (DriveConstants.kFineControlSpeed * driverJoytick.getRawAxis(OIConstants.kFineControlAxis))
                     + (DriveConstants.kFasterSpeed * driverJoytick.getRawAxis(OIConstants.kFastControlAxis));
             
-            /*    if (driverJoytick.getRawButton(OIConstants.kFineControlAxis)) {
-                    xSpeed *= 1. - (DriveConstants.kFineControlSpeed);
-                    ySpeed *= 1. - (DriveConstants.kFineControlSpeed);
-                    turningSpeed *= 1. - (DriveConstants.kFineControlSpeed);
-                }
-                if (driverJoytick.getRawButton(OIConstants.kFastControlAxis)) {
-                    xSpeed *= 1. + (DriveConstants.kFasterSpeed);
-                    ySpeed *= 1. + (DriveConstants.kFasterSpeed);
-                    turningSpeed *= 1. + (DriveConstants.kFasterSpeed);
-                }*/
+                //if (driverJoytick.getRawButton(OIConstants.kFineControlAxis)) {
+                //    xSpeed *= 1. - (DriveConstants.kFineControlSpeed);
+                //    ySpeed *= 1. - (DriveConstants.kFineControlSpeed);
+                //    turningSpeed *= 1. - (DriveConstants.kFineControlSpeed);
+                //}
+                //if (driverJoytick.getRawButton(OIConstants.kFastControlAxis)) {
+                //    xSpeed *= 1. + (DriveConstants.kFasterSpeed);
+                //    ySpeed *= 1. + (DriveConstants.kFasterSpeed);
+                //    turningSpeed *= 1. + (DriveConstants.kFasterSpeed);
+                //}
             // Smooth driver inputs
             smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .08;
             smoothedYSpeed = smoothedYSpeed + (ySpeed - smoothedYSpeed) * .08;
@@ -196,7 +196,7 @@ public class Robot extends TimedRobot {
             // 5. Convert chassis speeds to individual module states
             // SwerveModuleState[] moduleStates =
             // DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-            /* this should be done in the SwerveSubsystem */
+            // this should be done in the SwerveSubsystem 
             // SwerveModuleState[] moduleStates =
             // swerveSubsystem.chassis2ModuleStates(chassisSpeeds);
 
@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
 
             // swerveSubsystem.reportStatesToSmartDashbd(moduleStates);
             SmartDashboard.putNumber("Turning Speed", turningSpeed);
-          }
+          }*/
   }
 
   @Override
