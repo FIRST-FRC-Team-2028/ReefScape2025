@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class PausePlay extends Command {
+public class ElevatorPosition extends Command {
   private final Elevator elevator;
   private final double Destination;
-  /** Creates a new PausePlay. */
-  public PausePlay(Elevator elevator, double Destination) {
+  /** Drive elevator to a desired position - closed loop */
+  public ElevatorPosition(Elevator elevator, double Destination) {
     this.elevator = elevator;
     this.Destination = Destination;
     addRequirements(elevator);

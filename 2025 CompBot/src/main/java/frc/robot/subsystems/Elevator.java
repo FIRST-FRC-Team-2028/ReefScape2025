@@ -27,7 +27,15 @@ public class Elevator extends SubsystemBase {
   private final SparkClosedLoopController m_ClosedLoopController;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
+  private final double closeEnough = .2;
+  private double speedOL = 0.;
 
+  /**consists of two motors of which one is the leader.
+   * <p>Lifts the handler up. Methods:
+   *   <li>  PIDController - closedloop control to destination
+   *   <li>  setElevatorSpeed - vbus control
+   *   <li>  Vroom - open-loop to destination
+   */
   public Elevator() {
     m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
     m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
@@ -61,8 +69,6 @@ public class Elevator extends SubsystemBase {
   }
 
   /**Closed loop control of the elevator
-   * TODO MrG says Calibrate the system before use:
-   *   6 determine kp
    * 
    * @param target is the desired position (inches) for the elevator
    */
@@ -87,16 +93,17 @@ public class Elevator extends SubsystemBase {
   */
   public void Vroom(double Tim) {
     Destination = Tim;
-    m_elevatorMotorL.set(Math.copySign(.1, (Destination - CurrentPosition)));
+    speedOL = Math.copySign(.1, (Destination - CurrentPosition));
+    setElevatorSpeed(speedOL);
   }
 
-  /**Check whether elevator has attained the target height. Stop if it has.
+  /**Check whether elevator has attained the target height. Stop if it has. TODO this be lie.
    * 
    * @param Destination: Target Height
    * @return <b>True</b> if the motor is at the target height
    * <li><b>False</b> if the motor is not at the target height </li>
    */
   public boolean Finished(double Destination) {
-    return false;
+    return Math.abs(Destination-CurrentPosition)< closeEnough;
   }
 }
