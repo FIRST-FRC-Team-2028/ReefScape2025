@@ -124,9 +124,9 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
         .onTrue(new ElevatorVbusVariable(driverJoytick, elevatorSubsystem))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
-        new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
         .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
     }
     
@@ -162,17 +162,17 @@ public class RobotContainer {
       
       }
 
-      if (Constants.HANDLER_AVAILABLE) {
+    if (Constants.HANDLER_AVAILABLE) {
         new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
-      }
+    }
 
       
-      // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

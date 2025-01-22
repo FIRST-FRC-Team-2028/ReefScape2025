@@ -222,7 +222,8 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setDesiredState(desiredStates[3]);
     //SmartDashboard.putNumber("Module Turnin Target", desiredStates[0].angle.getRotations());
   }
-/**Updates the odometry location using swerve module position */
+
+  /**Updates the odometry location using swerve module position */
   public void updateOdometry() {
     m_odometry.update(
         m_gyro.getRotation2d(),
@@ -234,6 +235,10 @@ public class Drivetrain extends SubsystemBase {
         });
   }
 
+  /**Update the estimate of the robot Pose 
+   * based on odometry
+   * and any detectable April tags
+  */
   public void updatePoseEstimator() {
     m_poseEstimator.update(m_gyro.getRotation2d(),
                           new SwerveModulePosition[] {                                  
@@ -251,8 +256,7 @@ public class Drivetrain extends SubsystemBase {
                   aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);  //TODO Can't go from 3d to 2d when Pose3d is null
       }
       SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
-      SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
-          
+      SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());  
     }
   }
 
@@ -272,7 +276,8 @@ public class Drivetrain extends SubsystemBase {
       m_backRight.getState()
     };
   }
-/** Position of robot with x and y in meters */
+  
+  /** Position of robot with x and y in meters */
   public Pose2d getOdomentryPose() {
     return m_odometry.getPoseMeters();
   }
@@ -299,17 +304,12 @@ public class Drivetrain extends SubsystemBase {
     }
     //Command followPath = AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
     //SmartDashboard.putData("Pathfind To Path", followPath);
-    
-    
   }
 
   public Command pathfindToPose(double x, double y, double degree ) {
-    Rotation2d rotation = new Rotation2d().fromDegrees(degree);
+    Rotation2d rotation = Rotation2d.fromDegrees(degree);
     Pose2d targetPose = new Pose2d(x, y, rotation);
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0);
   }
 
-  
-  
-  
 }

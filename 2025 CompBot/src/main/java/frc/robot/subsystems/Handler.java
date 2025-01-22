@@ -38,7 +38,18 @@ public class Handler extends SubsystemBase {
   int currPa = 0;
   double avgCurrenta = 0;
   boolean algaeCaptureCurrentLimit = true;
-  /** Creates a new Handler. */
+  /** Manipulates scoring elements: coral, and algae.
+   * <p>Methods:<ul>
+   * <li>intake - grab coral
+   * <li>moveHandlerSpeed - vbus control of pivot motor
+   * <li>moveHandler - closed loop control pivot to position
+   * <li>targetPivot - closed loop control pivot to position TODO need both?
+   * <li>Shoot - vbus control of shoot motor
+   * <li>algaeGrab - vbus control of algae intake motor
+   * <li>algaeShoot - vbus control to shoot algae
+   * </ul>
+   * <p> 
+   */
   public Handler() {
     coralShoot = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
     pivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
@@ -76,6 +87,9 @@ public class Handler extends SubsystemBase {
     
     Shoot(speed);
     return doIHaveIt;
+    /* TODO: MrG says This method must run repeatedly for this process to work.
+       Use the appropriate Trigger type *
+       or make this process a command sequence. */
   }
 
   public void resetIntake(){
