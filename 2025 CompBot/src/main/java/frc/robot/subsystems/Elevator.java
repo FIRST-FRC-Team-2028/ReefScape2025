@@ -58,6 +58,11 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     m_elevatorEncoder.setPosition(0.);
+
+    /* TODO display in LiveWindow
+     * See docs
+     * addChild("Left Spark = Leader", m_elevatorMotorL);  // SparkMax does not implement Sendable
+    */
   }
 
   @Override
