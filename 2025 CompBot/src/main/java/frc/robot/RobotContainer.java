@@ -104,7 +104,9 @@ public class RobotContainer {
           ? stream.filter(auto -> auto.getName().startsWith("comp"))
           : stream);
       SmartDashboard.putData("Auto Chooser", autoChooser);
-    } else autoChooser=null;
+    } else { autoChooser=null;
+             field = null;
+    }
     // Configure the trigger bindings
     configureButtonBindings();
   }

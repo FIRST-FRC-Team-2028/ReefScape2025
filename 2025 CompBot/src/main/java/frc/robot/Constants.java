@@ -214,6 +214,9 @@ public final class Constants {
     // Soft Limits
     public static final double forwardSoftLimit = 185;
     public static final double reverseSoftLimit = -20;
+
+    // Test Constants
+
   }
 
   public final static class ElevatorConstants {
@@ -277,7 +280,15 @@ public final class Constants {
     public static final int EnableSoftLimits = 2;     //Driver
 
     public static final double kDeadband = 0.075;
-  
+ 
+    //Test Buttons
+
+    //Driver
+
+    //GameMech1
+    public static final int Test_Elevator_RelaxSoft = 1;
+
+    //GameMech2
 
   }
 
@@ -288,7 +299,7 @@ public final class Constants {
       public static final int followDistance = 1; //Meters
       public static final double camera_Height_Meters = Units.inchesToMeters(7);
       public static final double target_Height_Meters = Units.inchesToMeters(12);
-      public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(-6.2);
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;

@@ -131,8 +131,8 @@ public class AprilCamera extends SubsystemBase {
     if(hasTargets){
       if(target.fiducialId == 17 || target.fiducialId == 11){
         if(right){
-          poseTarget = truePose.toPose2d().plus(new Transform2d(-.1905,.1905, new Rotation2d(0)));
-        } else poseTarget = truePose.toPose2d().plus(new Transform2d(.1905,-.1905, new Rotation2d(0)));
+          poseTarget = truePose.toPose2d().plus(new Transform2d( -.1905,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(.1905, -.1905, new Rotation2d(0)));
       return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
       }
        else if(target.fiducialId == 18 || target.fiducialId == 10){

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain;
 
@@ -36,6 +37,7 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
   private SlewRateLimiter xLimiter, yLimiter, turningLimiter;
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
+  private final Joystick mechJoytick1 = new Joystick(OIConstants.kMechControllerPort);
   private Drivetrain drivetrain;
   double distance;
   double error;
@@ -53,6 +55,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     PDH =new PowerDistribution(1, ModuleType.kRev);
+    enableLiveWindowInTest(true);
     PathfindingCommand.warmupCommand().schedule();
   }
 
@@ -244,7 +247,7 @@ public class Robot extends TimedRobot {
     //   initial known position
     //   encoder range
     //   softlimits
-    }
+    }      
   }
 
   /** This function is called once when the robot is first started up. */

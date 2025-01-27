@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import javax.print.attribute.standard.MediaSize.Engineering;
 
+import java.io.ObjectInputFilter.Config;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -16,16 +18,21 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
+
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants;
+import frc.robot.SendableRelEncoder;
+import frc.robot.SendableSparkMax;
 
 public class Elevator extends SubsystemBase {
   
-  private final SparkMax m_elevatorMotorL;
-  private final SparkMax m_elevatorMotorR;
+  private final SendableSparkMax m_elevatorMotorL;
+  private final SendableSparkMax m_elevatorMotorR;
   private final RelativeEncoder m_elevatorEncoder;
+  private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
@@ -40,8 +47,10 @@ public class Elevator extends SubsystemBase {
    *   <li>  Vroom - open-loop to destination
    */
   public Elevator() {
-    m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
-    m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
+    m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
+    m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
+    //m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
+    //m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
     configL = new SparkMaxConfig();
@@ -62,10 +71,9 @@ public class Elevator extends SubsystemBase {
 
     m_elevatorEncoder.setPosition(0.);
 
-    /* TODO display in LiveWindow
-     * See docs
-     * addChild("Left Spark = Leader", m_elevatorMotorL);  // SparkMax does not implement Sendable
-    */
+    addChild("Left (Leader)", m_elevatorMotorL);
+    msre = new SendableRelEncoder(m_elevatorEncoder);
+    addChild("Position", msre);
   }
 
   @Override
@@ -115,10 +123,15 @@ public class Elevator extends SubsystemBase {
     return Math.abs(Destination-CurrentPosition)< closeEnough;
   }
 
-  public void switchSL(boolean enable){
-    configL.softLimit.forwardSoftLimitEnabled(enable);
-    configL.softLimit.reverseSoftLimitEnabled(enable);
+  // Test mode methods
+  /**Suspend and restore soft limits
+   * @param
+   */
+  public void switchSL(boolean enabled){
+    configL.softLimit.reverseSoftLimitEnabled(enabled);
+    configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    if (enable) m_elevatorEncoder.setPosition(0);
+    if (enabled) m_elevatorEncoder.setPosition(0.);
+    
   }
 }
