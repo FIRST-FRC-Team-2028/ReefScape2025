@@ -219,8 +219,15 @@ public final class Constants {
   public final static class ElevatorConstants {
     public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
     public static final double SOFTLIMITREVERSE = -6.; //    but dumb REVRobotics API won't allow inversion
-    public static final double L1 = -5.;
+
     public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
+    //public static double encoderConversionFactor = 50/36; //raw : inches   (revolutions/inches)
+    
+    //PID Target Positions
+    public static final double L1 = -5.;
+    public static final double L2 = 0;
+    public static final double L3 = 0;
+    public static final double L4 = 0;
   }
 
   public static class CANIDS {

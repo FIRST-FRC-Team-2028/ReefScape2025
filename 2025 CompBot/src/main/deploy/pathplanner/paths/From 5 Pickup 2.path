@@ -3,47 +3,46 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.2503787878787875,
-        "y": 5.366666666666666
+        "x": 4.932954545454546,
+        "y": 5.24469696969697
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.156705715372836,
-        "y": 5.427709108155417
+        "x": 3.9762369609246564,
+        "y": 6.459915037169412
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.983775252525252,
-        "y": 5.153219696969697
+        "x": 1.629608585858586,
+        "y": 7.399494949494949
       },
       "prevControl": {
-        "x": 6.333425463423535,
-        "y": 5.292122032641665
+        "x": 2.30804911517847,
+        "y": 7.090100856516841
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Score 1 Pose"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 0.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
-  "eventMarkers": [
+  "pointTowardsZones": [
     {
-      "name": "Raise Elevator L4",
-      "waypointRelativePos": 0.901090342679131,
-      "endWaypointRelativePos": null,
-      "command": null
+      "fieldPosition": {
+        "x": 4.07,
+        "y": 4.8
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.30295950155763296,
+      "maxWaypointRelativePos": 0.75,
+      "name": "Point Towards Zone"
     }
   ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 4.0,
@@ -54,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.7448812969422
+    "rotation": -55.0
   },
   "reversed": false,
-  "folder": "Top Side Paths",
+  "folder": "Reef To Coral Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": true
 }
