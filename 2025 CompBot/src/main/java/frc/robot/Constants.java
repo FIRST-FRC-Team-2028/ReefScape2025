@@ -219,8 +219,15 @@ public final class Constants {
   public final static class ElevatorConstants {
     public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
     public static final double SOFTLIMITREVERSE = -6.; //    but dumb REVRobotics API won't allow inversion
-    public static final double L1 = -5.;
+
     public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
+    //public static double encoderConversionFactor = 50/36; //raw : inches   (revolutions/inches)
+    
+    //PID Target Positions
+    public static final double L1 = -5.;
+    public static final double L2 = 0;
+    public static final double L3 = 0;
+    public static final double L4 = 0;
   }
 
   public static class CANIDS {
@@ -232,6 +239,7 @@ public final class Constants {
     //Elevator
     public static final int elevatorL = 50;
     public static final int elevatorR = 57;  // TODO reset when hardware available
+    public static final int UNUSED_MOTOR = 0;
   }
 
   public static class OIConstants {
@@ -292,11 +300,15 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = true;
-    public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
+    public static final boolean isCompetition = false;
+    /*public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
-                          DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+                          DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);*/
+    public static final PathConstraints pathConstraints = new PathConstraints(1,
+                          0.5,
+                          2,
+                          1);
   }
 
 

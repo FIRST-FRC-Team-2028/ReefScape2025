@@ -24,9 +24,11 @@ import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.PausePlay;
-import frc.robot.commands.VarySpeed;
+import frc.robot.commands.ElevatorPosition;
+import frc.robot.commands.ElevatorVbusVariable;
+import frc.robot.commands.Spit;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
@@ -82,7 +84,7 @@ public class RobotContainer {
     } else april = null;
 
     if (Constants.DRIVE_AVAILABLE){
-      
+      driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
       field = new Field2d();
       field.setRobotPose(driveSubsystem.getPoseEstimatorPose());
       SmartDashboard.putData(field);
@@ -120,27 +122,31 @@ public class RobotContainer {
   private void configureButtonBindings() {
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem))
+        .onTrue(new ElevatorVbusVariable(driverJoytick, elevatorSubsystem))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
-        new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .onTrue(new PausePlay(elevatorSubsystem, 0));
+      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
     }
     
 
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
+      /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue(new InstantCommand(() -> {
           try {
-            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("Top Coral Station"));
+            System.out.println("WORKING");
+            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("To Tag 17"));
           } catch (Exception e) {
             e.printStackTrace();
           }
-        }));
-      new JoystickButton(driverJoytick, 4)
+        }));*/
+      new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
+        .onTrue(driveSubsystem.pathfindToPath("To Tag 17"));
+
+      new JoystickButton(driverJoytick, 3)
         .onTrue(new InstantCommand(() -> field.setRobotPose(driveSubsystem.getPoseEstimatorPose())));
     }
 
@@ -156,7 +162,7 @@ public class RobotContainer {
       
       }
 
-      if (Constants.HANDLER_AVAILABLE) {
+    if (Constants.HANDLER_AVAILABLE) {
         new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
@@ -173,7 +179,7 @@ public class RobotContainer {
       }
 
       
-      // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }

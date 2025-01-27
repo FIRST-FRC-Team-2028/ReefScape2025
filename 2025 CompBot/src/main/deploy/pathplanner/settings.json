@@ -3,8 +3,9 @@
   "robotLength": 0.8128,
   "holonomicMode": true,
   "pathFolders": [
-    "3 Coral Auto",
-    "Pathfind To Paths"
+    "Reef To Coral Station",
+    "Pathfind To Paths",
+    "Top Side Paths"
   ],
   "autoFolders": [
     "Top Side Autos"

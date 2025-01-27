@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class VarySpeed extends Command {
+public class ElevatorVbusVariable extends Command {
   private final Joystick joystick;
   private final Elevator elevator;
   /** Creates a new VarySpeed. */
-  public VarySpeed(Joystick joystick, Elevator elevator) {
+  public ElevatorVbusVariable(Joystick joystick, Elevator elevator) {
     this.joystick = joystick;
     this.elevator = elevator;
     addRequirements(elevator);

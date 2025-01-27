@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.95094696969697,
-        "y": 1.982007575757575
+        "x": 4.932954545454546,
+        "y": 5.24469696969697
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.13785193734547,
-        "y": 2.1919260578239896
+        "x": 3.9762369609246564,
+        "y": 6.459915037169412
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7234217171717177,
-        "y": 2.998421717171717
+        "x": 1.629608585858586,
+        "y": 7.399494949494949
       },
       "prevControl": {
-        "x": 3.2417745385567356,
-        "y": 2.3924479888549053
+        "x": 2.30804911517847,
+        "y": 7.090100856516841
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,18 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.07,
+        "y": 4.8
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.30295950155763296,
+      "maxWaypointRelativePos": 0.75,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -42,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -55.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Reef To Coral Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": true
 }
