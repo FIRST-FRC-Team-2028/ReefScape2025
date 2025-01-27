@@ -231,9 +231,9 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     if(Constants.ELEVATOR_AVALIBLE){
-    if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
+      if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
       m_robotContainer.getElevator().switchSL(false);
-    }
+      }
       if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimits)){
         m_robotContainer.getElevator().switchSL(true);
       }

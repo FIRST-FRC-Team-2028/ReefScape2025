@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.298863636363636,
-        "y": 2.9780934343434335
+        "x": 5.796906565656566,
+        "y": 3.8420454545454543
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.512310606060606,
-        "y": 2.6833333333333327
+        "x": 6.945454545454546,
+        "y": 2.94760101010101
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 1.0469065656565646
       },
       "prevControl": {
-        "x": 0.040088383838383645,
-        "y": 1.046906565656565
+        "x": 1.4364898989898987,
+        "y": 1.21969696969697
       },
       "nextControl": null,
       "isLocked": false,
@@ -37,8 +37,8 @@
         "y": 3.22
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.3029595015576303,
-      "maxWaypointRelativePos": 0.7017133956386293,
+      "minWaypointRelativePos": 0.40264797507788075,
+      "maxWaypointRelativePos": 0.6985981308411223,
       "name": "Point Towards Zone"
     }
   ],
@@ -59,7 +59,7 @@
   "folder": "Reef To Coral Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

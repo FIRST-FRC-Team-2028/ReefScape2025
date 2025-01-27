@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.2785353535353545,
-        "y": 5.041414141414141
+        "x": 4.353598484848485,
+        "y": 5.844381313131313
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef Coral 6"
     },
     {
       "anchor": {
-        "x": 1.5076388888888888,
-        "y": 7.338510101010102
+        "x": 1.243371212121212,
+        "y": 7.145391414141414
       },
       "prevControl": {
-        "x": 0.5076388888888888,
-        "y": 7.338510101010102
+        "x": 2.3817550505050504,
+        "y": 6.820138888888889
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Pickup Pose 2"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -55.0
+    "rotation": -56.76828893202065
   },
   "reversed": false,
   "folder": "Reef To Coral Station",

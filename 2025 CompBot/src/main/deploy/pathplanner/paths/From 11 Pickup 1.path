@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.1643939393939395,
-        "y": 4.187626262626263
+        "x": 3.9775252525188036,
+        "y": 2.8459595959597332
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.471421431918514,
-        "y": 3.9677887244286842
+        "x": 3.3098206415772546,
+        "y": 2.2743025846656892
       },
       "isLocked": false,
-      "linkedName": "Reef Coral 2"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.243371212121212,
-        "y": 7.145391414141414
+        "x": 1.0400883838383836,
+        "y": 1.0469065656565646
       },
       "prevControl": {
-        "x": 1.0370919068171902,
-        "y": 7.292451839366033
+        "x": 2.8295724333048495,
+        "y": 1.83293469906345
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Pickup Pose 2"
+      "linkedName": "Pickup Pose 1"
     }
   ],
   "rotationTargets": [],
@@ -34,11 +34,11 @@
     {
       "fieldPosition": {
         "x": 4.1,
-        "y": 4.71
+        "y": 3.3
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.33722741433021886,
-      "maxWaypointRelativePos": 0.6,
+      "minWaypointRelativePos": 0.25,
+      "maxWaypointRelativePos": 0.75,
       "name": "Point Towards Zone"
     }
   ],
@@ -53,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -56.76828893202065
+    "rotation": 55.0
   },
   "reversed": false,
   "folder": "Reef To Coral Station",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }
