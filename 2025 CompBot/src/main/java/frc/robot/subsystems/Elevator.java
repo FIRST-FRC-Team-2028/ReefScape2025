@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.print.attribute.standard.MediaSize.Engineering;
+
 import java.io.ObjectInputFilter.Config;
 
 import com.revrobotics.RelativeEncoder;
@@ -32,11 +34,11 @@ public class Elevator extends SubsystemBase {
   private final RelativeEncoder m_elevatorEncoder;
   private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
-  private SparkMaxConfig configL;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
   private final double closeEnough = .2;
   private double speedOL = 0.;
+  private SparkMaxConfig configL, configR;
 
   /**consists of two motors of which one is the leader.
    * <p>Lifts the handler up. Methods:
@@ -52,7 +54,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
     configL = new SparkMaxConfig();
-    SparkMaxConfig configR = new SparkMaxConfig();
+    configR = new SparkMaxConfig();
 
     configL.idleMode(IdleMode.kBrake)
           .inverted(false);

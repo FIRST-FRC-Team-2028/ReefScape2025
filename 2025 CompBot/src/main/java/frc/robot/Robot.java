@@ -225,12 +225,20 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().getActiveButtonLoop().clear();
   }
 
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    if(Constants.ELEVATOR_AVALIBLE){  // TODO
+    if(Constants.ELEVATOR_AVALIBLE){
+    if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
+      m_robotContainer.getElevator().switchSL(false);
+    }
+      if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimits)){
+        m_robotContainer.getElevator().switchSL(true);
+      }
+    // TODO
     // Elevator tests:
     //   Leader/Follower
     //   direction

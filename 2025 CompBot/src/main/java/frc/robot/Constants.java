@@ -272,6 +272,10 @@ public final class Constants {
 
     //Gamemech2 Buttons
 
+    //Test Buttons
+    public static final int RestSoftLimits = 1;       //Driver
+    public static final int EnableSoftLimits = 2;     //Driver
+
     public static final double kDeadband = 0.075;
  
     //Test Buttons
