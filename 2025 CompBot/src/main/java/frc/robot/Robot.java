@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     PDH =new PowerDistribution(1, ModuleType.kRev);
+    enableLiveWindowInTest(true);
     PathfindingCommand.warmupCommand().schedule();
   }
 
@@ -236,7 +237,13 @@ public class Robot extends TimedRobot {
     //   initial known position
     //   encoder range
     //   softlimits
+    if (driverJoytick.getRawButtonPressed(OIConstants.Test_Elevator_RelaxSoft)) {
+      m_robotContainer.getElevator().switchSL(false);
     }
+    if (driverJoytick.getRawButtonReleased(OIConstants.Test_Elevator_RelaxSoft)) {
+      m_robotContainer.getElevator().switchSL(true);
+    }
+    }      
   }
 
   /** This function is called once when the robot is first started up. */

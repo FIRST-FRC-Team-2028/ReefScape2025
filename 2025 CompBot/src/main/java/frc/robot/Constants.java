@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean CAMERA_AVAILABLE = true;
+  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = false;
+  public static final boolean ELEVATOR_AVALIBLE = true;
 
 
 
@@ -273,6 +273,15 @@ public final class Constants {
     //Gamemech2 Buttons
 
     public static final double kDeadband = 0.075;
+ 
+    //Test Buttons
+
+    //Driver
+
+    //GameMech1
+    public static final int Test_Elevator_RelaxSoft = 1;
+
+    //GameMech2
 
   }
 
