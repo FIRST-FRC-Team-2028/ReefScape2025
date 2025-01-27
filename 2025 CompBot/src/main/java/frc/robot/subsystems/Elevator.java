@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import javax.print.attribute.standard.MediaSize.Engineering;
+
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -29,6 +31,7 @@ public class Elevator extends SubsystemBase {
   private double Destination = 0;
   private final double closeEnough = .2;
   private double speedOL = 0.;
+  private SparkMaxConfig configL, configR;
 
   /**consists of two motors of which one is the leader.
    * <p>Lifts the handler up. Methods:
@@ -41,8 +44,8 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
-    SparkMaxConfig configL = new SparkMaxConfig();
-    SparkMaxConfig configR = new SparkMaxConfig();
+    configL = new SparkMaxConfig();
+    configR = new SparkMaxConfig();
 
     configL.idleMode(IdleMode.kBrake)
           .inverted(false);
@@ -110,5 +113,12 @@ public class Elevator extends SubsystemBase {
    */
   public boolean Finished(double Destination) {
     return Math.abs(Destination-CurrentPosition)< closeEnough;
+  }
+
+  public void switchSL(boolean enable){
+    configL.softLimit.forwardSoftLimitEnabled(enable);
+    configL.softLimit.reverseSoftLimitEnabled(enable);
+    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    if (enable) m_elevatorEncoder.setPosition(0);
   }
 }

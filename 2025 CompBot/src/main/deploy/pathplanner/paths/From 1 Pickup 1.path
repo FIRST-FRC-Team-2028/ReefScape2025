@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.7758207070707069,
-        "y": 1.2806818181818176
+        "x": 1.0400883838383836,
+        "y": 1.0469065656565646
       },
       "prevControl": {
-        "x": 1.0333707861488666,
-        "y": 1.61533735140515
+        "x": 1.297638462916543,
+        "y": 1.381562098879897
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Pickup Pose 1"
     }
   ],
   "rotationTargets": [],
