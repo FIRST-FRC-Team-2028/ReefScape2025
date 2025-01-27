@@ -15,19 +15,23 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SendableRelEncoder;
 import frc.robot.Constants.HandlerConstants;
+import frc.robot.SendableSparkMax;
 
 public class Handler extends SubsystemBase {
-  SparkMax coralShoot;
-  SparkMax pivot;
+  SendableSparkMax coralShoot;
+  SendableSparkMax pivot;
   RelativeEncoder pivotEncoder;
   SparkClosedLoopController pivotController;
   DigitalInput grabSensor;
   double latestTarget;
+  SendableRelEncoder msrep;
   double[] currentHist = {0.,0.,0.,0.,0.};
   int currP = 0;
   double avgCurrent = 0;
@@ -51,8 +55,8 @@ public class Handler extends SubsystemBase {
    * <p> 
    */
   public Handler() {
-    coralShoot = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
-    pivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
+    coralShoot = new SendableSparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
+    pivot = new SendableSparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
     pivotEncoder = pivot.getEncoder();
     pivotController = pivot.getClosedLoopController();
     grabSensor = new DigitalInput(HandlerConstants.grabSensorPort);
@@ -65,6 +69,11 @@ public class Handler extends SubsystemBase {
       pivotConfig.softLimit.forwardSoftLimit(HandlerConstants.forwardSoftLimit);
       pivotConfig.idleMode(IdleMode.kBrake);
     pivot.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    
+    addChild("Pivot", pivot);
+    msrep = new SendableRelEncoder(pivotEncoder);
+    addChild("Pivot Encoder", msrep);
+    addChild("OutPut", coralShoot);
   }    
 
   /**
