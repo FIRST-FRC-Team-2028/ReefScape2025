@@ -260,6 +260,7 @@ public final class Constants {
     public static final int kRePivot =                   5;
     public static final int kNudgeUp =                   6;
     public static final int kNudgeDown =                 7;
+    public static final int kMoveSide =                  8;
 
     //Gamemech2 Buttons
 

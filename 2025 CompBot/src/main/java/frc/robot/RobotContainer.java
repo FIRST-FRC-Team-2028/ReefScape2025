@@ -27,7 +27,6 @@ import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PausePlay;
 import frc.robot.commands.VarySpeed;
-import frc.robot.commands.Spit;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
@@ -164,6 +163,13 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+      }
+
+      if (Constants.DRIVE_AVAILABLE && Constants.CAMERA_AVAILABLE){
+        new JoystickButton(mechJoytick1, OIConstants.kMoveSide)
+        .onTrue(new InstantCommand(() -> driveSubsystem.gamemechSwitchOn()));
+        new JoystickButton(mechJoytick1, OIConstants.kMoveSide)
+        .onFalse(new InstantCommand(() -> driveSubsystem.gamemechSwitchOff()));
       }
 
       

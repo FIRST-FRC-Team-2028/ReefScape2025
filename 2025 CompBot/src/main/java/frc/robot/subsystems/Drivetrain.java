@@ -38,6 +38,7 @@ public class Drivetrain extends SubsystemBase {
   static double kMaxSpeed = Constants.DriveConstants.kMaxTranslationalVelocity;
   static double kMaxAngularSpeed = Constants.DriveConstants.kMaxRotationalVelocity;
   private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
+  private boolean gamemechSwitch;
 
   private final AprilCamera aprilSubsystem;
 
@@ -182,6 +183,14 @@ public class Drivetrain extends SubsystemBase {
     return m_gyro.getRotation2d();
   }
 
+  public void gamemechSwitchOff(){
+    gamemechSwitch = false;
+  }
+
+  public void gamemechSwitchOn(){
+    gamemechSwitch = true;
+  }
+
   /** return a Rotation2d representing the heading of the robot
      * described in radians clockwise from forward
      */
@@ -245,10 +254,11 @@ public class Drivetrain extends SubsystemBase {
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);  //TODO Can't go from 3d to 2d when Pose3d is null
+                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
       }
       SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
       SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+      SmartDashboard.putNumber("Get Pose to Pose", aprilSubsystem.getPoseToPose(getPoseEstimatorPose(), gamemechSwitch));
           
     }
   }
