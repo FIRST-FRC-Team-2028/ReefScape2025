@@ -220,7 +220,16 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if(Constants.ELEVATOR_AVALIBLE){  // TODO
+    // Elevator tests:
+    //   Leader/Follower
+    //   direction
+    //   initial known position
+    //   encoder range
+    //   softlimits
+    }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

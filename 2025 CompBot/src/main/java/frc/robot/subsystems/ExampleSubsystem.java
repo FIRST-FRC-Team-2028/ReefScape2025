@@ -4,12 +4,20 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+
+import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.SendableSparkMax;
 
 public class ExampleSubsystem extends SubsystemBase {
+  private final SendableSparkMax motor = new SendableSparkMax(Constants.CANIDS.UNUSED_MOTOR, MotorType.kBrushless);
   /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+  public ExampleSubsystem() {
+    addChild("spark",motor);
+  }
 
   /**
    * Example command factory method.

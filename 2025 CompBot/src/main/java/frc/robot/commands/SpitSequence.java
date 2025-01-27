@@ -13,7 +13,8 @@ import frc.robot.subsystems.Handler;
 
 
 public class SpitSequence extends SequentialCommandGroup {
-  /** Sequence to move to position to spit out */
+  /** Sequence to move elevator to position
+   *  and spit coral out */
   public SpitSequence(Handler handlerSubsystem, Elevator elevatorSubsystem, double positionP, double positionE) {
 
     addCommands(new InstantCommand(() -> elevatorSubsystem.PIDController(positionE)),

@@ -26,8 +26,8 @@ import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.PausePlay;
-import frc.robot.commands.VarySpeed;
+import frc.robot.commands.ElevatorPosition;
+import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.Spit;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
@@ -122,12 +122,12 @@ public class RobotContainer {
   private void configureButtonBindings() {
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem))
+        .onTrue(new ElevatorVbusVariable(driverJoytick, elevatorSubsystem))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
-        new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .onTrue(new PausePlay(elevatorSubsystem, 0));
+      new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
     }
     
 
@@ -162,17 +162,17 @@ public class RobotContainer {
       
       }
 
-      if (Constants.HANDLER_AVAILABLE) {
+    if (Constants.HANDLER_AVAILABLE) {
         new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
-      }
+    }
 
       
-      // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   }
