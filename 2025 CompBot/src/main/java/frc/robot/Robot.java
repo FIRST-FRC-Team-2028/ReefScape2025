@@ -6,6 +6,11 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.PathfindingCommand;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+
+import java.util.Vector;
+
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.Drivetrain;
+
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -34,6 +40,8 @@ public class Robot extends TimedRobot {
   double distance;
   double error;
   private PowerDistribution PDH;
+  
+  
   
 
   /**

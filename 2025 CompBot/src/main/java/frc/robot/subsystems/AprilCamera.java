@@ -19,7 +19,9 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
@@ -27,7 +29,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.Constants.CamConstants;
 
 
@@ -51,6 +52,8 @@ public class AprilCamera extends SubsystemBase {
   boolean poseEstimated;
   EstimatedRobotPose estimatedPose;
   double estimatedPoseTime;
+  Pose2d poseTarget;
+  PhotonPipelineResult result;
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
@@ -124,6 +127,54 @@ public class AprilCamera extends SubsystemBase {
     
   }
 
+  double getPoseToPose(Pose2d robotCurrentPose, boolean right){
+    if(hasTargets){
+      if(target.fiducialId == 17 || target.fiducialId == 11){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(-.1905,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(.1905,-.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+       else if(target.fiducialId == 18 || target.fiducialId == 10){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(0,-.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(0,.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+      if(target.fiducialId == 19 || target.fiducialId == 9){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(.1905,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(-.1905,-.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+      else if(target.fiducialId == 20 || target.fiducialId == 8){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(-.1905,-.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(.1905,.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+      else if(target.fiducialId == 21 || target.fiducialId == 7){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(0,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(0,-.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+      else if(target.fiducialId == 21 || target.fiducialId == 7){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(0,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(0,-.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      }
+      else if(target.fiducialId == 22 || target.fiducialId == 6){
+        if(right){
+          poseTarget = truePose.toPose2d().plus(new Transform2d(.1905,.1905, new Rotation2d(0)));
+        } else poseTarget = truePose.toPose2d().plus(new Transform2d(-.1905,-.1905, new Rotation2d(0)));
+      return PhotonUtils.getDistanceToPose(robotCurrentPose, poseTarget);
+      } 
+      else return 999;
+    }
+    else return 999;
+  }  
  /* public Optional<EstimatedRobotPose> update(){
     poseEstimate = photonPoseEstimator.update(getLatestResult());
     return poseEstimate;
@@ -152,9 +203,9 @@ public class AprilCamera extends SubsystemBase {
   @Override
   public void periodic() {
     
+    
 
-
-    var result = camera.getLatestResult();
+    result = camera.getLatestResult();
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
@@ -174,6 +225,7 @@ public class AprilCamera extends SubsystemBase {
                 aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();
 
+      
       //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
       //SmartDashboard.putString("Robot Pose 2", photonPoseEstimator.update(result).toString());
      
@@ -188,7 +240,6 @@ public class AprilCamera extends SubsystemBase {
       SmartDashboard.putNumber("April Tag X", 999.);
       SmartDashboard.putNumber("Get Yaw", 999.);
       SmartDashboard.putNumber("Get Distance", 999.);
-      estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
       poseEstimated = false;
     }
     

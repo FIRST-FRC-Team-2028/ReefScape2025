@@ -171,7 +171,14 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
-    }
+      }
+
+      if (Constants.DRIVE_AVAILABLE && Constants.CAMERA_AVAILABLE){
+        new JoystickButton(mechJoytick1, OIConstants.kMoveSide)
+        .onTrue(new InstantCommand(() -> driveSubsystem.gamemechSwitchOn()));
+        new JoystickButton(mechJoytick1, OIConstants.kMoveSide)
+        .onFalse(new InstantCommand(() -> driveSubsystem.gamemechSwitchOff()));
+      }
 
       
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
