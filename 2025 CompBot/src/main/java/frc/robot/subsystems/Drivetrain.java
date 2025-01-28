@@ -317,10 +317,8 @@ public class Drivetrain extends SubsystemBase {
     //SmartDashboard.putData("Pathfind To Path", followPath);
   }
 
-  public Command pathfindToPose(double x, double y, double degree ) {
-    Rotation2d rotation = Rotation2d.fromDegrees(degree);
-    Pose2d targetPose = new Pose2d(x, y, rotation);
-    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0);
+  public Command pathfindToPose(Pose2d targetPose ) {
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0.);
   }
 
 }

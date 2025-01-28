@@ -20,6 +20,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 
 import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
@@ -39,6 +40,8 @@ public class Elevator extends SubsystemBase {
   private final double closeEnough = .2;
   private double speedOL = 0.;
   private SparkMaxConfig configL, configR;
+  private final DigitalInput bottomSwitch;
+  private double latestTarget;
 
   /**consists of two motors of which one is the leader.
    * <p>Lifts the handler up. Methods:
@@ -74,6 +77,7 @@ public class Elevator extends SubsystemBase {
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);
     addChild("Position", msre);
+    bottomSwitch = new DigitalInput(ElevatorConstants.bottomSwitchDIPort);
   }
 
   @Override
@@ -90,6 +94,15 @@ public class Elevator extends SubsystemBase {
    */
   public void PIDController(double target) {
     m_ClosedLoopController.setReference(target, ControlType.kPosition);
+    latestTarget = target;
+  }
+
+  /** Changes the target of the PID Controller by the adjustment
+   * @param adjustment
+   */
+  public void nudge(double adjustment){
+    latestTarget += adjustment;
+    m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
   }
 
   /** Run the elevator motor.
@@ -132,6 +145,5 @@ public class Elevator extends SubsystemBase {
     configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     if (enabled) m_elevatorEncoder.setPosition(0.);
-    
   }
 }

@@ -87,6 +87,7 @@ public class Handler extends SubsystemBase {
     // Then it switches to a lower speed until the other sensor detects that it has cleared the passive loader.
     if(grabSensor.get()){
       speed = HandlerConstants.grabCoralSpeed/2;
+      
     }
     /* if(clearSensor.get()){
       speed = 0
