@@ -63,9 +63,9 @@ public class Elevator extends SubsystemBase {
           .inverted(false);
     configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
     configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
-                    .forwardSoftLimitEnabled(true)
+                    .forwardSoftLimitEnabled(false)
                     .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
-                    .reverseSoftLimitEnabled(true);
+                    .reverseSoftLimitEnabled(false);
     configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
@@ -85,7 +85,7 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
     CurrentPosition = m_elevatorEncoder.getPosition();
     SmartDashboard.putNumber("Position", CurrentPosition);
-    System.out.println("Position: " + CurrentPosition);
+    //System.out.println("Position: " + CurrentPosition);
   }
 
   /**Closed loop control of the elevator
@@ -110,6 +110,16 @@ public class Elevator extends SubsystemBase {
   */
   public void setElevatorSpeed(double speed) {
     m_elevatorMotorL.set(speed);
+  }
+
+  
+  public void forwardHO() {
+    m_elevatorMotorL.set(.1);
+  }
+
+  
+  public void backwardHO() {
+    m_elevatorMotorL.set(-.1);
   }
 
   /** Stop the elevator motor. */
