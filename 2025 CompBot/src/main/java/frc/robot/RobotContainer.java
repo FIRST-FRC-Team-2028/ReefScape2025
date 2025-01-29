@@ -126,13 +126,12 @@ public class RobotContainer {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.5)))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.5)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.5)))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-      new JoystickButton(driverJoytick, 1)
-        .onTrue(new InstantCommand(()->elevatorSubsystem.switchSL(true)));
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.5)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+
       //new JoystickButton(driverJoytick, OIConstants.kThirdButton)
       //  .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
     }

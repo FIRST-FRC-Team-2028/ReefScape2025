@@ -5,9 +5,7 @@
 package frc.robot.subsystems;
 
 import javax.print.attribute.standard.MediaSize.Engineering;
-
 import java.io.ObjectInputFilter.Config;
-
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
@@ -18,7 +16,6 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
-
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -42,11 +39,12 @@ public class Elevator extends SubsystemBase {
   private final DigitalInput bottomSwitch;
   private double latestTarget;
 
-  /**consists of two motors of which one is the leader.
+  /**Consists of two motors of which the Left Motor is the leader.
    * <p>Lifts the handler up. Methods:
-   *   <li>  PIDController - closedloop control to destination
-   *   <li>  setElevatorSpeed - vbus control
-   *   <li>  Vroom - open-loop to destination
+   * @apiNote <b>PIDController</b> - closedloop control to destination
+   *   <li><b>setElevatorSpeed</b> - vbus control
+   *   <li><b>OpenLoopControl</b> - open-loop to destination
+   *   <li><b>Finished</b> - open-loop check if finished
    */
   public Elevator() {
     m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
@@ -60,11 +58,11 @@ public class Elevator extends SubsystemBase {
 
     configL.idleMode(IdleMode.kBrake)
            .inverted(false);
-    configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
-                    .forwardSoftLimitEnabled(true)
-                    .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
-                    .reverseSoftLimitEnabled(true);
+    configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
+                     .forwardSoftLimitEnabled(false)
+                     .reverseSoftLimit(ElevatorConstants.softLimitReverse)
+                     .reverseSoftLimitEnabled(false);
     configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
@@ -81,7 +79,6 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
     CurrentPosition = m_elevatorEncoder.getPosition();
     SmartDashboard.putNumber("Position", CurrentPosition);
     //System.out.println("Position: " + CurrentPosition);
@@ -107,22 +104,22 @@ public class Elevator extends SubsystemBase {
   /** Run the elevator motor.
    * @param speed sets motor speed. Variable between -1, 1. Positive is up and negative is down.
   */
-  public void setElevatorSpeed(double speed) {
+  public void SetElevatorSpeed(double speed) {
     m_elevatorMotorL.set(speed);
   }
 
   /** Stop the elevator motor. */
-  public void stopElevator() {
+  public void StopElevator() {
     m_elevatorMotorL.stopMotor();
   }
 
   /**Open-loop control of the elevator motor  
-   * @param Tim is the target height
+   * @param Target is the target height
   */
-  public void Vroom(double Tim) {
-    Destination = Tim;
+  public void OpenLoopControl(double Target) {
+    Destination = Target;
     speedOL = Math.copySign(.1, (Destination - CurrentPosition));
-    setElevatorSpeed(speedOL);
+    SetElevatorSpeed(speedOL);
   }
 
   /**Check whether elevator has attained the target height. Stop if it has. TODO this be lie.
@@ -132,7 +129,7 @@ public class Elevator extends SubsystemBase {
    * <li><b>False</b> if the motor is not at the target height </li>
    */
   public boolean Finished(double Destination) {
-    return Math.abs(Destination-CurrentPosition)< closeEnough;
+    return Math.abs(Destination - CurrentPosition) < closeEnough;
   }
 
   // Test mode methods

@@ -242,7 +242,7 @@ public final class Constants {
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 51;  // TODO reset when hardware available
+    public static final int elevatorR = 51;
     public static final int UNUSED_MOTOR = 0;
   }
 
