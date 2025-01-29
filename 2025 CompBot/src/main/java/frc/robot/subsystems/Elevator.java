@@ -71,7 +71,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(0.);
+    m_elevatorEncoder.setPosition(3.25);//3 in offset + 1/4 gear box
 
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);

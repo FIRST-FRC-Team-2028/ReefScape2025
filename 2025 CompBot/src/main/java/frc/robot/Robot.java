@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
       this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
       this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
       this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    m_robotContainer.configureButtonBindings();
   }
   double smoothedXSpeed = 0.;
   double smoothedYSpeed = 0.;
