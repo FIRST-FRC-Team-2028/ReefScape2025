@@ -56,7 +56,6 @@ public class AprilCamera extends SubsystemBase {
     camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
-    // Change to 2025 AprilTag Field Layout TODO
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
      // and 0.1778 meters of elevation (off floor)            on project X
     robotToCam = new Transform3d(new Translation3d(0.3302, 0.0, 0.1778),
@@ -129,12 +128,11 @@ public class AprilCamera extends SubsystemBase {
     return poseEstimate;
   }
 
-  public EstimatedRobotPose getPoseTrue(){
-  //photonPoseEstimator.setReferencePose(truePose);
+ /* public EstimatedRobotPose getPoseTrue(){
   poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
     return poseEstimateTrue;
   }
-
+    */
 
 
   //public void showYaw() {
@@ -149,7 +147,6 @@ public class AprilCamera extends SubsystemBase {
 
 
 
-    update();
     var result = camera.getLatestResult();
     hasTargets = result.hasTargets();
     if (hasTargets) {
@@ -164,7 +161,14 @@ public class AprilCamera extends SubsystemBase {
       //showYaw();
 
       //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
-      SmartDashboard.putString("Robot Pose 2", poseEstimate.toString());
+      //SmartDashboard.putString("Robot Pose 2", photonPoseEstimator.update(result).toString());
+      poseEstimate = photonPoseEstimator.update(result);
+      Pose3d estimatedPose3d;
+      if (poseEstimate.isPresent()){
+      estimatedPose3d = poseEstimate.get().estimatedPose;
+      } else estimatedPose3d = new Pose3d(0.,0.,0.,new Rotation3d(0.,0.,0.));
+      SmartDashboard.putNumber("Robot Pose X", estimatedPose3d.getX());
+      SmartDashboard.putNumber("Robot Pose Y", estimatedPose3d.getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
       SmartDashboard.putNumber("Get Distance", getDistanceToTarget());
@@ -175,6 +179,7 @@ public class AprilCamera extends SubsystemBase {
       SmartDashboard.putNumber("Get Yaw", 999.);
       SmartDashboard.putNumber("Get Distance", 999.);
     }
+    
   
   }
 }
