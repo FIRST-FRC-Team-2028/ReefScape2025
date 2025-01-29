@@ -87,6 +87,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     CommandScheduler.getInstance().enable();
+    m_robotContainer.configureButtonBindings();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -107,7 +108,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (Constants.DRIVE_AVAILABLE) {
+    /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs
             double xSpeed = -driverJoytick.getRawAxis(OIConstants.kDriverXAxis); // Negative values go forward
             double ySpeed = -driverJoytick.getRawAxis(OIConstants.kDriverYAxis);
@@ -141,7 +142,7 @@ public class Robot extends TimedRobot {
                     turningSpeed *= 1. + (DriveConstants.kFasterSpeed);
                 }*/
             // Smooth driver inputs
-            smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .08;
+            /*smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .08;
             smoothedYSpeed = smoothedYSpeed + (ySpeed - smoothedYSpeed) * .08;
             smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .08;
             // System.out.println("Raw Joystick Values");
@@ -205,19 +206,38 @@ public class Robot extends TimedRobot {
             // }
 
             // swerveSubsystem.reportStatesToSmartDashbd(moduleStates);
-            SmartDashboard.putNumber("Turning Speed", turningSpeed);
-          }
+            //SmartDashboard.putNumber("Turning Speed", turningSpeed);*/
+          //}*/
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().getActiveButtonLoop().clear();     //Clear's active buttons
+
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if(Constants.ELEVATOR_AVALIBLE){
+      if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
+      m_robotContainer.getElevator().switchSL(false);
+      }
+      if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimits)){
+        m_robotContainer.getElevator().switchSL(true);
+      }
+    // TODO
+    // Elevator tests:
+    //   Leader/Follower
+    //   direction
+    //   initial known position
+    //   encoder range
+    //   softlimits
+    }      
+  
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

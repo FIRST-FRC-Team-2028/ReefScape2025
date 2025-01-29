@@ -24,8 +24,8 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.PausePlay;
-import frc.robot.commands.VarySpeed;
+import frc.robot.commands.ElevatorPosition;
+import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.Spit;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -107,19 +108,16 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureButtonBindings() {
+  public void configureButtonBindings() {
+    CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new VarySpeed(driverJoytick, elevatorSubsystem))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L1));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L2));
-        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-          .onTrue(new PausePlay(elevatorSubsystem, ElevatorConstants.L3));
-      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .onTrue(new PausePlay(elevatorSubsystem, 0));
+      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.5)))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+    new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.5)))
+      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+
     }
     
 
@@ -183,5 +181,9 @@ public class RobotContainer {
 
   public AprilCamera getApril(){
     return april;
+  }
+
+  public Elevator getElevator(){
+    return elevatorSubsystem;
   }
 }

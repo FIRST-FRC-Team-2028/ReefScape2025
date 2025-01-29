@@ -19,14 +19,17 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.SendableSparkMax;
 import frc.robot.Constants.HandlerConstants;
+import frc.robot.SendableRelEncoder;
 
 public class Handler extends SubsystemBase {
-  SparkMax coralShoot;
-  SparkMax pivot;
+  SendableSparkMax coralShoot;
+  SendableSparkMax pivot;
   RelativeEncoder pivotEncoder;
   SparkClosedLoopController pivotController;
   DigitalInput grabSensor;
+  SendableRelEncoder msrep;
   double latestTarget;
   double[] currentHist = {0.,0.,0.,0.,0.};
   int currP = 0;
@@ -40,8 +43,8 @@ public class Handler extends SubsystemBase {
   boolean algaeCaptureCurrentLimit = true;
   /** Creates a new Handler. */
   public Handler() {
-    coralShoot = new SparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
-    pivot = new SparkMax(Constants.CANIDS.coralR, MotorType.kBrushless);
+    coralShoot = new SendableSparkMax(Constants.CANIDS.wheels, MotorType.kBrushless);
+    pivot = new SendableSparkMax(Constants.CANIDS.pivot, MotorType.kBrushless);
     pivotEncoder = pivot.getEncoder();
     pivotController = pivot.getClosedLoopController();
     grabSensor = new DigitalInput(HandlerConstants.grabSensorPort);
@@ -54,6 +57,11 @@ public class Handler extends SubsystemBase {
       pivotConfig.softLimit.forwardSoftLimit(HandlerConstants.forwardSoftLimit);
       pivotConfig.idleMode(IdleMode.kBrake);
     pivot.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    addChild("Pivot", pivot);
+    msrep = new SendableRelEncoder(pivotEncoder);
+    addChild("Pivot Encoder", msrep);
+    addChild("OutPut", coralShoot);
   }    
 
   /**

@@ -17,21 +17,24 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.SendableRelEncoder;
 import frc.robot.Constants;
+import frc.robot.SendableSparkMax;
 
 public class Elevator extends SubsystemBase {
   
-  private final SparkMax m_elevatorMotorL;
-  private final SparkMax m_elevatorMotorR;
+  private final SendableSparkMax m_elevatorMotorL;
+  private final SendableSparkMax m_elevatorMotorR;
   private final RelativeEncoder m_elevatorEncoder;
+  private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
   private final SparkMaxConfig configL, configR;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
 
   public Elevator() {
-    m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
-    m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
+    m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
+    m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
     configL = new SparkMaxConfig();
@@ -39,10 +42,10 @@ public class Elevator extends SubsystemBase {
 
     configL.idleMode(IdleMode.kBrake)
           .inverted(false);
-    configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
+    configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
                     .forwardSoftLimitEnabled(true)
-                    .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
+                    .reverseSoftLimit(ElevatorConstants.softLimitReverse)
                     .reverseSoftLimitEnabled(true);
     configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
@@ -50,7 +53,11 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(0.);
+    m_elevatorEncoder.setPosition(3.25);
+
+    addChild("Left (Leader)", m_elevatorMotorL);
+    msre = new SendableRelEncoder(m_elevatorEncoder);
+    addChild("Position", msre);
   }
 
   @Override
@@ -58,7 +65,7 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
     CurrentPosition = m_elevatorEncoder.getPosition();
     SmartDashboard.putNumber("Position", CurrentPosition);
-    System.out.println("Position: " + CurrentPosition);
+    //System.out.println("Position: " + CurrentPosition);
   }
 
   /**Closed loop control of the elevator

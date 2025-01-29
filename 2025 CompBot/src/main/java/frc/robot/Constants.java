@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = true;
+  public static final boolean DRIVE_AVAILABLE = false;
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = false;
+  public static final boolean ELEVATOR_AVALIBLE = true;
 
 
 
@@ -217,23 +217,26 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
-    public static final double SOFTLIMITREVERSE = -6.; //    but dumb REVRobotics API won't allow inversion
+    public static final double softLimitForward = 55.;  // inches
+    public static final double softLimitReverse = 6.; // inches
+
+    public static double encoderConversionFactor = 33/109.144;  // inches : raw
     public static final double L1 = -5.;
     public static final double L2 = -4.;
     public static final double L3 = -1.;
-    public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
+    public static final double L4 = 0.;
+    //public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
   }
 
   public static class CANIDS {
 
     //Handler
-    public static final int coralL = 50;
-    public static final int coralR = 57;
+    public static final int wheels = 53;
+    public static final int pivot = 52;
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 57;  // TODO reset when hardware available
+    public static final int elevatorR = 51;  // TODO reset when hardware available
   }
 
   public static class OIConstants {
@@ -264,6 +267,10 @@ public final class Constants {
     public static final int kNudgeDown =                 7;
 
     //Gamemech2 Buttons
+
+    //Test Buttons
+    public static final int RestSoftLimits = 1;       //Driver
+    public static final int EnableSoftLimits = 2;     //Driver
 
     public static final double kDeadband = 0.075;
 
