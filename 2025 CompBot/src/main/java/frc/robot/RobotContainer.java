@@ -175,6 +175,12 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+        new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+          .onTrue(new InstantCommand(()-> handlerSubsystem.Shoot(.1)))
+          .onFalse(new InstantCommand(()-> handlerSubsystem.stop()));
+        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+          .onTrue(new InstantCommand(()-> handlerSubsystem.Shoot(-.1)))
+          .onFalse(new InstantCommand(()-> handlerSubsystem.stop()));
       }
 
       if (Constants.DRIVE_AVAILABLE && Constants.CAMERA_AVAILABLE){
