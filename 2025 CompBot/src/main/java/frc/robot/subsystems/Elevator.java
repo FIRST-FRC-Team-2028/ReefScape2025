@@ -30,8 +30,7 @@ import frc.robot.SendableSparkMax;
 
 public class Elevator extends SubsystemBase {
   
-  private final SendableSparkMax m_elevatorMotorL;
-  private final SendableSparkMax m_elevatorMotorR;
+  private final SendableSparkMax m_elevatorMotorL, m_elevatorMotorR;
   private final RelativeEncoder m_elevatorEncoder;
   private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
@@ -60,12 +59,12 @@ public class Elevator extends SubsystemBase {
     configR = new SparkMaxConfig();
 
     configL.idleMode(IdleMode.kBrake)
-          .inverted(false);
+           .inverted(false);
     configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
     configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
-                    .forwardSoftLimitEnabled(false)
-                    .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
-                    .reverseSoftLimitEnabled(false);
+                     .forwardSoftLimitEnabled(false)
+                     .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
+                     .reverseSoftLimitEnabled(false);
     configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
@@ -110,16 +109,6 @@ public class Elevator extends SubsystemBase {
   */
   public void setElevatorSpeed(double speed) {
     m_elevatorMotorL.set(speed);
-  }
-
-  
-  public void forwardHO() {
-    m_elevatorMotorL.set(.1);
-  }
-
-  
-  public void backwardHO() {
-    m_elevatorMotorL.set(-.1);
   }
 
   /** Stop the elevator motor. */
