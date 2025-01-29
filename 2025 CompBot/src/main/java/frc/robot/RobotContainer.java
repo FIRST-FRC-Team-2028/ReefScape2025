@@ -122,14 +122,14 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureButtonBindings() {
+  public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.1)))
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.5)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.1)))
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.5)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
 
       //new JoystickButton(driverJoytick, OIConstants.kThirdButton)
