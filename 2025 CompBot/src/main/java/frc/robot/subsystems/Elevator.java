@@ -58,10 +58,10 @@ public class Elevator extends SubsystemBase {
 
     configL.idleMode(IdleMode.kBrake)
            .inverted(false);
-    configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
+    configL.encoder.positionConversionFactor(ElevatorConstants.ENCODERCONVERSION);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFTLIMITFORWARD)
                      .forwardSoftLimitEnabled(false)
-                     .reverseSoftLimit(ElevatorConstants.softLimitReverse)
+                     .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
                      .reverseSoftLimitEnabled(false);
     configL.closedLoop.pid(1.0, 0.0, 0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
