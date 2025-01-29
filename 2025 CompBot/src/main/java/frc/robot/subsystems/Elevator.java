@@ -25,6 +25,7 @@ public class Elevator extends SubsystemBase {
   private final SparkMax m_elevatorMotorR;
   private final RelativeEncoder m_elevatorEncoder;
   private final SparkClosedLoopController m_ClosedLoopController;
+  private final SparkMaxConfig configL, configR;
   private double CurrentPosition = 0.0;
   private double Destination = 0;
 
@@ -33,8 +34,8 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
-    SparkMaxConfig configL = new SparkMaxConfig();
-    SparkMaxConfig configR = new SparkMaxConfig();
+    configL = new SparkMaxConfig();
+    configR = new SparkMaxConfig();
 
     configL.idleMode(IdleMode.kBrake)
           .inverted(false);
@@ -99,4 +100,12 @@ public class Elevator extends SubsystemBase {
   public boolean Finished(double Destination) {
     return false;
   }
+
+  public void switchSL(boolean enabled){
+    configL.softLimit.reverseSoftLimitEnabled(enabled);
+    configL.softLimit.forwardSoftLimitEnabled(enabled);
+    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    if (enabled) m_elevatorEncoder.setPosition(0.);
+  }
+  
 }
