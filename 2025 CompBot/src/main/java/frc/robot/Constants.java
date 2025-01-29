@@ -220,10 +220,10 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double softLimitForward = 55.;  // all encoder values look backward
-    public static final double softLimitReverse = 6.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFT_LIMIT_FORWARD = 55.;  // all encoder values look backward
+    public static final double SOFT_LIMIT_REVERSE = 6.; //    but dumb REVRobotics API won't allow inversion
 
-    public static double encoderConversionFactor = 33/109.144;  // raw : inches
+    public static double EncoderConversionFactor = 33/109.144;  // raw : inches
     
     //PID Target Positions
     public static final double L1 = -5.;

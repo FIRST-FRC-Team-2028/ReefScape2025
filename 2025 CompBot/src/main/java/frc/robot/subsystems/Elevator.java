@@ -58,10 +58,10 @@ public class Elevator extends SubsystemBase {
 
     configL.idleMode(IdleMode.kBrake)
            .inverted(false);
-    configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
+    // configL.encoder.positionConversionFactor(ElevatorConstants.EncoderConversionFactor);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFT_LIMIT_FORWARD)
                      .forwardSoftLimitEnabled(false)
-                     .reverseSoftLimit(ElevatorConstants.softLimitReverse)
+                     .reverseSoftLimit(ElevatorConstants.SOFT_LIMIT_REVERSE)
                      .reverseSoftLimitEnabled(false);
     configL.closedLoop.pid(1.0, 
                            0.0, 
@@ -71,7 +71,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(3.25); //3 in offset + 1/4 gear box
+    m_elevatorEncoder.setPosition(0); //3 in offset + 1/4 gear box
 
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);
