@@ -63,7 +63,9 @@ public class Elevator extends SubsystemBase {
                      .forwardSoftLimitEnabled(false)
                      .reverseSoftLimit(ElevatorConstants.SOFTLIMITREVERSE)
                      .reverseSoftLimitEnabled(false);
-    configL.closedLoop.pid(1.0, 0.0, 0.0);
+    configL.closedLoop.pid(1.0, 
+                           0.0, 
+                           0.0);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
