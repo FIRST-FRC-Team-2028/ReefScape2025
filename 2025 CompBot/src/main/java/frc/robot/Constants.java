@@ -220,8 +220,8 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double SOFTLIMITFORWARD = 0.;  // all encoder values look backward
-    public static final double SOFTLIMITREVERSE = -6.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFTLIMITFORWARD = 2.;  // all encoder values look backward
+    public static final double SOFTLIMITREVERSE = 0.; //    but dumb REVRobotics API won't allow inversion
 
     public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
     //public static double encoderConversionFactor = 50/36; //raw : inches   (revolutions/inches)
@@ -243,7 +243,7 @@ public final class Constants {
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 57;  // TODO reset when hardware available
+    public static final int elevatorR = 51;  // TODO reset when hardware available
     public static final int UNUSED_MOTOR = 0;
   }
 
