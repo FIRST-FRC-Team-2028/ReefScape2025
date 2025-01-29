@@ -131,9 +131,6 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.5)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-
-      //new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-      //  .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
     }
     
 

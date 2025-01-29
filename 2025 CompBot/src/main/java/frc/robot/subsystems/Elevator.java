@@ -71,7 +71,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(3.25);//3 in offset + 1/4 gear box
+    m_elevatorEncoder.setPosition(3.25); //3 in offset + 1/4 gear box
 
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);
@@ -98,7 +98,7 @@ public class Elevator extends SubsystemBase {
   /** Changes the target of the PID Controller by the adjustment
    * @param adjustment
    */
-  public void nudge(double adjustment){
+  public void Nudge(double adjustment){
     latestTarget += adjustment;
     m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
   }
@@ -138,7 +138,7 @@ public class Elevator extends SubsystemBase {
   /**Suspend and restore soft limits
    * @param
    */
-  public void switchSL(boolean enabled){
+  public void SwitchSL(boolean enabled){
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
