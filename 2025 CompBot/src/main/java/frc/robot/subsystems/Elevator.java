@@ -134,6 +134,10 @@ public class Elevator extends SubsystemBase {
     return Math.abs(Destination - CurrentPosition) < closeEnough;
   }
 
+  public double getElevatorPosition() {
+    return CurrentPosition;
+  }
+
   // Test mode methods
   /**Suspend and restore soft limits
    * @param
