@@ -44,7 +44,7 @@ public class Spit extends Command {
   public void end(boolean interrupted) {
     time.stop();
     handler.stop();
-    handler.resetIntake();
+    handler.iDontHaveIt();
     time.reset();
   }
 

@@ -5,6 +5,7 @@
 package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
+import com.revrobotics.servohub.config.ServoChannelConfig.PulseRange;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -188,9 +189,9 @@ public final class Constants {
   }
 
   public static class HandlerConstants{
-    public static double pivotP = 1;
-    public static double pivotI = 0;
-    public static double pivotD = 0;
+    public static final double pivotP = 1;
+    public static final double pivotI = 0;
+    public static final double pivotD = 0;
     public static final int grabSensorPort = 0;
     public static final double pivotCurrentLimit = 30;
     public static final double grabAlgaeSpeed = .5;
@@ -217,15 +218,19 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double softLimitForward = 55.;  // inches
-    public static final double softLimitReverse = 6.; // inches
+    public static final double softLimitForward = 57.;  // inches
+    public static final double softLimitReverse = 4.; // inches
 
-    public static double encoderConversionFactor = 33/109.144;  // inches : raw
-    public static final double L1 = -5.;
-    public static final double L2 = -4.;
-    public static final double L3 = -1.;
-    public static final double L4 = 0.;
+    public static double encoderConversionFactor = 50./124.238;  // inches : raw
+    public static final double L1 = 4.;
+    public static final double L2 = 25.;
+    public static final double L3 = 40.;
+    public static final double L4 = 57.;
     //public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
+
+    public static final double kP = 0.2;
+    public static final double kI = 0;
+    public static final double kD = 0;
   }
 
   public static class CANIDS {
@@ -267,6 +272,8 @@ public final class Constants {
     public static final int kNudgeDown =                 7;
 
     //Gamemech2 Buttons
+    public static final int kAlgaeOut =                  1;
+    public static final int kIntake =                    2;
 
     //Test Buttons
     public static final int RestSoftLimits = 1;       //Driver

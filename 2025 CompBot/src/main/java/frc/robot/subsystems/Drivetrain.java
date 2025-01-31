@@ -28,6 +28,8 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
@@ -286,8 +288,16 @@ public class Drivetrain extends SubsystemBase {
     m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
   }
 
-  public void pathfindToPath(PathPlannerPath path) {
-    AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+  public Command pathfindToPath(String pathname) {
+    PathPlannerPath path;
+    try{
+      path = PathPlannerPath.fromPathFile(pathname);
+      return AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
+    } catch(Exception e){
+      e.getStackTrace();
+      return new InstantCommand(()->System.out.println("FAIL"));
+    }
+
     
   }
 

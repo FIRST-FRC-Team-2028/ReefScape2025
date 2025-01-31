@@ -48,7 +48,7 @@ public class Handler extends SubsystemBase {
     pivotEncoder = pivot.getEncoder();
     pivotController = pivot.getClosedLoopController();
     grabSensor = new DigitalInput(HandlerConstants.grabSensorPort);
-    SparkMaxConfig pivotConfig = new SparkMaxConfig(){};
+    SparkMaxConfig pivotConfig = new SparkMaxConfig();
       pivotConfig.closedLoop.pid(HandlerConstants.pivotP,
                                  HandlerConstants.pivotI, 
                                  HandlerConstants.pivotD);
@@ -76,6 +76,7 @@ public class Handler extends SubsystemBase {
     if(grabSensor.get()){
       speed = HandlerConstants.grabCoralSpeed/2;
     }
+
     /* if(clearSensor.get()){
       speed = 0
       doIHaveIt = true;
@@ -86,7 +87,16 @@ public class Handler extends SubsystemBase {
     return doIHaveIt;
   }
 
-  public void resetIntake(){
+
+  public boolean doIHaveIt(){
+    return doIHaveIt;
+  }
+
+  public void iHaveIt(){
+    doIHaveIt = true;
+  }
+
+  public void iDontHaveIt(){
     doIHaveIt = false;
   }
 
@@ -95,7 +105,7 @@ public class Handler extends SubsystemBase {
   }
 
   /**Run Handler to  shoot coral
-   * @param outputSpeed  how hard to spew (in what units or what range)
+   * @param outputSpeed  how hard to spew -1 to 1
   */
   public void Shoot(double outputSpeed){
     coralShoot.set(outputSpeed);
@@ -103,7 +113,7 @@ public class Handler extends SubsystemBase {
   
   /** Stops the coral shooter */
   public void stop(){
-    Shoot(0);
+    coralShoot.stopMotor();
   }
 
   /** Pivots the handler to set position
@@ -157,7 +167,11 @@ public class Handler extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
+    if (grabSensor.get()){
+      iHaveIt();
+    } else iDontHaveIt();
+    SmartDashboard.putBoolean("Proximity Sensor", doIHaveIt());
+    /*SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
     SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();
 
@@ -178,7 +192,7 @@ public class Handler extends SubsystemBase {
 
     if(avgCurrenta>HandlerConstants.grabAlgaeCurrent){
       algaeCaptureCurrentLimit = false;
-    }
+    }*/
   
   }
 }

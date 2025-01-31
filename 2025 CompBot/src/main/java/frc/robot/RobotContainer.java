@@ -24,6 +24,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.RunWheels;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.Spit;
@@ -108,15 +109,24 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
+  @SuppressWarnings("unused")
   public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
-      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.5)))
+      new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
+      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.2)))
       .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-    new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.5)))
+    new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
+      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.2)))
       .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+    new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
+      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
+    new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
+    new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));
 
     }
     
@@ -125,13 +135,7 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue(new InstantCommand(() -> {
-          try {
-            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("Top Coral Station"));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }));
+        .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
@@ -153,6 +157,10 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+        new JoystickButton(mechJoytick2, OIConstants.kIntake)
+          .onTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 1, false));
+        new JoystickButton(mechJoytick2, OIConstants.kAlgaeOut)
+          .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 0, true));
       }
 
       

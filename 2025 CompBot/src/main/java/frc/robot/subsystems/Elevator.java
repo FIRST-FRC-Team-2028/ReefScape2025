@@ -29,7 +29,6 @@ public class Elevator extends SubsystemBase {
   private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
   private final SparkMaxConfig configL, configR;
-  private double CurrentPosition = 0.0;
   private double Destination = 0;
 
   public Elevator() {
@@ -47,13 +46,13 @@ public class Elevator extends SubsystemBase {
                     .forwardSoftLimitEnabled(true)
                     .reverseSoftLimit(ElevatorConstants.softLimitReverse)
                     .reverseSoftLimitEnabled(true);
-    configL.closedLoop.pid(1.0, 0.0, 0.0);
+    configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
     configR.follow(Constants.CANIDS.elevatorL, true);
 
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(3.25);
+    m_elevatorEncoder.setPosition(3);
 
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);
@@ -63,8 +62,9 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    CurrentPosition = m_elevatorEncoder.getPosition();
-    SmartDashboard.putNumber("Position", CurrentPosition);
+   
+    SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
+    SmartDashboard.putNumber("Current", m_elevatorMotorL.getOutputCurrent());
     //System.out.println("Position: " + CurrentPosition);
   }
 
@@ -93,10 +93,10 @@ public class Elevator extends SubsystemBase {
   /**Open-loop control of the elevator motor  
    * @param Tim is the target height
   */
-  public void Vroom(double Tim) {
+  /*public void Vroom(double Tim) {
     Destination = Tim;
     m_elevatorMotorL.set(Math.copySign(.1, (Destination - CurrentPosition)));
-  }
+  }*/
 
   /**Check whether elevator has attained the target height. Stop if it has.
    * 
@@ -108,11 +108,15 @@ public class Elevator extends SubsystemBase {
     return false;
   }
 
+  public double getPosition(){
+    return m_elevatorEncoder.getPosition();
+  }
+
   public void switchSL(boolean enabled){
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);
-    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    if (enabled) m_elevatorEncoder.setPosition(0.);
+    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, null);    //Persist mode Null because can't persist while enabled
+    if (enabled) m_elevatorEncoder.setPosition(3.);
   }
   
 }

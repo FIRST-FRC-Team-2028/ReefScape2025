@@ -11,7 +11,10 @@ import frc.robot.subsystems.Elevator;
 public class ElevatorPosition extends Command {
   private final Elevator elevator;
   private final double Destination;
-  /** Creates a new PausePlay. */
+  private final double allowance = 0.15;
+  /** Sets the PID of the elevator to the set position
+   * Stops motor once within the allowance range
+   */
   public ElevatorPosition(Elevator elevator, double Destination) {
     this.elevator = elevator;
     this.Destination = Destination;
@@ -31,11 +34,14 @@ public class ElevatorPosition extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    elevator.stopElevator();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.Finished(Destination);
+    return Destination - allowance < elevator.getPosition() 
+           && elevator.getPosition() < Destination + allowance;
   }
 }

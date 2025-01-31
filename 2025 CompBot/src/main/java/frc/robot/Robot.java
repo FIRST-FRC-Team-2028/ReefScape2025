@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     PDH =new PowerDistribution(1, ModuleType.kRev);
+    enableLiveWindowInTest(true);
+    PathfindingCommand.warmupCommand().schedule();
   }
 
   /**
