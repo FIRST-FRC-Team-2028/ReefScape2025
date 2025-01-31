@@ -43,7 +43,7 @@ public class Spit extends Command {
   @Override
   public void end(boolean interrupted) {
     time.stop();
-    handler.stop();
+    handler.stopWheels();
     handler.iDontHaveIt();
     time.reset();
   }
