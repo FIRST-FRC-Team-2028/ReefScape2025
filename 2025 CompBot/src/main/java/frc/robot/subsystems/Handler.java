@@ -112,8 +112,12 @@ public class Handler extends SubsystemBase {
   }
   
   /** Stops the coral shooter */
-  public void stop(){
+  public void stopWheels(){
     coralShoot.stopMotor();
+  }
+
+  public void stopPivot(){
+    pivot.stopMotor();
   }
 
   /** Pivots the handler to set position
@@ -158,6 +162,10 @@ public class Handler extends SubsystemBase {
 
   public double getAlgaeCurrent(){
     return coralShoot.getOutputCurrent();
+  }
+/**get postition of the pivot encoder */
+  public double getPivotPostition(){
+    return pivotEncoder.getPosition();
   }
   
   /**Resets the pivot safety to true */

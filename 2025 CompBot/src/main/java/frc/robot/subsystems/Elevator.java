@@ -105,7 +105,7 @@ public class Elevator extends SubsystemBase {
    * <li><b>False</b> if the motor is not at the target height </li>
    */
   public boolean Finished(double Destination) {
-    return false;
+    return getPosition() == Destination;
   }
 
   public double getPosition(){

@@ -140,13 +140,13 @@ public class RobotContainer {
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
       new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L2));
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L3));
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, 0));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
       
       }
 
