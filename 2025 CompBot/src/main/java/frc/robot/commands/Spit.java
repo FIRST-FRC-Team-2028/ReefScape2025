@@ -18,7 +18,9 @@ public class Spit extends Command {
   boolean L1;
   double position;
   Timer time;
-  /** Uses the handler to shoot on L1 */
+  /** Run the handler shoot on L1,
+   *  timed run
+   */
   public Spit(Handler handler) {
     addRequirements(handler);
     time = new Timer();
@@ -30,9 +32,6 @@ public class Spit extends Command {
   public void initialize() {
     time.start();
     handler.Shoot(HandlerConstants.outputSpeed);
-    
-
-   
   }
 
   // Called every time the scheduler runs while the command is scheduled.

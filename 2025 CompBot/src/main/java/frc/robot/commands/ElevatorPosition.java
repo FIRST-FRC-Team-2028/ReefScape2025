@@ -12,8 +12,8 @@ public class ElevatorPosition extends Command {
   private final Elevator elevator;
   private final double Destination;
   private final double allowance = 0.15;
-  /** Sets the PID of the elevator to the set position
-   * Stops motor once within the allowance range
+  /** closed loop set the elevator position.
+   * @param Destination inches
    */
   public ElevatorPosition(Elevator elevator, double Destination) {
     this.elevator = elevator;
@@ -38,7 +38,7 @@ public class ElevatorPosition extends Command {
     elevator.stopElevator();
   }
 
-  // Returns true when the command should end.
+  // Returns true when position is close enough to target
   @Override
   public boolean isFinished() {
     return Destination - allowance < elevator.getPosition() 

@@ -6,6 +6,8 @@ package frc.robot;
 
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 
 
@@ -14,10 +16,10 @@ public class SendableSparkMax
 extends SparkMax
 implements Sendable
 {
+    /** create a new Sendable object for controlling a SparkMax Motor Controller */
     public SendableSparkMax(int id, MotorType motorType){
         super(id, motorType);
     }
-    
     
     @Override
     public void initSendable(SendableBuilder builder) {

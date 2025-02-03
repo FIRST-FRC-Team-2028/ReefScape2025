@@ -112,21 +112,23 @@ public class RobotContainer {
   @SuppressWarnings("unused")
   public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
+
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
-      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.2)))
-      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-    new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
-      .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.2)))
-      .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
-    new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
-    new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
-    new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
-    new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-      .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(.2)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+      new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.setElevatorSpeed(-.2)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+        
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+      new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
+      new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
+      new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));
 
     }
     

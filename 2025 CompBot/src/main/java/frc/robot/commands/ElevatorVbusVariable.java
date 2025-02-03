@@ -12,7 +12,7 @@ import frc.robot.subsystems.Elevator;
 public class ElevatorVbusVariable extends Command {
   private final Joystick joystick;
   private final Elevator elevator;
-  /** Creates a new VarySpeed. */
+  /** Run elevator motor in Vbus mode at speed controlled by cotroller axis 1 */
   public ElevatorVbusVariable(Joystick joystick, Elevator elevator) {
     this.joystick = joystick;
     this.elevator = elevator;

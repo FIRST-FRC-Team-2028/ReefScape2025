@@ -21,6 +21,8 @@ public class RunWheels extends Command {
    * Speed between -1 and 1.
    * Positive speed is input/output for coral and intake for algae.
    * Negative speed is output for algae
+   * @param extraTime time after aquisition to continue running motor
+   * @param algae true for algae, false for coral
    */
   public RunWheels(Handler handler, double speed, double extraTime, boolean algae) {
     this.handler = handler;

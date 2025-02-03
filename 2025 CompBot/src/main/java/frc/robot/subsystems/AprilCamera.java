@@ -50,7 +50,8 @@ public class AprilCamera extends SubsystemBase {
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
-  /** Creates a new AprilTags. */
+  /** Use PhotonVision with a camera to acquire AprilTag info:
+   */
   public AprilCamera() {
 
     camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
@@ -59,10 +60,10 @@ public class AprilCamera extends SubsystemBase {
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
      // and 0.1778 meters of elevation (off floor)            on project X
     robotToCam = new Transform3d(new Translation3d(0.3302, 0.0, 0.1778),
-                new Rotation3d(0,0,0));
+                        new Rotation3d(0,0,0));
  
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-    PoseStrategy.LOWEST_AMBIGUITY, robotToCam);
+                PoseStrategy.LOWEST_AMBIGUITY, robotToCam);
 
 
   }
@@ -144,18 +145,12 @@ public class AprilCamera extends SubsystemBase {
   @Override
   public void periodic() {
     
-
-
-
     var result = camera.getLatestResult();
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
       target = result.getBestTarget();
       
-
-      
-
       robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
                 aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();

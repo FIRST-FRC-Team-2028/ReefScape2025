@@ -10,7 +10,7 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 
-/** Add your docs here. */
+/** Make the encoder for a SparkMax visible on LiveWindow */
 public class SendableRelEncoder
 implements RelativeEncoder, Sendable 
 {

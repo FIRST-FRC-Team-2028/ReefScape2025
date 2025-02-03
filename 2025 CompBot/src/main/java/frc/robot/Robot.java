@@ -218,7 +218,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    CommandScheduler.getInstance().getActiveButtonLoop().clear();     //Clear's active buttons
+    CommandScheduler.getInstance().getActiveButtonLoop().clear();     // Clear active button triggers
 
   }
 

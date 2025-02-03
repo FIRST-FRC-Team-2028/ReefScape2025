@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import javax.print.attribute.standard.Destination;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Handler;
@@ -14,7 +13,9 @@ public class HandlerPosition extends Command {
   private final Handler handler;
   private final double target;
   double allowance;
-  /** Creates a new HandlerPosition. */
+  /** Pivot the Handler to position
+   * @param target
+   */
   public HandlerPosition(Handler handler, double target) {
     this.handler = handler;
     this.target = target;
@@ -24,7 +25,7 @@ public class HandlerPosition extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    handler.moveHandler(target);
+    handler.targetPivot(target);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,7 +38,7 @@ public class HandlerPosition extends Command {
     handler.stopPivot();
   }
 
-  // Returns true when the command should end.
+  // Returns true when position is close enough to target.
   @Override
   public boolean isFinished() {
     return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID chnage to return false and take out "stopPivot"

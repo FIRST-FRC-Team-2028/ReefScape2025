@@ -5,11 +5,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -20,6 +18,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.SendableRelEncoder;
 import frc.robot.Constants;
 import frc.robot.SendableSparkMax;
+import frc.robot.SendableSparkPID;
 
 public class Elevator extends SubsystemBase {
   
@@ -57,6 +56,7 @@ public class Elevator extends SubsystemBase {
     addChild("Left (Leader)", m_elevatorMotorL);
     msre = new SendableRelEncoder(m_elevatorEncoder);
     addChild("Position", msre);
+    addChild("PID", new SendableSparkPID(m_elevatorMotorL));
   }
 
   @Override
@@ -69,8 +69,6 @@ public class Elevator extends SubsystemBase {
   }
 
   /**Closed loop control of the elevator
-   * TODO MrG says Calibrate the system before use:
-   *   6 determine kp
    * 
    * @param target is the desired position (inches) for the elevator
    */
@@ -98,7 +96,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorL.set(Math.copySign(.1, (Destination - CurrentPosition)));
   }*/
 
-  /**Check whether elevator has attained the target height. Stop if it has.
+  /**Check whether elevator has attained the target height. Stop if it has. TODO NOT TRUE
    * 
    * @param Destination: Target Height
    * @return <b>True</b> if the motor is at the target height
@@ -112,10 +110,12 @@ public class Elevator extends SubsystemBase {
     return m_elevatorEncoder.getPosition();
   }
 
+  /**disables/enables Softlimits on elevator motors, resets position to reverse SL*/
   public void switchSL(boolean enabled){
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, null);    //Persist mode Null because can't persist while enabled
+                                        // TODO: MrG asks do you want to override all original configs or just the SL?
     if (enabled) m_elevatorEncoder.setPosition(3.);
   }
   

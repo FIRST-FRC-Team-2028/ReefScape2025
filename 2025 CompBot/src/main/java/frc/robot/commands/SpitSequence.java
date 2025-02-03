@@ -7,7 +7,6 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.HandlerConstants;
 import frc.robot.subsystems.Elevator;
@@ -21,7 +20,7 @@ public class SpitSequence extends SequentialCommandGroup {
     addCommands(  
                   Commands.parallel(
                     new ElevatorPosition(elevatorSubsystem, positionE),
-                    new HandlerPosition(handlerSubsystem, positionP)
+                    new HandlerPosition(handlerSubsystem, positionP)    // TODO ensure handler position is clear of elevator parts
                     ),
                   new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
   }

@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
@@ -120,7 +119,7 @@ public class Handler extends SubsystemBase {
     pivot.stopMotor();
   }
 
-  /** Pivots the handler to set position
+  /** Pivots the handler to set position using closed-loop controller
    * 
    */
   public void moveHandler(double position){
@@ -140,6 +139,9 @@ public class Handler extends SubsystemBase {
     Shoot(HandlerConstants.algaeShootSpeed);
   }
 
+  /** pivot the handler to position in closed loop 
+   * @param target degrees
+  */
   public void targetPivot(double target){
     if(pivotSaftey){
       pivotController.setReference(target, ControlType.kPosition);
@@ -173,6 +175,14 @@ public class Handler extends SubsystemBase {
     pivotSaftey = true;
   }
 
+  /** periodic constantly:
+   * <ul>
+   * <li> checks the sensor to determine if a coral is present
+   *  and sets the state variable doIHaveIt accordingly;
+   *  <li> monitors coralshoot motor current as a means to determine if an algae has been acquired;
+   *  <li> monitors pivot motor current
+   * </ul>
+   */
   @Override
   public void periodic() {
     if (grabSensor.get()){
