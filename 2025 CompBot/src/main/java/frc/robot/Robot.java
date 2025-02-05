@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
       this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
       this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
       this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    m_robotContainer.configureButtonBindings();
   }
   double smoothedXSpeed = 0.;
   double smoothedYSpeed = 0.;
@@ -234,11 +235,11 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     if(Constants.ELEVATOR_AVALIBLE){
-    if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
-      m_robotContainer.getElevator().switchSL(false);
-    }
+      if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimits)){
+      m_robotContainer.getElevator().SwitchSL(false);
+      }
       if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimits)){
-        m_robotContainer.getElevator().switchSL(true);
+        m_robotContainer.getElevator().SwitchSL(true);
       }
     // TODO
     // Elevator tests:

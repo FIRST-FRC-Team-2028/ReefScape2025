@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.io.IOException;
+import java.util.function.BooleanSupplier;
 
 import org.json.simple.parser.ParseException;
 
@@ -122,16 +123,41 @@ public class RobotContainer {
    * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
-  private void configureButtonBindings() {
+  public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
+      // I figured it out Mr. G!!! -Salm
+
+      /* If you set the first Joystick Button (B) to go at -.2 speed (up on FRC 2029) whenever the current encder
+      *    position is below the target position (or above in this case since the encoder is negative), and the
+      *    second JSButton (with the same button) to active when above the target, it works perfectly!!!
+      *    Hope that explained it well...
+      *    It's currently programmed to the 2024 bot and the climber */
+
+
+      // Go -.2 speed until target reached
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(new ElevatorVbusVariable(driverJoytick, elevatorSubsystem))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.stopElevator()));
+        .and(() -> elevatorSubsystem.getElevatorPosition() >= -35)
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.2)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+
+      // Once target reached go 0.1 speed
+      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+        .and(() -> elevatorSubsystem.getElevatorPosition() <= -35)
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.1)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+        
+
+      // Second Button (X) brings the elevator back down
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.2)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+        /*
       new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, 0));
+        .and(() -> elevatorSubsystem.getElevatorPosition() >= 5)
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.1)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+         */
     }
     
 
@@ -173,6 +199,12 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+        new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+          .onTrue(new InstantCommand(()-> handlerSubsystem.Shoot(.1)))
+          .onFalse(new InstantCommand(()-> handlerSubsystem.stop()));
+        new JoystickButton(driverJoytick, OIConstants.kSecondButton)
+          .onTrue(new InstantCommand(()-> handlerSubsystem.Shoot(-.1)))
+          .onFalse(new InstantCommand(()-> handlerSubsystem.stop()));
       }
 
       if (Constants.DRIVE_AVAILABLE && Constants.CAMERA_AVAILABLE){

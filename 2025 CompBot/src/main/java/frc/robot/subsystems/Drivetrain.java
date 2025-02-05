@@ -150,6 +150,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
+    
     //SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
     //SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());
     //SmartDashboard.putNumber("front right abs", m_frontRight.getAbsTurningPosition(0.1).getDegrees());
@@ -256,6 +258,8 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
+    SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 
@@ -317,10 +321,8 @@ public class Drivetrain extends SubsystemBase {
     //SmartDashboard.putData("Pathfind To Path", followPath);
   }
 
-  public Command pathfindToPose(double x, double y, double degree ) {
-    Rotation2d rotation = Rotation2d.fromDegrees(degree);
-    Pose2d targetPose = new Pose2d(x, y, rotation);
-    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0);
+  public Command pathfindToPose(Pose2d targetPose ) {
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0.);
   }
 
 }

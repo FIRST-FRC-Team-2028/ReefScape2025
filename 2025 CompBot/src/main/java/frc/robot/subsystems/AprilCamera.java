@@ -66,7 +66,7 @@ public class AprilCamera extends SubsystemBase {
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
      // and 0.1778 meters of elevation (off floor)            on project X
     robotToCam = new Transform3d(new Translation3d(.381, 0.0, 0.0254),
-                new Rotation3d(0,0,0));
+                new Rotation3d(0,CamConstants.camera_Pitch_Radians, 2.29));
  
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
     PoseStrategy.LOWEST_AMBIGUITY, robotToCam);

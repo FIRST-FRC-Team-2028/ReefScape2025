@@ -12,7 +12,7 @@
         "y": 6.880648714594321
       },
       "isLocked": false,
-      "linkedName": "Pickup Pose 2"
+      "linkedName": "Pickup Pose"
     },
     {
       "anchor": {
@@ -52,7 +52,7 @@
     "rotation": -59.237280465761025
   },
   "reversed": false,
-  "folder": "Top Side Paths",
+  "folder": "3 Coral Auto",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -56.76828893202065
