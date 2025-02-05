@@ -119,13 +119,15 @@ public class AprilCamera extends SubsystemBase {
 
 
    double getDistanceToTarget(){
-    return PhotonUtils.calculateDistanceToTargetMeters(CamConstants.camera_Height_Meters,
+    double distance = PhotonUtils.calculateDistanceToTargetMeters(CamConstants.camera_Height_Meters,
                                                       getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
                                                       Units.degreesToRadians(target.getPitch()));
+    return Math.sqrt(distance*distance-(getHeight()-CamConstants.camera_Height_Meters)*(getHeight()-CamConstants.camera_Height_Meters));
           
     
   }
+
 
   double getPoseToPose(Pose2d robotCurrentPose, boolean right){
     if(hasTargets){
@@ -228,12 +230,16 @@ public class AprilCamera extends SubsystemBase {
       
       //SmartDashboard.putString("Robot Pose 1", photonPoseEstimator.getReferencePose().toString());
       //SmartDashboard.putString("Robot Pose 2", photonPoseEstimator.update(result).toString());
+
+
      
-      SmartDashboard.putNumber("Robot Pose X", getPose3d().getX());
-      SmartDashboard.putNumber("Robot Pose Y", getPose3d().getY());
+      SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
+      SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
-      SmartDashboard.putNumber("Get Distance", getDistanceToTarget());
+      SmartDashboard.putNumber("Get Distance", Units.metersToInches(getDistanceToTarget()));
+      
+      
 
       // This method will be called once per scheduler run
     } else {

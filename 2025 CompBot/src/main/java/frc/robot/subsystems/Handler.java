@@ -101,7 +101,7 @@ public class Handler extends SubsystemBase {
        or make this process a command sequence. */
   }
 
-  public void resetIntake(){
+  public void iDontHaveIt(){
     doIHaveIt = false;
   }
 

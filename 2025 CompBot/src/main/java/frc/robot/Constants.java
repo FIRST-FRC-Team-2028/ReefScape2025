@@ -241,7 +241,7 @@ public final class Constants {
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 57;  // TODO reset when hardware available
+    public static final int elevatorR = 57;  
     public static final int UNUSED_MOTOR = 0;
   }
 
@@ -299,7 +299,7 @@ public final class Constants {
       public static final int followDistance = 1; //Meters
       public static final double camera_Height_Meters = Units.inchesToMeters(7);
       public static final double target_Height_Meters = Units.inchesToMeters(12);
-      public static final double camera_Pitch_Radians = Units.degreesToRadians(-6.2);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(-4.727443456);
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;
