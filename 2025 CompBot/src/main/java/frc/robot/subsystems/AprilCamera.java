@@ -25,8 +25,6 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CamConstants;
@@ -42,7 +40,6 @@ public class AprilCamera extends SubsystemBase {
   double distanceToTarget;
   Transform3d robotToCam;
   PhotonPoseEstimator photonPoseEstimator;
-  private Drivetrain drivetrain;
   Optional<Pose3d> targetPose;
   Pose3d truePose;
   Optional<EstimatedRobotPose> poseEstimate;
@@ -57,7 +54,21 @@ public class AprilCamera extends SubsystemBase {
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
-  /** Creates a new AprilTags. */
+  /** Uses the PhotonVision VendorDep to process April Tags
+   * <p>Methods<ul>
+   * <li>getRobotPosition - Gets the position of the robot
+   * <li>print - Prints the robot position
+   * <li>tagYaw - Gets the yaw of an AprilTag
+   * <li>generalTargets - Gets if the camera has targets
+   * <li>tagArea - Gets the area of an Apriltag
+   * <li>getHeight - Gets the height of an AprilTag
+   * <li>getDistanceToTarget - Calculates the distance to targeted Apriltag
+   * <li>getPoseToPose - Changes the position the robot is getting the distance to and calculates the distance there
+   * <li>getPose3d - gets the estimated position of the robot as a Pose3d
+   * <li>isPoseEstimated - gets the boolean to determine if a pose is estimated
+   * </ul>
+   * </p>
+   */
   public AprilCamera() {
 
     camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
@@ -76,39 +87,58 @@ public class AprilCamera extends SubsystemBase {
 
 
 
-  /*public void aprilTagsOn() {
-    blue.set(true);
-  }
 
-  public void aprilTagsOff() {
-    blue.set(false);
-  }*/
-
-
+  /**
+   * Gets the position of the robot
+   * @return the position of the robot in a pose 3d if there is a target otherwise returns 999
+   * 
+   */
   public Pose3d getRobotPosition() {
     if (hasTargets) return robotPose;
     else return new Pose3d(-999., 999., -999., new Rotation3d(999, -999, -1000));
   }
+
+  /** Prints the robot position */
   void print() {
     System.out.println(getRobotPosition());
   }
 
+  /**
+   * If the camera has a target 
+   * @return the yaw of the target
+   * <p>
+   * Otherwise returns garbage
+   */
   public double tagYaw() {
     if (hasTargets){
     return target.getYaw();
     } else return -999;
   }
+
+  /**
+   * Gets if the camera has targets
+   * @return if the camera has targets
+   */
   public boolean generalTarget() {
     return hasTargets;
   }
+
+   /**
+   * If the camera has a target 
+   * @return the area of the target
+   * <p>
+   * Otherwise returns garbage
+   */
   public double tagArea(){
     if (hasTargets){
     return target.getArea();
     }else return -999;
   }
-  public double getTimestampSeconds(){
-    return 0;
-  }
+  
+  /**
+   * Gets the height of an AprilTag 
+   * @return the Z of an Apriltag
+   */
    double getHeight(){
     targetPose = aprilTagFieldLayout.getTagPose(target.fiducialId);
     truePose = targetPose.get();
@@ -117,8 +147,11 @@ public class AprilCamera extends SubsystemBase {
     
   }
 
-
-   double getDistanceToTarget(){
+  /**
+   * Calculates the distance to targeted Apriltag
+   * @return The distance from the front of the robot to the april tag
+   */
+  double getDistanceToTarget(){
     double distance = PhotonUtils.calculateDistanceToTargetMeters(CamConstants.camera_Height_Meters,
                                                       getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
@@ -128,7 +161,13 @@ public class AprilCamera extends SubsystemBase {
     
   }
 
-
+  /**
+   * Modifies the position to one of the reef levels
+   * Then calculates the distance to it
+   * @param robotCurrentPose the current poisition of the robot
+   * @param right if the robot will go to the right or left
+   * @return the distance to the modified position
+   */
   double getPoseToPose(Pose2d robotCurrentPose, boolean right){
     if(hasTargets){
       if(target.fiducialId == 17 || target.fiducialId == 11){
@@ -182,10 +221,18 @@ public class AprilCamera extends SubsystemBase {
     return poseEstimate;
   } */
 
+  /**
+   * gets the estimated position of the robot as a Pose3d
+   * @return estimatedPose3d
+   */
   public Pose3d getPose3d(){
     return estimatedPose3d;
   }
 
+  /**
+   * gets the boolean to determine if a pose is estimated
+   * @return poseEstimated
+   */
   public boolean isPoseEstimated(){
     return poseEstimated;
   }
