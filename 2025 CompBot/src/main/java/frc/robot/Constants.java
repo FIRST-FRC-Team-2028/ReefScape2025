@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean ELEVATOR_AVALIBLE = false;
 
 
 
@@ -45,10 +45,10 @@ public final class Constants {
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 42;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 42;
     public static final double kPTurning_Comp = 0.5;
-    public static final double kDriveP = 0.1; // 2023 Competition Robot
+    public static final double kDriveP = 0.1; // 2023 Competition Robot Under ongoing change   0.1
     public static final double kDriveI = 0.0; // 2023 Competition Robot
     public static final double kDriveD = 0.0; // 2023 Competition Robot
-    public static final double kDriveFF = 0.255; // 2023 Competition Robot
+    public static final double kDriveFF = 0.255; // 2023 Competition Robot      .255
 
     public static final double kPTurning = 0.5;
     public static final double kTurningP = 0.75; // 2023 Competition Robot 
@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(ModuleConstants.kDriveP, ModuleConstants.kDriveI, ModuleConstants.kDriveD);
+    new PIDConstants(1.25, 0., 0.);     //kp first was 1. 2 overshot TODO
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD);
+    new PIDConstants(1.25,0.,0.);       //kp first was 1. 2 overshot
 
   }
 
@@ -239,8 +239,8 @@ public final class Constants {
   public static class CANIDS {
 
     //Handler
-    public static final int coralL = 50;
-    public static final int coralR = 57;
+    public static final int coralL = 52;
+    public static final int coralR = 53;
 
     //Elevator
     public static final int elevatorL = 50;
@@ -304,7 +304,7 @@ public final class Constants {
       public static final int followDistance = 1; //Meters
       public static final double camera_Height_Meters = Units.inchesToMeters(7);
       public static final double target_Height_Meters = Units.inchesToMeters(12);
-      public static final double camera_Pitch_Radians = Units.degreesToRadians(-6.2);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(-4.727443456);
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;

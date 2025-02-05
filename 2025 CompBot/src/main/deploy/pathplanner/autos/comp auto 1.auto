@@ -25,13 +25,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path 2"
+            "pathName": "Mr. Gumbert's Path"
           }
         }
       ]
     }
   },
-  "resetOdom": false,
+  "resetOdom": true,
   "folder": null,
   "choreoAuto": false
 }

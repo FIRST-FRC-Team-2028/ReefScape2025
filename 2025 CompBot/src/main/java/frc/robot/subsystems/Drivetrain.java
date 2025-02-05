@@ -150,6 +150,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
+    
     //SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
     //SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());
     //SmartDashboard.putNumber("front right abs", m_frontRight.getAbsTurningPosition(0.1).getDegrees());
@@ -256,6 +258,8 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
+    SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 
@@ -264,8 +268,8 @@ public class Drivetrain extends SubsystemBase {
         m_poseEstimator.addVisionMeasurement(
                   aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
       }
-      SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
-      SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+      SmartDashboard.putNumber("Swerve Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+      SmartDashboard.putNumber("Swerve Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
       SmartDashboard.putNumber("Get Pose to Pose", aprilSubsystem.getPoseToPose(getPoseEstimatorPose(), gamemechSwitch));
           
     }
