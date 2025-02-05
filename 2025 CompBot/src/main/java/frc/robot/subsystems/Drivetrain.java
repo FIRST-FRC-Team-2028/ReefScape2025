@@ -268,7 +268,8 @@ public class Drivetrain extends SubsystemBase {
         m_poseEstimator.addVisionMeasurement(
                   aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
       }
-      
+      SmartDashboard.putNumber("Swerve Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+      SmartDashboard.putNumber("Swerve Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
       SmartDashboard.putNumber("Get Pose to Pose", aprilSubsystem.getPoseToPose(getPoseEstimatorPose(), gamemechSwitch));
           
     }

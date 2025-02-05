@@ -220,8 +220,10 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double SOFT_LIMIT_FORWARD = 55.;  // all encoder values look backward
-    public static final double SOFT_LIMIT_REVERSE = 6.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFT_LIMIT_FORWARDl = 0.;  // all encoder values look backward
+    public static final double SOFT_LIMIT_REVERSEl = -250.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFT_LIMIT_FORWARDr = 0.;  // all encoder values look backward
+    public static final double SOFT_LIMIT_REVERSEr = -250.;
 
     public static double EncoderConversionFactor = 33/109.144;  // raw : inches
     
@@ -242,7 +244,7 @@ public final class Constants {
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 51;
+    public static final int elevatorR = 57;
     public static final int UNUSED_MOTOR = 0;
   }
 
@@ -261,6 +263,7 @@ public final class Constants {
     public static final int kFirstButton = 2;
     public static final int kSecondButton = 3;
     public static final int kThirdButton = 4;
+
     public static final int kpathfindTopCoralStation =   4;
     public static final int kDriverRobotOrientedButton = 6;
 
@@ -301,7 +304,7 @@ public final class Constants {
       public static final int followDistance = 1; //Meters
       public static final double camera_Height_Meters = Units.inchesToMeters(7);
       public static final double target_Height_Meters = Units.inchesToMeters(12);
-      public static final double camera_Pitch_Radians = Units.degreesToRadians(-6.2);
+      public static final double camera_Pitch_Radians = Units.degreesToRadians(-4.727443456);
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;

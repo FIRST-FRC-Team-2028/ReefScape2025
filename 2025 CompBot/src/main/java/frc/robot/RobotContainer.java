@@ -5,10 +5,7 @@
 package frc.robot;
 
 import java.io.IOException;
-import java.util.function.BooleanSupplier;
-
 import org.json.simple.parser.ParseException;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -19,14 +16,11 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FileVersionException;
 import com.pathplanner.lib.util.PathPlannerLogging;
-
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
-import frc.robot.commands.autoCommands.Autos;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.Spit;
@@ -34,7 +28,6 @@ import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -44,6 +37,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -57,13 +52,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Elevator elevatorSubsystem;
   private final Handler handlerSubsystem;
   private final AprilCamera april;
   private final SendableChooser<Command> autoChooser;
   private final Field2d field;
+  public static Command sequence;
 
   // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -84,6 +79,17 @@ public class RobotContainer {
     if (Constants.CAMERA_AVAILABLE){
       april = new AprilCamera();
     } else april = null;
+
+
+    sequence = new SequentialCommandGroup(new ElevatorPosition(elevatorSubsystem, -150, -50)
+                                 .andThen(new WaitCommand(.5))
+                                 .andThen(new ElevatorPosition(elevatorSubsystem, -100, -100))
+                                 .andThen(new WaitCommand(.5))
+                                 .andThen(new ElevatorPosition(elevatorSubsystem, -50, -150))
+                                 .andThen(new WaitCommand(2))
+                                 .andThen(new ElevatorPosition(elevatorSubsystem, -1, -1)));
+
+
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
@@ -126,38 +132,31 @@ public class RobotContainer {
   public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
-      // I figured it out Mr. G!!! -Salm
 
-      /* If you set the first Joystick Button (B) to go at -.2 speed (up on FRC 2029) whenever the current encder
-      *    position is below the target position (or above in this case since the encoder is negative), and the
-      *    second JSButton (with the same button) to active when above the target, it works perfectly!!!
-      *    Hope that explained it well...
-      *    It's currently programmed to the 2024 bot and the climber */
+      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
+        .onTrue(sequence);
 
-
-      // Go -.2 speed until target reached
+        /*
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
         .and(() -> elevatorSubsystem.getElevatorPosition() >= -35)
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.2)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
 
-      // Once target reached go 0.1 speed
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
         .and(() -> elevatorSubsystem.getElevatorPosition() <= -35)
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.1)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-        
+         */
 
       // Second Button (X) brings the elevator back down
+      
+      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeedL(.1)))
+        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.2)))
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeedR(.1)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-        /*
-      new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .and(() -> elevatorSubsystem.getElevatorPosition() >= 5)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.1)))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-         */
     }
     
 
@@ -189,8 +188,7 @@ public class RobotContainer {
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, 0));
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, 0));
-      
-      }
+    }
 
     if (Constants.HANDLER_AVAILABLE) {
         new JoystickButton(mechJoytick1, OIConstants.kRePivot)

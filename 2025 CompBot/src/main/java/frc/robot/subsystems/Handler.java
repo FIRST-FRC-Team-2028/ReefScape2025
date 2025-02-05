@@ -7,15 +7,12 @@ package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,17 +39,23 @@ public class Handler extends SubsystemBase {
   int currPa = 0;
   double avgCurrenta = 0;
   boolean algaeCaptureCurrentLimit = true;
+
   /** Manipulates scoring elements: coral, and algae.
    * <p>Methods:<ul>
-   * <li>intake - grab coral
+   * <li>intake - grab coral 
+   * <li>iDontHaveIt - set doIHave it to false
    * <li>moveHandlerSpeed - vbus control of pivot motor
-   * <li>moveHandler - closed loop control pivot to position
-   * <li>targetPivot - closed loop control pivot to position TODO need both?
+   * <li>targetPivot - closed loop control pivot to position
+   * <li>reTargetPivot - Nudges the PID target of the pivot motor
    * <li>Shoot - vbus control of shoot motor
+   * <li>stop - Stops the algae and coral manipulator motor
    * <li>algaeGrab - vbus control of algae intake motor
    * <li>algaeShoot - vbus control to shoot algae
+   * <li>getPivotCurrent - Gets the gets the current of the motor that controls the handlers pivot
+   * <li>getAlgaeCurrent - Gets the current of the motor that controls the coral and algae manipulator
+   * <li>rePivot - Resets the pivot safety to true
    * </ul>
-   * <p> 
+   * </p> 
    */
   public Handler() {
     coralShoot = new SendableSparkMax(Constants.CANIDS.coralL, MotorType.kBrushless);
@@ -102,10 +105,15 @@ public class Handler extends SubsystemBase {
        or make this process a command sequence. */
   }
 
-  public void resetIntake(){
+  /** sets doIHave it to false */
+  public void iDontHaveIt(){
     doIHaveIt = false;
   }
 
+  /**
+   * vbus control control for the handler
+   * @param hSpeed 
+   */
   public void moveHandlerSpeed(double hSpeed){
     pivot.set(hSpeed);
   }
@@ -117,31 +125,28 @@ public class Handler extends SubsystemBase {
     coralShoot.set(outputSpeed);
   }
   
-  /** Stops the coral shooter */
+  /** Stops the algae and coral manipulator motor */
   public void stop(){
     Shoot(0);
   }
 
-  /** Pivots the handler to set position
-   * 
-   */
-  public void moveHandler(double position){
-    if(pivotSaftey){
-    pivotController.setReference(position, ControlType.kPosition);
-    }
-  }
 
-  /** Runs the motor to grab an algae*/
+  /** vbus control of algae intake motor*/
   public void algaeGrab(){
     if(algaeCaptureCurrentLimit){
     Shoot(HandlerConstants.grabAlgaeSpeed);
     }else Shoot(HandlerConstants.algaeHoldSpeed);
   }
 
+  /** vbus control to shoot algae */
   public void algaeShoot(){
     Shoot(HandlerConstants.algaeShootSpeed);
   }
 
+  /**
+   * closed loop control pivot to position
+   * @param target the target of the pivot motor
+   */
   public void targetPivot(double target){
     if(pivotSaftey){
       pivotController.setReference(target, ControlType.kPosition);
@@ -149,6 +154,10 @@ public class Handler extends SubsystemBase {
     }
   }
 
+  /**
+   * Nudges the PID target of the pivot motor
+   * @param adjustment PID nudge amount
+   */
   public void reTargetPivot(double adjustment){
     if (pivotSaftey){
       latestTarget += adjustment;
@@ -162,6 +171,9 @@ public class Handler extends SubsystemBase {
     return pivot.getOutputCurrent();
   }
 
+  /** Gets the current of the motor that controls the coral and algae manipulator
+   * @return current of the coral and algae manipulator
+   */
   public double getAlgaeCurrent(){
     return coralShoot.getOutputCurrent();
   }
