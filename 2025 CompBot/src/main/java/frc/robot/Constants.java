@@ -68,7 +68,7 @@ public final class Constants {
     // Convert to meters per second at the wheel
     public static final double kDriveVelocityConversionFactor =
       kDrivePositionConversionFactor / 60.0;
-    public static final double kRampRate = 1;
+    public static final double kRampRate = 0.25;//1;
     public static final double kRampRateT = 0.75;
     public static final double AbsoluteSensorDiscontinuityPoint = 0.5; //1 is value between [0, 1] 0.5 is value between [-0.5, 0.5] 0 is value between [-1, 0] -CTRE Docs
   }
@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(1.25, 0., 0.);     //kp first was 1. 2 overshot TODO
+    new PIDConstants(2.75, 0., 0.);     //kp first was 1. 2 overshot TODO
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(1.25,0.,0.);       //kp first was 1. 2 overshot
+    new PIDConstants(1.5,0.,0.);       //kp first was 1. 2 overshot
 
   }
 
