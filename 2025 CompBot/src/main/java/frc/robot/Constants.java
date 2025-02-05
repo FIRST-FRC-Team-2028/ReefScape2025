@@ -220,8 +220,10 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double SOFT_LIMIT_FORWARD = 55.;  // all encoder values look backward
-    public static final double SOFT_LIMIT_REVERSE = 6.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFT_LIMIT_FORWARDl = 0.;  // all encoder values look backward
+    public static final double SOFT_LIMIT_REVERSEl = -250.; //    but dumb REVRobotics API won't allow inversion
+    public static final double SOFT_LIMIT_FORWARDr = 0.;  // all encoder values look backward
+    public static final double SOFT_LIMIT_REVERSEr = -250.;
 
     public static double EncoderConversionFactor = 33/109.144;  // raw : inches
     
@@ -242,7 +244,7 @@ public final class Constants {
 
     //Elevator
     public static final int elevatorL = 50;
-    public static final int elevatorR = 51;
+    public static final int elevatorR = 57;
     public static final int UNUSED_MOTOR = 0;
   }
 
@@ -261,6 +263,7 @@ public final class Constants {
     public static final int kFirstButton = 2;
     public static final int kSecondButton = 3;
     public static final int kThirdButton = 4;
+
     public static final int kpathfindTopCoralStation =   4;
     public static final int kDriverRobotOrientedButton = 6;
 

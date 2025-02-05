@@ -28,10 +28,11 @@ import frc.robot.SendableSparkMax;
 public class Elevator extends SubsystemBase {
   
   private final SendableSparkMax m_elevatorMotorL, m_elevatorMotorR;
-  private final RelativeEncoder m_elevatorEncoder;
+  private final RelativeEncoder m_elevatorEncoderL, m_elevatorEncoderR;
   private final SendableRelEncoder msre;
-  private final SparkClosedLoopController m_ClosedLoopController;
-  private double CurrentPosition = 0.0;
+  private final SparkClosedLoopController m_ClosedLoopControllerL, m_ClosedLoopControllerR;
+  private double CurrentPositionL = 0.0;
+  private double CurrentPositionR = 0.0;
   private double Destination = 0;
   private final double closeEnough = .2;
   private double speedOL = 0.;
@@ -51,39 +52,53 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     //m_elevatorMotorL = new SparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
     //m_elevatorMotorR = new SparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
-    m_elevatorEncoder = m_elevatorMotorL.getEncoder();
-    m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
+    m_elevatorEncoderL = m_elevatorMotorL.getEncoder();
+    m_elevatorEncoderR = m_elevatorMotorR.getEncoder();
+    m_ClosedLoopControllerL = m_elevatorMotorL.getClosedLoopController();
+    m_ClosedLoopControllerR = m_elevatorMotorR.getClosedLoopController();
     configL = new SparkMaxConfig();
     configR = new SparkMaxConfig();
 
     configL.idleMode(IdleMode.kBrake)
            .inverted(false);
     // configL.encoder.positionConversionFactor(ElevatorConstants.EncoderConversionFactor);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFT_LIMIT_FORWARD)
-                     .forwardSoftLimitEnabled(false)
-                     .reverseSoftLimit(ElevatorConstants.SOFT_LIMIT_REVERSE)
-                     .reverseSoftLimitEnabled(false);
+    configL.softLimit.forwardSoftLimit(ElevatorConstants.SOFT_LIMIT_FORWARDl)
+                     .forwardSoftLimitEnabled(true)
+                     .reverseSoftLimit(ElevatorConstants.SOFT_LIMIT_REVERSEl)
+                     .reverseSoftLimitEnabled(true);
     configL.closedLoop.pid(1.0, 
                            0.0, 
                            0.0);
-    configR.follow(Constants.CANIDS.elevatorL, true);
+    //configR.follow(Constants.CANIDS.elevatorL, true);
+    configR.idleMode(IdleMode.kBrake)
+           .inverted(true);
+    // configL.encoder.positionConversionFactor(ElevatorConstants.EncoderConversionFactor);
+    configR.softLimit.forwardSoftLimit(ElevatorConstants.SOFT_LIMIT_FORWARDr)
+                     .forwardSoftLimitEnabled(true)
+                     .reverseSoftLimit(ElevatorConstants.SOFT_LIMIT_REVERSEr)
+                     .reverseSoftLimitEnabled(true);
+    configR.closedLoop.pid(1.0, 
+                           0.0, 
+                           0.0);
 
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-    m_elevatorEncoder.setPosition(0); //3 in offset + 1/4 gear box
+    m_elevatorEncoderL.setPosition(0); //3 in offset + 1/4 gear box
+    m_elevatorEncoderR.setPosition(0);
 
     addChild("Left (Leader)", m_elevatorMotorL);
-    msre = new SendableRelEncoder(m_elevatorEncoder);
+    msre = new SendableRelEncoder(m_elevatorEncoderL);
     addChild("Position", msre);
     bottomSwitch = new DigitalInput(ElevatorConstants.bottomSwitchDIPort);
   }
 
   @Override
   public void periodic() {
-    CurrentPosition = m_elevatorEncoder.getPosition();
-    SmartDashboard.putNumber("Position", CurrentPosition);
-    //System.out.println("Position: " + CurrentPosition);
+    CurrentPositionL = m_elevatorEncoderL.getPosition();
+    CurrentPositionR = m_elevatorEncoderR.getPosition();
+    SmartDashboard.putNumber("Left Position", m_elevatorEncoderL.getPosition());
+    SmartDashboard.putNumber("Right Position", m_elevatorEncoderR.getPosition());
   }
 
   /**Closed loop control of the elevator
@@ -91,7 +106,7 @@ public class Elevator extends SubsystemBase {
    * @param target is the desired position (inches) for the elevator
    */
   public void PIDController(double target) {
-    m_ClosedLoopController.setReference(target, ControlType.kPosition);
+    m_ClosedLoopControllerL.setReference(target, ControlType.kPosition);
     latestTarget = target;
   }
 
@@ -100,19 +115,23 @@ public class Elevator extends SubsystemBase {
    */
   public void Nudge(double adjustment){
     latestTarget += adjustment;
-    m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
+    m_ClosedLoopControllerL.setReference(latestTarget, ControlType.kPosition);
   }
 
   /** Run the elevator motor.
    * @param speed sets motor speed. Variable between -1, 1. Positive is up and negative is down.
   */
-  public void SetElevatorSpeed(double speed) {
+  public void SetElevatorSpeedL(double speed) {
     m_elevatorMotorL.set(speed);
+  }
+  public void SetElevatorSpeedR(double speed) {
+    m_elevatorMotorR.set(speed);
   }
 
   /** Stop the elevator motor. */
   public void StopElevator() {
     m_elevatorMotorL.stopMotor();
+    m_elevatorMotorR.stopMotor();
   }
 
   /**Open-loop control of the elevator motor  
@@ -120,8 +139,16 @@ public class Elevator extends SubsystemBase {
   */
   public void OpenLoopControl(double Target) {
     Destination = Target;
-    speedOL = Math.copySign(.1, (Destination - CurrentPosition));
-    SetElevatorSpeed(speedOL);
+    speedOL = Math.copySign(.1, (Destination - CurrentPositionL));
+    //SetElevatorSpeed(speedOL);
+  }
+
+  
+  public void PIDleft(double target) {
+    m_ClosedLoopControllerL.setReference(target, ControlType.kPosition);
+  }
+  public void PIDright(double target) {
+    m_ClosedLoopControllerR.setReference(target, ControlType.kPosition);
   }
 
   /**Check whether elevator has attained the target height. Stop if it has. TODO this be lie.
@@ -130,12 +157,10 @@ public class Elevator extends SubsystemBase {
    * @return <b>True</b> if the motor is at the target height
    * <li><b>False</b> if the motor is not at the target height </li>
    */
-  public boolean Finished(double Destination) {
-    return Math.abs(Destination - CurrentPosition) < closeEnough;
-  }
-
-  public double getElevatorPosition() {
-    return CurrentPosition;
+  public boolean Finished(double LeftDestination, double RightDestination) {
+    boolean LeftCloseEnough = Math.abs(LeftDestination - CurrentPositionL) < closeEnough;
+    boolean RightCloseEnough = Math.abs(RightDestination - CurrentPositionR) < closeEnough;
+    return LeftCloseEnough && RightCloseEnough;
   }
 
   // Test mode methods
@@ -146,6 +171,6 @@ public class Elevator extends SubsystemBase {
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    if (enabled) m_elevatorEncoder.setPosition(0.);
+    if (enabled) m_elevatorEncoderL.setPosition(0.);
   }
 }

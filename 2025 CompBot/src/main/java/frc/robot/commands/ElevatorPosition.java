@@ -10,18 +10,21 @@ import frc.robot.subsystems.Elevator;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ElevatorPosition extends Command {
   private final Elevator elevator;
-  private final double Destination;
+  private final double LeftDestination;
+  private final double RightDestination;
   /** Drive elevator to a desired position - closed loop */
-  public ElevatorPosition(Elevator elevator, double Destination) {
+  public ElevatorPosition(Elevator elevator, double LeftDestination, double RightDestination) {
     this.elevator = elevator;
-    this.Destination = Destination;
+    this.LeftDestination = LeftDestination;
+    this.RightDestination = RightDestination;
     addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    elevator.PIDController(Destination);
+    elevator.PIDleft(LeftDestination);
+    elevator.PIDright(RightDestination);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -36,6 +39,6 @@ public class ElevatorPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return elevator.Finished(Destination);
+    return elevator.Finished(LeftDestination, RightDestination);
   }
 }
