@@ -40,7 +40,25 @@ public class Handler extends SubsystemBase {
   int currPa = 0;
   double avgCurrenta = 0;
   boolean algaeCaptureCurrentLimit = true;
-  /** Creates a new Handler. */
+    /** Manipulates scoring elements: coral, and algae.
+   * <p>Methods:<ul>
+   * <li>intake - grab coral
+   * <li>doIHaveIt - Spews doIHaveIt
+   * <li>iHaveIt - sets doIHaveIt to true
+   * <li>iDontHaveIt - set doIHaveIt to false
+   * <li>moveHandlerSpeed - vbus control of pivot motor
+   * <li>targetPivot - closed loop control pivot to position
+   * <li>reTargetPivot - Nudges the PID target of the pivot motor
+   * <li>Shoot - vbus control of shoot motor
+   * <li>stop - Stops the algae and coral manipulator motor
+   * <li>algaeGrab - vbus control of algae intake motor
+   * <li>algaeShoot - vbus control to shoot algae
+   * <li>getPivotCurrent - Gets the gets the current of the motor that controls the handlers pivot
+   * <li>getAlgaeCurrent - Gets the current of the motor that controls the coral and algae manipulator
+   * <li>rePivot - Resets the pivot safety to true
+   * </ul>
+   * </p> 
+   */
   public Handler() {
     coralShoot = new SendableSparkMax(Constants.CANIDS.wheels, MotorType.kBrushless);
     pivot = new SendableSparkMax(Constants.CANIDS.pivot, MotorType.kBrushless);
@@ -86,19 +104,27 @@ public class Handler extends SubsystemBase {
     return doIHaveIt;
   }
 
-
+  /**
+   * @return doIHaveIt
+   */
   public boolean doIHaveIt(){
     return doIHaveIt;
   }
 
+  /** Sets doIHaveIt to true */
   public void iHaveIt(){
     doIHaveIt = true;
   }
 
+  /** Sets doIHaveIt to false */
   public void iDontHaveIt(){
     doIHaveIt = false;
   }
 
+  /**
+  * vbus control control for the handler
+  * @param hSpeed 
+  */
   public void moveHandlerSpeed(double hSpeed){
     pivot.set(hSpeed);
   }
@@ -115,6 +141,7 @@ public class Handler extends SubsystemBase {
     coralShoot.stopMotor();
   }
 
+  /** Stops the Pivot motor */
   public void stopPivot(){
     pivot.stopMotor();
   }
@@ -128,20 +155,22 @@ public class Handler extends SubsystemBase {
     }
   }
 
-  /** Runs the motor to grab an algae*/
+  /** vbus control of algae intake motor */
   public void algaeGrab(){
     if(algaeCaptureCurrentLimit){
     Shoot(HandlerConstants.grabAlgaeSpeed);
     }else Shoot(HandlerConstants.algaeHoldSpeed);
   }
 
+  /** vbus control to shoot algae */
   public void algaeShoot(){
     Shoot(HandlerConstants.algaeShootSpeed);
   }
 
-  /** pivot the handler to position in closed loop 
-   * @param target degrees
-  */
+  /**
+   * closed loop control pivot to position
+   * @param target the target of the pivot motor
+   */
   public void targetPivot(double target){
     if(pivotSaftey){
       pivotController.setReference(target, ControlType.kPosition);
@@ -149,12 +178,17 @@ public class Handler extends SubsystemBase {
     }
   }
 
+  /**
+   * Nudges the PID target of the pivot motor
+   * @param adjustment PID nudge amount
+   */
   public void reTargetPivot(double adjustment){
     if (pivotSaftey){
       latestTarget += adjustment;
       pivotController.setReference(latestTarget, ControlType.kPosition);
     }
   }
+
   /** Gets the current of the motor that contols the handlers pivot
    * @return current of the Pivot motor
    */
@@ -162,6 +196,9 @@ public class Handler extends SubsystemBase {
     return pivot.getOutputCurrent();
   }
 
+  /** Gets the current of the motor that controls the coral and algae manipulator
+   * @return current of the coral and algae manipulator
+   */
   public double getAlgaeCurrent(){
     return coralShoot.getOutputCurrent();
   }
@@ -189,7 +226,7 @@ public class Handler extends SubsystemBase {
       iHaveIt();
     } else iDontHaveIt();
     SmartDashboard.putBoolean("Proximity Sensor", doIHaveIt());
-    /*SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
+    SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
     SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();
 
@@ -210,7 +247,7 @@ public class Handler extends SubsystemBase {
 
     if(avgCurrenta>HandlerConstants.grabAlgaeCurrent){
       algaeCaptureCurrentLimit = false;
-    }*/
+    }
   
   }
 }

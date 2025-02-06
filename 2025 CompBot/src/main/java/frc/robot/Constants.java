@@ -5,7 +5,6 @@
 package frc.robot;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.path.PathConstraints;
-import com.revrobotics.servohub.config.ServoChannelConfig.PulseRange;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;

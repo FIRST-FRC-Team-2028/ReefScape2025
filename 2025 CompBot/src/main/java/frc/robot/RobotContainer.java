@@ -17,22 +17,17 @@ import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.util.FileVersionException;
-
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
-import frc.robot.commands.autoCommands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.RunWheels;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorVbusVariable;
-import frc.robot.commands.Spit;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -54,7 +49,6 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Drivetrain driveSubsystem;
   private final Elevator elevatorSubsystem;
   private final Handler handlerSubsystem;
