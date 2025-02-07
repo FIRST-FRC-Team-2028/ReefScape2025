@@ -4,31 +4,12 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import org.json.simple.parser.ParseException;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.events.EventTrigger;
-import com.pathplanner.lib.path.GoalEndState;
-import com.pathplanner.lib.path.PathConstraints;
-import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.path.Waypoint;
-import com.pathplanner.lib.util.FileVersionException;
-import com.pathplanner.lib.util.PathPlannerLogging;
-import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.HandlerConstants;
-import frc.robot.Constants.OIConstants;
-import frc.robot.Constants.PathPlannerConstants;
-import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ElevatorPosition;
-import frc.robot.commands.ElevatorVbusVariable;
-import frc.robot.commands.Spit;
-import frc.robot.commands.SpitSequence;
-import frc.robot.subsystems.AprilCamera;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Handler;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -37,12 +18,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.HandlerConstants;
+import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.PathPlannerConstants;
+import frc.robot.commands.DriveCommand;
+import frc.robot.commands.ElevatorPosition;
+import frc.robot.commands.SpitSequence;
+import frc.robot.subsystems.AprilCamera;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Handler;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -127,22 +117,83 @@ public class RobotContainer {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     if (Constants.ELEVATOR_AVALIBLE){
 
+      /*     Sequence of events:
+       * Button is pressed
+       * Left motor rises to -100
+       * Once left motor is at or below -50, right motor will begin to move to -50
+       * Pause for 1 second to ensure both are in position
+       * Left motor drops to -50 and right motor rises to -100
+       * Once right motor is inbetween -95 and -105, left motor will rise to -150
+       * Once left motor is at or below -150, right motor drops to -50
+       * Pause for 2 seconds
+       * Both motors make their way to -1
+       */
+
+       /*     Button Press:
+        * Sets the left motor PID to -100.
+        */
+
+       /*     ElevatorPositionTrigger1:
+        * Once the left motor is at or below -100 and EPT1 Atomic Boolean is equal to false, Trigger1
+        *   will set the right motor PID to -50, set EPT1 to true, wait 1 second, then set the left
+        *   motor PID to -50 and the right motor PID to -100.
+        */
+
+       /*     ElevatorPositionTrigger2:
+        * Once the right motor is between -95 and -105 and the EPT2 Atomic Boolean is equal to false,
+        *   Trigger2 will set the left motor PID to -150, then set the EPT2 to true.
+        */
+
+       /*     ElevatorPositionTrigger3:
+        * Once the left motor is at or below -150 and the EPT3 Atomic Boolean is equal to false, 
+        *    Trigger3 will start the sequence, then set EPT3 to true.
+        */
+
+       /*     sequence:
+        * When called, sequence will set the right motor PID to -50, then wait 2 seconds, set 
+        *    both left and right motors to -1, then set EPT1, EPT2, and EPT3 to false.
+        */
+
+      AtomicBoolean EPT1 = new AtomicBoolean(false);
+      Trigger ElevatorPositionTrigger1 = new Trigger(() -> elevatorSubsystem.getElevatorPositionL() <= -50
+                                                        && !EPT1.get());
+
+      AtomicBoolean EPT2 = new AtomicBoolean(false);
+      Trigger ElevatorPositionTrigger2 = new Trigger(() -> elevatorSubsystem.getElevatorPositionR() <= -95
+                                                        && elevatorSubsystem.getElevatorPositionR() >= -105
+                                                        && !EPT2.get());
+                                                     
+      AtomicBoolean EPT3 = new AtomicBoolean(false);
+      Trigger ElevatorPositionTrigger3 = new Trigger(() -> elevatorSubsystem.getElevatorPositionL() <= -150
+                                                        && !EPT3.get());
+
+      sequence = new SequentialCommandGroup(new InstantCommand(() -> elevatorSubsystem.PIDright(-50))
+                     .andThen(new WaitCommand(2))
+                     .andThen(new ElevatorPosition(elevatorSubsystem, -1, -1))
+                     .andThen(new InstantCommand(() -> EPT1.set(false)))
+                     .alongWith(new InstantCommand(() -> EPT2.set(false)))
+                     .alongWith(new InstantCommand(() -> EPT3.set(false))));
+
+      ElevatorPositionTrigger1
+      .onTrue(new InstantCommand(() -> elevatorSubsystem.PIDright(-50))
+      .alongWith(new InstantCommand(() -> EPT1.set(true)))
+      .andThen(new WaitCommand(1))
+      .andThen(new ElevatorPosition(elevatorSubsystem, -50, -100)));
+
+      ElevatorPositionTrigger2
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.PIDleft(-150))
+        .alongWith(new InstantCommand(() -> EPT1.set(true))));
+      
+      ElevatorPositionTrigger3
+        .onTrue(sequence
+        .alongWith(new InstantCommand(() -> EPT1.set(true))));
+
+
       new JoystickButton(driverJoytick, OIConstants.kThirdButton)
-        .onTrue(sequence);
+        .onTrue(new InstantCommand(() -> elevatorSubsystem.PIDleft(-100)));
 
-        /*
-      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .and(() -> elevatorSubsystem.getElevatorPosition() >= -35)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.2)))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-
-      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .and(() -> elevatorSubsystem.getElevatorPosition() <= -35)
-        .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(-.1)))
-        .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
-         */
-
-      // Second Button (X) brings the elevator back down
+      // First Button (B) brings the left motor down
+      // Second Button (X) brings the right motor down
       
       new JoystickButton(driverJoytick, OIConstants.kFirstButton)
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeedL(.1)))

@@ -96,6 +96,14 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putNumber("Right Position", m_elevatorEncoderR.getPosition());
   }
 
+  
+  public double getElevatorPositionL() {
+    return m_elevatorEncoderL.getPosition();
+  }
+  public double getElevatorPositionR() {
+    return m_elevatorEncoderR.getPosition();
+  }
+
   /**Closed loop control of the elevator
    * 
    * @param target is the desired position (inches) for the elevator
