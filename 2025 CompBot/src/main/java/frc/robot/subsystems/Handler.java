@@ -43,7 +43,7 @@ public class Handler extends SubsystemBase {
   /** Manipulates scoring elements: coral, and algae.
    * <p>Methods:<ul>
    * <li>intake - grab coral 
-   * <li>iDontHaveIt - set doIHave it to false
+   * <li>iDontHaveIt - set doIHaveIt to false
    * <li>moveHandlerSpeed - vbus control of pivot motor
    * <li>targetPivot - closed loop control pivot to position
    * <li>reTargetPivot - Nudges the PID target of the pivot motor

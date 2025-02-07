@@ -150,7 +150,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updatePoseEstimator();
-    SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
+    //SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
     
     //SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
     //SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());

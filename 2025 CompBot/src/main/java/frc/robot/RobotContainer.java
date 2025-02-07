@@ -81,13 +81,7 @@ public class RobotContainer {
     } else april = null;
 
 
-    sequence = new SequentialCommandGroup(new ElevatorPosition(elevatorSubsystem, -150, -50)
-                                 .andThen(new WaitCommand(.5))
-                                 .andThen(new ElevatorPosition(elevatorSubsystem, -100, -100))
-                                 .andThen(new WaitCommand(.5))
-                                 .andThen(new ElevatorPosition(elevatorSubsystem, -50, -150))
-                                 .andThen(new WaitCommand(2))
-                                 .andThen(new ElevatorPosition(elevatorSubsystem, -1, -1)));
+    
 
 
 
@@ -103,7 +97,7 @@ public class RobotContainer {
       new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
       NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
       NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
-      NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+      NamedCommands.registerCommand("Print Auto 1", Commands.print("Kilroy was:" + driveSubsystem.getPoseEstimatorPose()));
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
       autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -157,6 +151,14 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, OIConstants.kSecondButton)
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeedR(.1)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
+
+        sequence = new SequentialCommandGroup(new ElevatorPosition(elevatorSubsystem, -150, -50)
+        .andThen(new WaitCommand(.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -100, -100))
+        .andThen(new WaitCommand(.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -50, -150))
+        .andThen(new WaitCommand(2))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -1, -1)));
     }
     
 
