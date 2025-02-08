@@ -46,16 +46,22 @@ public class DriveCommand extends Command {
     turningSpeed *= 1.
                     - (DriveConstants.kFineControlSpeed * driverJoytick.getRawAxis(OIConstants.kFineControlAxis))
                     + (DriveConstants.kFasterSpeed * driverJoytick.getRawAxis(OIConstants.kFastControlAxis));
-    smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .08;
-    smoothedYSpeed = smoothedYSpeed + (ySpeed - smoothedYSpeed) * .08;
-    smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .08;
+    if(drivetrain.elevatorUp()){
+    smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .04;
+    smoothedYSpeed = smoothedYSpeed + (ySpeed - smoothedYSpeed) * .04;
+    smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .04;
+    } else {
+      smoothedXSpeed = smoothedXSpeed + (xSpeed - smoothedXSpeed) * .08;
+      smoothedYSpeed = smoothedYSpeed + (ySpeed - smoothedYSpeed) * .08;
+      smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .08;
+    }
 
     xSpeed = smoothedXSpeed;
     ySpeed = smoothedYSpeed;
     turningSpeed = smoothedTurningSpeed;
     
     ChassisSpeeds chassisSpeeds;
-    //if (driverJoytick.getRawButton(OIConstants.kDriverRobotOrientedButtonIdx)) { //Following Minibot
+    
     if (!driverJoytick.getRawButton(OIConstants.kDriverRobotOrientedButton)) { //normal use
     // Relative to field
       chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(

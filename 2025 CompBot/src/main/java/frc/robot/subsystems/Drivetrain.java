@@ -40,6 +40,7 @@ public class Drivetrain extends SubsystemBase {
   static double kMaxSpeed = Constants.DriveConstants.kMaxTranslationalVelocity;
   static double kMaxAngularSpeed = Constants.DriveConstants.kMaxRotationalVelocity;
   private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
+  boolean elevatorUp;
 
   private final AprilCamera aprilSubsystem;
 
@@ -313,4 +314,11 @@ public class Drivetrain extends SubsystemBase {
     Pose2d targetPose = new Pose2d(x, y, rotation2d);
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
   }
+  public boolean elevatorUp(){
+    return elevatorUp;
+  }
+  public void elevatorPositionBoolean(boolean up){
+    elevatorUp = up;
+  }
+  
 }
