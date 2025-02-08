@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean ELEVATOR_AVALIBLE = false;
 
 
 
@@ -50,8 +50,8 @@ public final class Constants {
     public static final double kDriveD = 0.0; // 2023 Competition Robot
     public static final double kDriveFF = 0.255; // 2023 Competition Robot      .255
 
-    public static final double kPTurning = 0.5;
-    public static final double kTurningP = 0.75; // 2023 Competition Robot 
+    //public static final double kPTurning = 0.5;
+    public static final double kTurningP = 1.75; // 2023 Competition Robot 
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(2.75, 0., 0.);     //kp first was 1. 2 overshot TODO
+    new PIDConstants(6.0, 0., 0.);     //kp first was 1. 2 overshot TODO 2.75
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(1.5,0.,0.);       //kp first was 1. 2 overshot
+    new PIDConstants(3,0.,0.);       //kp first was 1. 2 overshot
 
   }
 

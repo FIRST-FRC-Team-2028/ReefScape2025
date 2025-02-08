@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 4.6538
+        "x": 1.51,
+        "y": 0.76
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 5.4038
+        "x": 2.117487373743842,
+        "y": 1.6567550505098927
       },
       "isLocked": false,
       "linkedName": "TEST END GUMBERT AUTO"
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 6.0
+        "x": 3.5951656116090644,
+        "y": 3.0032569725493765
       },
       "prevControl": {
-        "x": 1.0,
-        "y": 6.0
+        "x": 2.646022727279196,
+        "y": 2.236111111115955
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,11 +29,25 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7967289719626165,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 270.0,
+        "maxAngularAcceleration": 324.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.5,
+    "maxVelocity": 3.0,
     "maxAcceleration": 4.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
@@ -42,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 72.7904424794521
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 54.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

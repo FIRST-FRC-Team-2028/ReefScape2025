@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.2,
-        "y": 0.04
+        "x": 3.6743002683026584,
+        "y": 3.018199790149231
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.196420454545455,
-        "y": 0.04293750000000007
+        "x": 3.3758678286145862,
+        "y": 2.4896026107089813
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.828735469987778,
-        "y": 2.9374986945886996
+        "x": 1.51,
+        "y": 0.76
       },
       "prevControl": {
-        "x": 2.828735469987778,
-        "y": 2.9374986945886996
+        "x": 2.1808333333333367,
+        "y": 1.440997474747474
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Test "
+      "linkedName": "TEST END GUMBERT AUTO"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 54.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 73.0653959402618
+    "rotation": 59.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
