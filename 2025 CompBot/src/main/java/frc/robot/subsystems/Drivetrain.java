@@ -246,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
 
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
-        */
+        
         m_poseEstimator.addVisionMeasurement(
                   aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
       }  
