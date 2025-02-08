@@ -182,9 +182,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(ModuleConstants.kDriveP, ModuleConstants.kDriveI, ModuleConstants.kDriveD);
+    new PIDConstants(6, 0, 0);  //GUESSES Based on project X
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(ModuleConstants.kTurningP, ModuleConstants.kTurningI, ModuleConstants.kTurningD);
+    new PIDConstants(3, 0, 0);  //GUESSES Based on project X
 
   }
 

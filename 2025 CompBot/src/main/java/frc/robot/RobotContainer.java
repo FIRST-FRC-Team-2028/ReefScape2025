@@ -34,6 +34,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Handler;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -112,6 +113,7 @@ public class RobotContainer {
   @SuppressWarnings("unused")
   public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
+    
 
     if (Constants.ELEVATOR_AVALIBLE){
       new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
@@ -138,6 +140,8 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
+      new JoystickButton(driverJoytick, 2)
+        .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {

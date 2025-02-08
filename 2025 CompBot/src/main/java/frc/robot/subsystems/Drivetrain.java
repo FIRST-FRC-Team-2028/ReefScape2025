@@ -146,7 +146,7 @@ public class Drivetrain extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    updateOdometry();
+    //updateOdometry();
     updatePoseEstimator();
     //SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
     //SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());
@@ -222,7 +222,7 @@ public class Drivetrain extends SubsystemBase {
     //SmartDashboard.putNumber("Module Turnin Target", desiredStates[0].angle.getRotations());
   }
 /**Updates the odometry location using swerve module position */
-  public void updateOdometry() {
+/*  public void updateOdometry() {                Replaced by m_poseEstimator 
     m_odometry.update(
         m_gyro.getRotation2d(),
         new SwerveModulePosition[] {
@@ -231,7 +231,7 @@ public class Drivetrain extends SubsystemBase {
           m_backLeft.getPosition(),
           m_backRight.getPosition()
         });
-  }
+  }*/
 
   public void updatePoseEstimator() {
     m_poseEstimator.update(m_gyro.getRotation2d(),
@@ -242,18 +242,16 @@ public class Drivetrain extends SubsystemBase {
                           m_backRight.getPosition()
     });
     if(Constants.CAMERA_AVAILABLE){
-      var res = aprilSubsystem.getLatestResult();
-      if (res.hasTargets()) {
-        var imageCaptureTime = res.getTimestampSeconds();
+      if (aprilSubsystem.isPoseEstimated()) {
+
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getRobotPosition().toPose2d(), imageCaptureTime);  //TODO Can't go from 3d to 2d when Pose3d is null
-      }
-      SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
-      SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
-          
+                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
+      }  
     }
+    SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
+    SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
   }
 
   public SwerveModulePosition[] getModulePositions() {
@@ -273,13 +271,13 @@ public class Drivetrain extends SubsystemBase {
     };
   }
 /** Position of robot with x and y in meters */
-  public Pose2d getOdomentryPose() {
+/*  public Pose2d getOdomentryPose() {
     return m_odometry.getPoseMeters();
   }
-  public void resetOdomentryPose(Pose2d pose) {
+  public void resetOdomentryPose(Pose2d pose) {                         Replaced by m_poseEstimator
     //System.out.println(pose);
     m_odometry.resetPosition(getHeading(), getModulePositions(), pose);
-  } 
+  }*/ 
 
   public Pose2d getPoseEstimatorPose() {
     return m_poseEstimator.getEstimatedPosition();
@@ -287,7 +285,11 @@ public class Drivetrain extends SubsystemBase {
   public void resetPoseEstimatorPose(Pose2d pose) {
     m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
   }
-
+  /**Contructs and runs a path to the given path name avoiding obsticals outlinned in navgrid.json. Uses the
+   * normal constraints of the robot as path constraints.
+   * @param pathname The name of the path file in the deploy/pathplanner/paths file.
+   * Will only print out "FAIL" if the file name does not exist.
+  */
   public Command pathfindToPath(String pathname) {
     PathPlannerPath path;
     try{
@@ -297,42 +299,17 @@ public class Drivetrain extends SubsystemBase {
       e.getStackTrace();
       return new InstantCommand(()->System.out.println("FAIL"));
     }
-
-    
   }
-
-  //Pathplanner Autobuilder
-  /*try{
-      RobotConfig config = RobotConfig.fromGUISettings();
-
-      // Configure AutoBuilder
-      AutoBuilder.configure(
-        this::getPose, 
-        this::resetPose, 
-        this::getChassisSpeeds, 
-        this::drive, 
-        new PPHolonomicDriveController(
-          DriveConstants.translationConstants,
-          DriveConstants.rotationConstants
-        ),
-        config,
-        () -> {
-            // Boolean supplier that controls when the path will be mirrored for the red alliance
-            // This will flip the path being followed to the red side of the field.
-            // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-            var alliance = DriverStation.getAlliance();
-            if (alliance.isPresent()) {
-                return alliance.get() == DriverStation.Alliance.Red;
-            }
-            return false;
-        },
-        this
-      );
-      DriverStation.reportError("Success", null);
-    }catch(Exception e){
-      DriverStation.reportError("Failed to load PathPlanner config and configure AutoBuilder", e.getStackTrace());
-    }*/
-  
-  
+  /**Contructs and runs a path to the given pose avoiding obsticals outlinned in navgrid.json
+   * @param x The x cordinate of the target position 
+   * @param y The y cordinate of the target position
+   * @param rotation the Rotation 2d value of the target position
+   * @param goalEndVelocity The velocity of the robot at the end of the path. 0 is required to stop at the target pose.
+   * A value > 0 may be used to keep the robot up to speed for the driver to take over.
+   */
+  public Command pathfindToPose(double x, double y, double rotation, double goalEndVelocity) {
+    Rotation2d rotation2d = new Rotation2d(rotation);
+    Pose2d targetPose = new Pose2d(x, y, rotation2d);
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
+  }
 }
