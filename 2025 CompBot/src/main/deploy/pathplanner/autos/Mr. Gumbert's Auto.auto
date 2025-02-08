@@ -15,30 +15,6 @@
           "data": {
             "waitTime": 0.5
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Mr. G Path 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Mr. G Path 3"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Mr. G Path 4"
-          }
         }
       ]
     }

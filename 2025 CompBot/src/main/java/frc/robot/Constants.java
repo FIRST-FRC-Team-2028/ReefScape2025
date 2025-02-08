@@ -164,7 +164,7 @@ public final class Constants {
   public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond /1.5;
   public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
                                      kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
-  public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 4;
+  public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
   public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.8;
   public static final double kptwist = .5;
 
@@ -326,9 +326,9 @@ public final class Constants {
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
                           DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);*/
-    public static final PathConstraints pathConstraints = new PathConstraints(1,
-                          0.5,
-                          2,
+    public static final PathConstraints pathConstraints = new PathConstraints(2,
+                          4,
+                          3,
                           1);
   }
 

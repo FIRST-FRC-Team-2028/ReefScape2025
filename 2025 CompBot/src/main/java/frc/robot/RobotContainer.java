@@ -216,20 +216,12 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue(new InstantCommand(() -> {
-          try {
-            System.out.println("WORKING");
-            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("To Tag 17"));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }));*/
+
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue(driveSubsystem.pathfindToPath("To Tag 17"));
+        .onTrue(driveSubsystem.pathfindToPath("Test Path 1"));
 
       new JoystickButton(driverJoytick, 3)
-        .onTrue(new InstantCommand(() -> field.setRobotPose(driveSubsystem.getPoseEstimatorPose())));
+        .whileTrue(driveSubsystem.pathfindToPose(1.51, 0.76, 54, 0));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {

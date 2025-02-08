@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.51,
-        "y": 0.76
+        "x": 1.5016883257827303,
+        "y": 0.752572287455888
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1464913764320979,
-        "y": 0.4453377289793583
+        "x": 1.1381797022148281,
+        "y": 0.4379100164352463
       },
       "isLocked": false,
       "linkedName": "TEST END GUMBERT AUTO"
