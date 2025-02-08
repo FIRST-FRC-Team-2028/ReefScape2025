@@ -41,7 +41,7 @@ public class HandlerPosition extends Command {
   // Returns true when position is close enough to target.
   @Override
   public boolean isFinished() {
-    return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID chnage to return false and take out "stopPivot"
+    return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID change to return false and take out "stopPivot"
            && target + allowance > handler.getPivotPostition();
   }
 }

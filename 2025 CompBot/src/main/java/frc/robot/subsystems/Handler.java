@@ -39,10 +39,11 @@ public class Handler extends SubsystemBase {
   int currPa = 0;
   double avgCurrenta = 0;
   boolean algaeCaptureCurrentLimit = true;
-
-  /** Manipulates scoring elements: coral, and algae.
+    /** Manipulates scoring elements: coral, and algae.
    * <p>Methods:<ul>
-   * <li>intake - grab coral 
+   * <li>intake - grab coral
+   * <li>doIHaveIt - Spews doIHaveIt
+   * <li>iHaveIt - sets doIHaveIt to true
    * <li>iDontHaveIt - set doIHaveIt to false
    * <li>moveHandlerSpeed - vbus control of pivot motor
    * <li>targetPivot - closed loop control pivot to position
@@ -119,9 +120,9 @@ public class Handler extends SubsystemBase {
   }  
 
   /**
-   * vbus control control for the handler
-   * @param hSpeed 
-   */
+  * vbus control control for the handler
+  * @param hSpeed 
+  */
   public void moveHandlerSpeed(double hSpeed){
     pivot.set(hSpeed);
   }
@@ -138,11 +139,22 @@ public class Handler extends SubsystemBase {
     coralShoot.stopMotor();
   }
 
+  /** Stops the Pivot motor */
   public void stopPivot(){
     pivot.stopMotor();
   }
 
   /** vbus control of algae intake motor*/
+  /** Pivots the handler to set position using closed-loop controller
+   * 
+   */
+  public void moveHandler(double position){
+    if(pivotSaftey){
+    pivotController.setReference(position, ControlType.kPosition);
+    }
+  }
+
+  /** vbus control of algae intake motor */
   public void algaeGrab(){
     if(algaeCaptureCurrentLimit){
     Shoot(HandlerConstants.grabAlgaeSpeed);
@@ -175,6 +187,7 @@ public class Handler extends SubsystemBase {
       pivotController.setReference(latestTarget, ControlType.kPosition);
     }
   }
+
   /** Gets the current of the motor that contols the handlers pivot
    * @return current of the Pivot motor
    */
