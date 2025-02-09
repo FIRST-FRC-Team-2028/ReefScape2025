@@ -22,14 +22,17 @@ import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.RunWheels;
+import frc.robot.commands.Spit;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorVbusVariable;
+import frc.robot.commands.HandlerPosition;
 import frc.robot.commands.SpitSequence;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.concurrent.Event;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -121,6 +124,7 @@ public class RobotContainer {
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
+      // TODO when elevator is set higher than L2, advise the DriveTrain to drive gently to avoid tipping
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
@@ -148,9 +152,9 @@ public class RobotContainer {
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
       
-      }
+    }
 
-      if (Constants.HANDLER_AVAILABLE) {
+    if (Constants.HANDLER_AVAILABLE) {
         new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
@@ -161,12 +165,42 @@ public class RobotContainer {
           .onTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 1, false));
         new JoystickButton(mechJoytick2, OIConstants.kAlgaeOut)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 0, true));
-      }
+    }
 
       
       // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+
+    boolean MRG_WAS_NEVER_HERE = false;
+    if (MRG_WAS_NEVER_HERE){
+    /* How might the handler motion automatically wait move to a position 
+     * of potential collision until the elevator has risen sufficiently?
+     * Desired:
+     *   send elevator on its way
+     *   set trigger for handler to pivot only after elevator is high enough
+     * Will the trigger remain active after the sequence is finished;
+     * must the trigger be deactivated somehow
+    */
+    new JoystickButton(mechJoytick1, 777)
+      .onTrue(Commands.parallel(new ElevatorPosition(elevatorSubsystem, 999.),
+                                new InstantCommand(()->setHandlerTrigger(true)))
+             .andThen(new InstantCommand(()->setHandlerTrigger(false)))
+      );
+    }
+
+  }
+
+  Trigger handlerTrigger;
+  /**activate/deactivate a trigger to run the handler when the elevator is high enough */
+  void setHandlerTrigger(boolean activate){
+    if(activate){
+      handlerTrigger = new Trigger(()->{return elevatorSubsystem.getPosition() > 9999.5;});
+      handlerTrigger.onTrue(new HandlerPosition(handlerSubsystem, 8888.));
+    }else {
+      // remove the trigger
+      //for (Event e: CommandScheduler.getInstance().getActiveButtonLoop().)
+    }
   }
 
   /**

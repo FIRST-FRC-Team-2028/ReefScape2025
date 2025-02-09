@@ -6,8 +6,8 @@ package frc.robot;
 
 import com.pathplanner.lib.commands.PathfindingCommand;
 
-import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+//import edu.wpi.first.math.filter.SlewRateLimiter;
+//import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.DriveConstants;
+//import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.Drivetrain;
+//import frc.robot.subsystems.Drivetrain;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -28,9 +28,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private SlewRateLimiter xLimiter, yLimiter, turningLimiter;
+  //private SlewRateLimiter xLimiter, yLimiter, turningLimiter;
   private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
-  private Drivetrain drivetrain;
+  //private Drivetrain drivetrain;
   double distance;
   double error;
   private PowerDistribution PDH;
@@ -100,14 +100,14 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    this.drivetrain = m_robotContainer.getDrivetrain();
-      this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-      this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-      this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    //this.drivetrain = m_robotContainer.getDrivetrain();
+      //this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+      //this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+      //this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
   }
-  double smoothedXSpeed = 0.;
-  double smoothedYSpeed = 0.;
-  double smoothedTurningSpeed = 0.;
+  //double smoothedXSpeed = 0.;
+  //double smoothedYSpeed = 0.;
+  //double smoothedTurningSpeed = 0.;
 
   /** This function is called periodically during operator control. */
   @Override

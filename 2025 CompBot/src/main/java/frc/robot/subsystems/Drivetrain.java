@@ -99,7 +99,7 @@ public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     if (Constants.CAMERA_AVAILABLE){
-      aprilSubsystem = new AprilCamera();
+      aprilSubsystem = new AprilCamera();  // TODO: MrG asks what about the object that exists in RobotContainer?
     }else aprilSubsystem = null;
     resetGyro();
     for (SwerveModule module : modules) {
@@ -314,9 +314,11 @@ public class Drivetrain extends SubsystemBase {
     Pose2d targetPose = new Pose2d(x, y, rotation2d);
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
   }
+  /** returns the state, does the DriveTrain believe the elevator is up? */
   public boolean elevatorUp(){
     return elevatorUp;
   }
+  /** sets the state whether the DriveTrain should drive as if the CG is elevated */
   public void elevatorPositionBoolean(boolean up){
     elevatorUp = up;
   }
