@@ -191,15 +191,15 @@ public class RobotContainer {
 
   }
 
-  Trigger handlerTrigger;
+  Command tHandle;
   /**activate/deactivate a trigger to run the handler when the elevator is high enough */
   void setHandlerTrigger(boolean activate){
     if(activate){
-      handlerTrigger = new Trigger(()->{return elevatorSubsystem.getPosition() > 9999.5;});
-      handlerTrigger.onTrue(new HandlerPosition(handlerSubsystem, 8888.));
+      tHandle =new HandlerPosition(handlerSubsystem, 8888.);
+      new Trigger(()->{return elevatorSubsystem.getPosition() > 9999.5;}).onTrue(tHandle);
     }else {
-      // remove the trigger
-      //for (Event e: CommandScheduler.getInstance().getActiveButtonLoop().)
+      // remove the command
+      tHandle.cancel();
     }
   }
 
