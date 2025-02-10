@@ -217,7 +217,7 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double softLimitForward = 57.;  // inches
+    public static final double softLimitForward = 65.;  // inches
     public static final double softLimitReverse = 4.; // inches
 
     public static double encoderConversionFactor = 50./124.238;  // inches : raw

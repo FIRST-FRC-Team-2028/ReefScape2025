@@ -9,9 +9,12 @@ import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.LimitSwitchConfig.Type;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLimitSwitch;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
@@ -27,6 +30,7 @@ public class Elevator extends SubsystemBase {
   private final RelativeEncoder m_elevatorEncoder;
   private final SendableRelEncoder msre;
   private final SparkClosedLoopController m_ClosedLoopController;
+  private final SparkLimitSwitch m_rearLimitSwitch;
   private final SparkMaxConfig configL, configR;
   private double Destination = 0;
 
@@ -35,6 +39,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
     m_elevatorEncoder = m_elevatorMotorL.getEncoder();
     m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
+    m_rearLimitSwitch = m_elevatorMotorL.getReverseLimitSwitch();
     configL = new SparkMaxConfig();
     configR = new SparkMaxConfig();
 
@@ -47,6 +52,8 @@ public class Elevator extends SubsystemBase {
                     .reverseSoftLimitEnabled(true);
     configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
     configR.follow(Constants.CANIDS.elevatorL, true);
+    configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
+                       .reverseLimitSwitchEnabled(true);
 
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -62,10 +69,17 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-   
+   if(m_rearLimitSwitch.isPressed()){
+     m_elevatorEncoder.setPosition(3);
+     System.out.println("Reset Zero");
+   }
     SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
     SmartDashboard.putNumber("Current", m_elevatorMotorL.getOutputCurrent());
     //System.out.println("Position: " + CurrentPosition);
+  }
+
+  public boolean LWPressed(){
+    return m_rearLimitSwitch.isPressed();
   }
 
   /**Closed loop control of the elevator
@@ -108,6 +122,10 @@ public class Elevator extends SubsystemBase {
 
   public double getPosition(){
     return m_elevatorEncoder.getPosition();
+  }
+
+  public void setPosition(double newPose){
+    m_elevatorEncoder.setPosition(newPose);
   }
 
   /**disables/enables Softlimits on elevator motors, resets position to reverse SL*/

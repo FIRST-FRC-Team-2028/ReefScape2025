@@ -232,6 +232,10 @@ public class Robot extends TimedRobot {
       if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimits)){
         m_robotContainer.getElevator().switchSL(true);
       }
+      if (m_robotContainer.getElevator().LWPressed()){
+        m_robotContainer.getElevator().setPosition(3);
+        System.out.println("Reset Zero");
+      }
     // TODO
     // Elevator tests:
     //   Leader/Follower
