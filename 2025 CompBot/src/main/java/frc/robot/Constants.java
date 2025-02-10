@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(6.0, 0., 0.);     //kp first was 1. 2 overshot TODO 2.75
+    new PIDConstants(6.0, .9, 0.41);     //d:.475
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(3,0.,0.);       //kp first was 1. 2 overshot
+    new PIDConstants(2.6,0.,0.);       
 
   }
 

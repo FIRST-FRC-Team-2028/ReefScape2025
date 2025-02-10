@@ -15,6 +15,12 @@
           "data": {
             "waitTime": 0.5
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mr. G Path 2"
+          }
         }
       ]
     }
