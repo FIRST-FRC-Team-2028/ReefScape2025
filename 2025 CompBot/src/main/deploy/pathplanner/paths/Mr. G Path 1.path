@@ -12,23 +12,28 @@
         "y": 2.4896026107089813
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Gumbert Start 1"
     },
     {
       "anchor": {
-        "x": 1.5016883257827303,
-        "y": 0.752572287455888
+        "x": 1.49,
+        "y": 0.74
       },
       "prevControl": {
-        "x": 2.1725216591160668,
-        "y": 1.433569762203362
+        "x": 2.1608333333333363,
+        "y": 1.420997474747474
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TEST END GUMBERT AUTO"
+      "linkedName": "Gumbert End 1"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],

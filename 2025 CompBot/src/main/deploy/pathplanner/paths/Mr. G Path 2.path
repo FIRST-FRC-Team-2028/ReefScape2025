@@ -12,7 +12,7 @@
         "y": 0.4379100164352463
       },
       "isLocked": false,
-      "linkedName": "TEST END GUMBERT AUTO"
+      "linkedName": "Gumbert Start 2"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "TEST START GUMBERT AUTO"
+      "linkedName": "Gumbert End 2"
     }
   ],
   "rotationTargets": [],
