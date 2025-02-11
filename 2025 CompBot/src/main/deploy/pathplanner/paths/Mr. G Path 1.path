@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6743002683026584,
+        "x": 3.674,
         "y": 3.018199790149231
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3758678286145862,
-        "y": 2.4896026107089813
+        "x": 3.2064631438454008,
+        "y": 2.4977512499062993
       },
       "isLocked": false,
       "linkedName": "Gumbert Start 1"
     },
     {
       "anchor": {
-        "x": 1.49,
-        "y": 0.74
+        "x": 1.573096443372756,
+        "y": 0.7189093064213853
       },
       "prevControl": {
-        "x": 2.1608333333333363,
-        "y": 1.420997474747474
+        "x": 2.081303514079827,
+        "y": 1.4100709225830026
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,7 +30,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 0.0
     }
   ],

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.502,
-        "y": 0.752572287455888
+        "x": 1.573096443372756,
+        "y": 0.7189093064213853
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1384913764320979,
-        "y": 0.4379100164352463
+        "x": 1.2095878198048537,
+        "y": 0.4042470354007436
       },
       "isLocked": false,
-      "linkedName": "Gumbert Start 2"
+      "linkedName": "Gumbert End 1"
     },
     {
       "anchor": {
-        "x": 3.95,
-        "y": 2.83
+        "x": 3.6743002683026584,
+        "y": 3.018199790149231
       },
       "prevControl": {
-        "x": 3.669561600243361,
-        "y": 2.5495616002433614
+        "x": 3.3938618685460193,
+        "y": 2.7377613903925924
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Gumbert End 2"
+      "linkedName": "Gumbert Start 1"
     }
   ],
   "rotationTargets": [],
