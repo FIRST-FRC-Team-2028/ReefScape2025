@@ -27,7 +27,7 @@ public class ElevatorVbusVariable extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.SetElevatorSpeedL(joystick.getRawAxis(1));
+    elevator.SetElevatorSpeed(joystick.getRawAxis(1));
   }
 
   // Called once the command ends or is interrupted.

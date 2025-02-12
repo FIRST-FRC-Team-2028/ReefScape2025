@@ -263,6 +263,8 @@ public final class Constants {
     public static final int kFirstButton = 2;
     public static final int kSecondButton = 3;
     public static final int kThirdButton = 4;
+    public static final int kFourthButton = 5;
+    public static final int kFifthButton = 6;
 
     public static final int kpathfindTopCoralStation =   4;
     public static final int kDriverRobotOrientedButton = 6;
