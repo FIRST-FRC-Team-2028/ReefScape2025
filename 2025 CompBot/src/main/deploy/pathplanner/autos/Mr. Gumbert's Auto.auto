@@ -7,7 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Mr. Gumbert's Path"
+            "pathName": "Mr. G Path 1"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Mr. G Path 2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         }
       ]

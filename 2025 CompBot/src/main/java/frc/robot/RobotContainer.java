@@ -71,6 +71,9 @@ public class RobotContainer {
     } else april = null;
 
 
+    
+
+
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
@@ -84,7 +87,7 @@ public class RobotContainer {
       new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
       NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
       NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
-      NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+      NamedCommands.registerCommand("Print Auto 1", Commands.print("Kilroy was:" + driveSubsystem.getPoseEstimatorPose()));
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
       autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -172,29 +175,25 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> elevatorSubsystem.SetElevatorSpeed(.1)))
         .onFalse(new InstantCommand(() -> elevatorSubsystem.StopElevator()));
 
-
-     // new JoystickButton(driverJoytick, OIConstants.kFourthButton)
-     //   .toggleOnTrue(new InstantCommand(() -> sequencBoolean.set(!sequencBoolean.get())));
+        sequence = new SequentialCommandGroup(new ElevatorPosition(elevatorSubsystem, -150)
+        .andThen(new WaitCommand(.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -100))
+        .andThen(new WaitCommand(.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -50))
+        .andThen(new WaitCommand(2))
+        .andThen(new ElevatorPosition(elevatorSubsystem, -1)));
     }
     
 
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue(new InstantCommand(() -> {
-          try {
-            System.out.println("WORKING");
-            driveSubsystem.pathfindToPath(PathPlannerPath.fromPathFile("To Tag 17"));
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
-        }));*/
+
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue(driveSubsystem.pathfindToPath("To Tag 17"));
+        .onTrue(driveSubsystem.pathfindToPath("Test Path 1"));
 
       new JoystickButton(driverJoytick, 3)
-        .onTrue(new InstantCommand(() -> field.setRobotPose(driveSubsystem.getPoseEstimatorPose())));
+        .whileTrue(driveSubsystem.pathfindToPose(1.51, 0.76, 54, 0));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {

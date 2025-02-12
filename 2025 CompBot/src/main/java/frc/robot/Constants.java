@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  FieldConstants
  */
 public final class Constants {
-  public static final boolean DRIVE_AVAILABLE = false;
+  public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = false;
-  public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean ELEVATOR_AVALIBLE = false;
 
 
 
@@ -50,8 +50,8 @@ public final class Constants {
     public static final double kDriveD = 0.0; // 2023 Competition Robot
     public static final double kDriveFF = 0.255; // 2023 Competition Robot      .255
 
-    public static final double kPTurning = 0.5;
-    public static final double kTurningP = 0.75; // 2023 Competition Robot 
+    //public static final double kPTurning = 0.5;
+    public static final double kTurningP = 1.75; // 2023 Competition Robot 
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
@@ -164,7 +164,7 @@ public final class Constants {
   public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond /1.5;
   public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = 
                                      kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
-  public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 4;
+  public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
   public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 1.8;
   public static final double kptwist = .5;
 
@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(2.75, 0., 0.);     //kp first was 1. 2 overshot TODO
+    new PIDConstants(6.0, 1.6, 1);     //d:.475
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(1.5,0.,0.);       //kp first was 1. 2 overshot
+    new PIDConstants(2.9,0.,0.);       
 
   }
 
@@ -328,9 +328,9 @@ public final class Constants {
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
                           DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);*/
-    public static final PathConstraints pathConstraints = new PathConstraints(1,
-                          0.5,
-                          2,
+    public static final PathConstraints pathConstraints = new PathConstraints(2,
+                          4,
+                          3,
                           1);
   }
 

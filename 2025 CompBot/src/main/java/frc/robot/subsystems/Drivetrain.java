@@ -150,7 +150,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     updateOdometry();
     updatePoseEstimator();
-    SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
+    //SmartDashboard.putNumber("front Left Velocity", m_frontLeft.getVelocity());
     
     //SmartDashboard.putNumber("front left abs", m_frontLeft.getAbsTurningPosition(0.1).getDegrees());
     //SmartDashboard.putNumber("front left rel", m_frontLeft.getRelativeTurningPosition().getDegrees());
@@ -260,6 +260,7 @@ public class Drivetrain extends SubsystemBase {
     });
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+    SmartDashboard.putNumber("Robot Degrees Rotation", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees());
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 
@@ -308,21 +309,32 @@ public class Drivetrain extends SubsystemBase {
     m_poseEstimator.resetPosition(getHeading(), getModulePositions(), pose);
   }
 
-  public Command pathfindToPath(String pathName) {
+ /**Contructs and runs a path to the given path name avoiding obsticals outlinned in navgrid.json. Uses the
+   * normal constraints of the robot as path constraints.
+   * @param pathname The name of the path file in the deploy/pathplanner/paths file.
+   * Will only print out "FAIL" if the file name does not exist.
+  */
+  public Command pathfindToPath(String pathname) {
     PathPlannerPath path;
     try{
-      path = PathPlannerPath.fromPathFile(pathName);
+      path = PathPlannerPath.fromPathFile(pathname);
       return AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
-    }catch (Exception e){
+    } catch(Exception e){
       e.getStackTrace();
-      return new InstantCommand(()-> System.out.println("FAIL"));
+      return new InstantCommand(()->System.out.println("FAIL"));
     }
-    //Command followPath = AutoBuilder.pathfindThenFollowPath(path, PathPlannerConstants.pathConstraints);
-    //SmartDashboard.putData("Pathfind To Path", followPath);
   }
-
-  public Command pathfindToPose(Pose2d targetPose ) {
-    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, 0.);
+  /**Contructs and runs a path to the given pose avoiding obsticals outlinned in navgrid.json
+   * @param x The x cordinate of the target position 
+   * @param y The y cordinate of the target position
+   * @param rotation the Rotation 2d value of the target position
+   * @param goalEndVelocity The velocity of the robot at the end of the path. 0 is required to stop at the target pose.
+   * A value > 0 may be used to keep the robot up to speed for the driver to take over.
+   */
+  public Command pathfindToPose(double x, double y, double rotation, double goalEndVelocity) {
+    Rotation2d rotation2d = new Rotation2d(rotation);
+    Pose2d targetPose = new Pose2d(x, y, rotation2d);
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
   }
 
 }

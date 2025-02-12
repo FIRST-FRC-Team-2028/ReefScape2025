@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.93,
+        "y": 2.81
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.7127839120113726,
+        "y": 2.9570113773445
+      },
+      "isLocked": false,
+      "linkedName": "Gumbert End 2"
+    },
+    {
+      "anchor": {
+        "x": 3.6743002683026584,
+        "y": 3.018199790149231
+      },
+      "prevControl": {
+        "x": 3.862524963609521,
+        "y": 2.853665708340511
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Gumbert Start 1"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7967289719626165,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.0,
+        "maxAcceleration": 4.0,
+        "maxAngularVelocity": 270.0,
+        "maxAngularAcceleration": 324.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 0.5,
+    "maxAcceleration": 0.5,
+    "maxAngularVelocity": 270.0,
+    "maxAngularAcceleration": 324.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "useDefaultConstraints": false
+}
