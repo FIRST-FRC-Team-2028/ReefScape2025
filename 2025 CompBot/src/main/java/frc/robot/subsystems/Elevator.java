@@ -14,6 +14,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLimitSwitch;
+import com.revrobotics.spark.SparkMaxAlternateEncoder;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -71,7 +72,7 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
    if(m_rearLimitSwitch.isPressed()){
      m_elevatorEncoder.setPosition(3);
-     System.out.println("Reset Zero");
+     //System.out.println("Reset Zero");
    }
     SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
     SmartDashboard.putNumber("Current", m_elevatorMotorL.getOutputCurrent());

@@ -23,6 +23,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.RunWheels;
 import frc.robot.commands.Spit;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.HandlerPosition;
@@ -80,6 +81,7 @@ public class RobotContainer {
     } else april = null;
 
     if (Constants.DRIVE_AVAILABLE){
+      driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
       new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
       NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
       NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
@@ -138,11 +140,11 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
-      new JoystickButton(driverJoytick, 2)
-        .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
+      //new JoystickButton(driverJoytick, 2)
+      //  .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
     }
 
-    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
+    /*if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
       new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
@@ -152,19 +154,20 @@ public class RobotContainer {
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
       
-    }
+    } */
 
     if (Constants.HANDLER_AVAILABLE) {
-        new JoystickButton(mechJoytick1, OIConstants.kRePivot)
+        /*new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
         new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
-          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));*/
         new JoystickButton(mechJoytick2, OIConstants.kIntake)
-          .onTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 1, false));
+          .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 1, false));
         new JoystickButton(mechJoytick2, OIConstants.kAlgaeOut)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 0, true));
+        
     }
 
       
@@ -182,11 +185,11 @@ public class RobotContainer {
      * Will the trigger remain active after the sequence is finished;
      * must the trigger be deactivated somehow
     */
-    new JoystickButton(mechJoytick1, 777)
+    /*new JoystickButton(mechJoytick1, 777)
       .onTrue(Commands.parallel(new ElevatorPosition(elevatorSubsystem, 999.),
                                 new InstantCommand(()->setHandlerTrigger(true)))
              .andThen(new InstantCommand(()->setHandlerTrigger(false)))
-      );
+      );*/
     }
 
   }
