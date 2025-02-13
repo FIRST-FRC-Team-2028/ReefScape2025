@@ -188,42 +188,46 @@ public final class Constants {
   }
 
   public static class HandlerConstants{
-    public static final double pivotP = 1;
+
+    //PID
+    public static final double pivotP = .45;
     public static final double pivotI = 0;
     public static final double pivotD = 0;
+
+
     public static final int grabSensorPort = 0;
     public static final double pivotCurrentLimit = 30;
     public static final double grabAlgaeSpeed = .5;
     public static final double grabAlgaeCurrent = 30;
     public static final double algaeHoldSpeed = .05;
     public static final double algaeShootSpeed = -0.5;
-    public static final double outputSpeed = .5;
+    public static final double outputSpeed = .75;
     public static final double grabCoralSpeed = .3;
-    public static final double pivotEncoderConversionFactor = 1;
+    public static final double pivotEncoderConversionFactor = 1/41.833;
 
 
     //PID positions
-    public static final double L4Position = 100;
-    public static final double L2Position = 15;
+    public static final double L4Position = .5;
+    public static final double L2Position = 0;
     public static final double intake = 0;
-    public static final double algae = 180;
-    public static final double barge = -15;
+    public static final double algae = .9;
+    public static final double barge = .5;
     public static final double nudgeUp = 2;
     public static final double nudgeDown = -2;
 
     // Soft Limits
-    public static final double forwardSoftLimit = 185;
-    public static final double reverseSoftLimit = -20;
+    public static final double forwardSoftLimit = 1;
+    public static final double reverseSoftLimit = 0;
   }
 
   public final static class ElevatorConstants {
     public static final double softLimitForward = 65.;  // inches
-    public static final double softLimitReverse = 4.; // inches
+    public static final double softLimitReverse = 3.25; // inches
 
     public static double encoderConversionFactor = 50./124.238;  // inches : raw
-    public static final double L1 = 4.;
-    public static final double L2 = 25.;
-    public static final double L3 = 40.;
+    public static final double L1 = 3.;
+    public static final double L2 = 13;
+    public static final double L3 = 28.2;
     public static final double L4 = 57.;
     //public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
 
@@ -267,8 +271,8 @@ public final class Constants {
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
     public static final int kRePivot =                   5;
-    public static final int kNudgeUp =                   6;
-    public static final int kNudgeDown =                 7;
+    public static final int kNudgeUp =                   9;
+    public static final int kNudgeDown =                 10;
 
     //Gamemech2 Buttons
     public static final int kAlgaeOut =                  1;

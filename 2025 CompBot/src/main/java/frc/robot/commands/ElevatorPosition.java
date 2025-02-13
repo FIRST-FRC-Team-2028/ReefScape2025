@@ -41,7 +41,7 @@ public class ElevatorPosition extends Command {
   // Returns true when position is close enough to target
   @Override
   public boolean isFinished() {
-    return Destination - allowance < elevator.getPosition() 
-           && elevator.getPosition() < Destination + allowance;
+    return false; /*Destination - allowance < elevator.getPosition() 
+           && elevator.getPosition() < Destination + allowance;*/
   }
 }
