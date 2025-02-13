@@ -33,48 +33,60 @@ public class Elevator extends SubsystemBase {
   private final SparkLimitSwitch m_rearLimitSwitch;
   private final SparkMaxConfig configL, configR;
   private double Destination = 0;
+  private double latestTarget = 3;
+  double[] currentHist = {0.,0.,0.,0.,0.};
+  int currP = 0;
+  double avgCurrent = 0;
+  boolean elevatorSaftey = true;
 
-  public Elevator() {
-    m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
-    m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
-    m_elevatorEncoder = m_elevatorMotorL.getEncoder();
-    m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
-    m_rearLimitSwitch = m_elevatorMotorL.getReverseLimitSwitch();
-    configL = new SparkMaxConfig();
-    configR = new SparkMaxConfig();
+  
+    public Elevator() {
+      m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
+      m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
+      m_elevatorEncoder = m_elevatorMotorL.getEncoder();
+      m_ClosedLoopController = m_elevatorMotorL.getClosedLoopController();
+      m_rearLimitSwitch = m_elevatorMotorL.getReverseLimitSwitch();
+      configL = new SparkMaxConfig();
+      configR = new SparkMaxConfig();
+  
+      configL.idleMode(IdleMode.kBrake)
+            .inverted(false);
+      configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
+      configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
+                      .forwardSoftLimitEnabled(true)
+                      .reverseSoftLimit(ElevatorConstants.softLimitReverse)
+                      .reverseSoftLimitEnabled(true);
+      configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+      configR.follow(Constants.CANIDS.elevatorL, true);
+      configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
+                         .reverseLimitSwitchEnabled(true);
+  
+      m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+      m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  
+      m_elevatorEncoder.setPosition(3);
+  
+      addChild("Left (Leader)", m_elevatorMotorL);
+      msre = new SendableRelEncoder(m_elevatorEncoder);
+      addChild("Position", msre);
+      addChild("PID", new SendableSparkPID(m_elevatorMotorL));
+    }
+  
+    @Override
+    public void periodic() {
+      // This method will be called once per scheduler run
+     if(m_rearLimitSwitch.isPressed()){
+       m_elevatorEncoder.setPosition(3);
+     }
+      SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
+      SmartDashboard.putNumber("Elevator Current L", m_elevatorMotorL.getOutputCurrent());
+      SmartDashboard.putNumber("Elevator Temp L", m_elevatorMotorL.getMotorTemperature());
+      SmartDashboard.putNumber("Elevator Temp R", m_elevatorMotorR.getMotorTemperature());
 
-    configL.idleMode(IdleMode.kBrake)
-          .inverted(false);
-    configL.encoder.positionConversionFactor(ElevatorConstants.encoderConversionFactor);
-    configL.softLimit.forwardSoftLimit(ElevatorConstants.softLimitForward)
-                    .forwardSoftLimitEnabled(true)
-                    .reverseSoftLimit(ElevatorConstants.softLimitReverse)
-                    .reverseSoftLimitEnabled(true);
-    configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
-    configR.follow(Constants.CANIDS.elevatorL, true);
-    configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
-                       .reverseLimitSwitchEnabled(true);
-
-    m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
-    m_elevatorEncoder.setPosition(3);
-
-    addChild("Left (Leader)", m_elevatorMotorL);
-    msre = new SendableRelEncoder(m_elevatorEncoder);
-    addChild("Position", msre);
-    addChild("PID", new SendableSparkPID(m_elevatorMotorL));
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-   if(m_rearLimitSwitch.isPressed()){
-     m_elevatorEncoder.setPosition(3);
-     System.out.println("Reset Zero");
-   }
-    SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
-    SmartDashboard.putNumber("Current", m_elevatorMotorL.getOutputCurrent());
+     double currentCurrent = m_elevatorMotorL.getOutputCurrent();
+      avgCurrent += currentCurrent/5. - currentHist[currP]/5.;
+    currentHist[currP] = currentCurrent;
+    currP = (currP+1)%5;
     //System.out.println("Position: " + CurrentPosition);
   }
 
@@ -88,6 +100,7 @@ public class Elevator extends SubsystemBase {
    */
   public void PIDController(double target) {
     m_ClosedLoopController.setReference(target, ControlType.kPosition);
+    latestTarget = target;
   }
 
   /** Run the elevator motor.
@@ -126,6 +139,11 @@ public class Elevator extends SubsystemBase {
 
   public void setPosition(double newPose){
     m_elevatorEncoder.setPosition(newPose);
+  }
+
+  public void reTargetElevator(double adjustment){
+    m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
+    latestTarget += adjustment;
   }
 
   /**disables/enables Softlimits on elevator motors, resets position to reverse SL*/

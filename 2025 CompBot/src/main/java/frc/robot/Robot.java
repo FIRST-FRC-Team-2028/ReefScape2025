@@ -234,7 +234,6 @@ public class Robot extends TimedRobot {
       }
       if (m_robotContainer.getElevator().LWPressed()){
         m_robotContainer.getElevator().setPosition(3);
-        System.out.println("Reset Zero");
       }
     // TODO
     // Elevator tests:
@@ -243,7 +242,16 @@ public class Robot extends TimedRobot {
     //   initial known position
     //   encoder range
     //   softlimits
-    }      
+    }   
+    
+    if (Constants.HANDLER_AVAILABLE){
+      if (driverJoytick.getRawButtonPressed(OIConstants.kSecondButton)){
+        m_robotContainer.getHandler().switchSL(false);
+      }
+      if (driverJoytick.getRawButtonPressed(OIConstants.kThirdButton)){
+        m_robotContainer.getHandler().switchSL(true);
+      }
+    }
   
   }
 

@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkAnalogSensor;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -26,14 +27,15 @@ public class Handler extends SubsystemBase {
   SendableSparkMax pivot;
   RelativeEncoder pivotEncoder;
   SparkClosedLoopController pivotController;
-  DigitalInput grabSensor;
-  double latestTarget;
+  double latestTarget = 0;
   SendableRelEncoder msrep;
+  SparkAnalogSensor grabsensor;
   double[] currentHist = {0.,0.,0.,0.,0.};
   int currP = 0;
   double avgCurrent = 0;
   boolean pivotSaftey = true;
   boolean doIHaveIt = false;
+  SparkMaxConfig pivotConfig;
 
   double[] currentHista = {0.,0.,0.,0.,0.};
   int currPa = 0;
@@ -46,7 +48,6 @@ public class Handler extends SubsystemBase {
    * <li>iHaveIt - sets doIHaveIt to true
    * <li>iDontHaveIt - set doIHaveIt to false
    * <li>moveHandlerSpeed - vbus control of pivot motor
-   * <li>targetPivot - closed loop control pivot to position
    * <li>reTargetPivot - Nudges the PID target of the pivot motor
    * <li>Shoot - vbus control of shoot motor
    * <li>stop - Stops the algae and coral manipulator motor
@@ -63,48 +64,46 @@ public class Handler extends SubsystemBase {
     pivot = new SendableSparkMax(Constants.CANIDS.pivot, MotorType.kBrushless);
     pivotEncoder = pivot.getEncoder();
     pivotController = pivot.getClosedLoopController();
-    grabSensor = new DigitalInput(HandlerConstants.grabSensorPort);
-    SparkMaxConfig pivotConfig = new SparkMaxConfig(){};
+    grabsensor = coralShoot.getAnalog();
+      pivotConfig = new SparkMaxConfig(){};
       pivotConfig.closedLoop.pid(HandlerConstants.pivotP,
                                  HandlerConstants.pivotI, 
                                  HandlerConstants.pivotD);
+      pivotConfig.closedLoopRampRate(.5);
       pivotConfig.encoder.positionConversionFactor(HandlerConstants.pivotEncoderConversionFactor);
       pivotConfig.softLimit.reverseSoftLimit(HandlerConstants.reverseSoftLimit);
+      pivotConfig.softLimit.reverseSoftLimitEnabled(true);
+      pivotConfig.softLimit.forwardSoftLimitEnabled(true);
       pivotConfig.softLimit.forwardSoftLimit(HandlerConstants.forwardSoftLimit);
       pivotConfig.idleMode(IdleMode.kBrake);
     pivot.configure(pivotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    
+
+    SparkMaxConfig coralConfig = new SparkMaxConfig();
+      coralConfig.inverted(true);
+      coralConfig.idleMode(IdleMode.kBrake);
+    coralShoot.configure(coralConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    pivotEncoder.setPosition(0);
     addChild("Pivot", pivot);
     msrep = new SendableRelEncoder(pivotEncoder);
     addChild("Pivot Encoder", msrep);
-    addChild("OutPut", coralShoot);
-  }    
+    addChild("CoralShoot", coralShoot);
+  }
+  
+  public void switchSL(boolean enabled){
+    pivotConfig.softLimit.forwardSoftLimitEnabled(enabled);
+    pivotConfig.softLimit.forwardSoftLimitEnabled(enabled);
+    if (enabled) pivotEncoder.setPosition(0);
+  }
+  public void resetPivotEncoder(){
+    pivotEncoder.setPosition(0);
+  }
 
   /**
    * Runs the handler depending on the speed needed to grab the coral
    * @return true, If the handler has a coral ready to be scored
    */
-  public boolean intake(){
-    double speed;
-    speed = HandlerConstants.grabCoralSpeed;
-    // Runs the handler spitting motor until the sensor detects that it has a coral.
-    // Then it switches to a lower speed until the other sensor detects that it has cleared the passive loader.
-    if(grabSensor.get()){
-      speed = HandlerConstants.grabCoralSpeed/2;
-      
-    }
-    /* if(clearSensor.get()){
-      speed = 0
-      doIHaveIt = true;
-    }
-    */
+
     
-    Shoot(speed);
-    return doIHaveIt;
-    /* TODO: MrG says This method must run repeatedly for this process to work.
-       Use the appropriate Trigger type *
-       or make this process a command sequence. */
-  }
   /**returns if the handler has a coral or not */
   public boolean doIHaveIt(){
     return doIHaveIt;
@@ -151,6 +150,7 @@ public class Handler extends SubsystemBase {
   public void moveHandler(double position){
     if(pivotSaftey){
     pivotController.setReference(position, ControlType.kPosition);
+    latestTarget = position;
     }
   }
 
@@ -166,16 +166,6 @@ public class Handler extends SubsystemBase {
     Shoot(HandlerConstants.algaeShootSpeed);
   }
 
-  /**
-   * closed loop control pivot to position
-   * @param target the target of the pivot motor
-   */
-  public void targetPivot(double target){
-    if(pivotSaftey){
-      pivotController.setReference(target, ControlType.kPosition);
-      latestTarget = target;
-    }
-  }
 
   /**
    * Nudges the PID target of the pivot motor
@@ -215,10 +205,10 @@ public class Handler extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(grabSensor.get()){
+ 
+    if (grabsensor.getPosition() > 2)
       iHaveIt();
-    }else iDontHaveIt();
-    SmartDashboard.putBoolean("Do I have It?", doIHaveIt());
+    else iDontHaveIt();
 
     SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
     SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
