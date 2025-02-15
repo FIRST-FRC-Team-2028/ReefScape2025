@@ -116,21 +116,39 @@ public class RobotContainer {
 
     if (Constants.ELEVATOR_AVALIBLE){
       
-      new JoystickButton(mechJoytick1, 6)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, 56));
-      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
-      new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
-      // TODO when elevator is set higher than L2, advise the DriveTrain to drive gently to avoid tipping
-      new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
-      new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));
-      new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
-        .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(.25)));
-        new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
-        .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(-.25)));
+      new JoystickButton(mechJoytick1, OIConstants.kToMaxE)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kElevatorMax));
+
+      // if (!OIConstants.kCompleteSwitch){
+        new JoystickButton(mechJoytick1, OIConstants.kIntake)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));
+
+      new JoystickButton(mechJoytick1, OIConstants.kNudgeUpE)
+        .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(ElevatorConstants.kNudgeUpE)));
+        new JoystickButton(mechJoytick1, OIConstants.kNudgeDownE)
+        .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(-ElevatorConstants.kNudgeDownE)));
+
+        if (Constants.ELEVATOR_AVALIBLE){
+          new JoystickButton(mechJoytick1, OIConstants.kIntake)
+            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(false)));
+          new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
+          new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
+        }
+      //}
     }
     
 
@@ -139,45 +157,54 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
-      new JoystickButton(driverJoytick, 2)
+      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
         .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
     }
 
-    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
-      /*new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+/*    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE && OIConstants.kCompleteSwitch) {
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
+
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L2));
+
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L3));
+
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
-      */
-    }
+
+      
+    }*/
 
    if (Constants.HANDLER_AVAILABLE) {
-      /*  new JoystickButton(mechJoytick1, OIConstants.kRePivot)
+        new JoystickButton(mechJoytick1, OIConstants.kRePivot)
           .onTrue(new InstantCommand(() -> handlerSubsystem.rePivot()));
-        new JoystickButton(mechJoytick1, OIConstants.kNudgeUp)
+
+        new JoystickButton(mechJoytick2, OIConstants.kNudgeUpP)
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeUp)));
-        new JoystickButton(mechJoytick1, OIConstants.kNudgeDown)
-          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));*/
+
+        new JoystickButton(mechJoytick2, OIConstants.kNudgeDownP)
+          .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
+
         new JoystickButton(mechJoytick2, OIConstants.kIntake)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 0.2, false));
+
         new JoystickButton(mechJoytick2, OIConstants.kAlgaeOut)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 0, true));
-        new JoystickButton(mechJoytick2, 3)
+
+        new JoystickButton(mechJoytick2, OIConstants.kHandlerHalfExtend)
           .onTrue(new InstantCommand(()-> handlerSubsystem.moveHandler(.5)));
-        new JoystickButton(mechJoytick2, 4)
+
+        new JoystickButton(mechJoytick2, OIConstants.kRetract)
           .onTrue(new InstantCommand(()-> handlerSubsystem.moveHandler(0)));
+
         new JoystickButton(mechJoytick2, 5)
           .onTrue(new InstantCommand(()-> handlerSubsystem.moveHandler(.9)));
-        new JoystickButton(mechJoytick1, 11)
-          .onTrue(new InstantCommand(()-> handlerSubsystem.reTargetPivot(.025)));
-        new JoystickButton(mechJoytick1, 12)
-          .onTrue(new InstantCommand(()-> handlerSubsystem.reTargetPivot(-.025)));
+
         new JoystickButton(mechJoytick2, 6)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
+
 
     }
 

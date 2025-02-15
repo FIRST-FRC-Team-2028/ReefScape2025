@@ -189,13 +189,7 @@ public final class Constants {
 
   public static class HandlerConstants{
 
-    //PID
-    public static final double pivotP = .45;
-    public static final double pivotI = 0;
-    public static final double pivotD = 0;
-
-
-    public static final int grabSensorPort = 0;
+    public static final double pivotEncoderConversionFactor = 1/41.833;
     public static final double pivotCurrentLimit = 30;
     public static final double grabAlgaeSpeed = .5;
     public static final double grabAlgaeCurrent = 30;
@@ -203,7 +197,11 @@ public final class Constants {
     public static final double algaeShootSpeed = -0.5;
     public static final double outputSpeed = .75;
     public static final double grabCoralSpeed = .3;
-    public static final double pivotEncoderConversionFactor = 1/41.833;
+
+    //PID
+    public static final double pivotP = .45;
+    public static final double pivotI = 0;
+    public static final double pivotD = 0;
 
 
     //PID positions
@@ -212,8 +210,8 @@ public final class Constants {
     public static final double intake = 0;
     public static final double algae = .9;
     public static final double barge = .5;
-    public static final double nudgeUp = 2;
-    public static final double nudgeDown = -2;
+    public static final double nudgeUp = .025;
+    public static final double nudgeDown = -.025;
 
     // Soft Limits
     public static final double forwardSoftLimit = 1;
@@ -225,15 +223,22 @@ public final class Constants {
     public static final double softLimitReverse = 3.25; // inches
 
     public static double encoderConversionFactor = 50./124.238;  // inches : raw
-    public static final double L1 = 3.;
-    public static final double L2 = 13;
-    public static final double L3 = 28.2;
-    public static final double L4 = 57.;
+
     //public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
 
     public static final double kP = 0.2;
     public static final double kI = 0;
     public static final double kD = 0;
+
+    //PID Postiions
+    public static final double kNudgeUpE = .25;
+    public static final double kNudgeDownE = -.25;
+    public static final double kElevatorMax = 56;
+    public static final double Intake = 3.;
+    public static final double L1 = 3.;
+    public static final double L2 = 13;
+    public static final double L3 = 28.2;
+    public static final double L4 = 57.;
   }
 
   public static class CANIDS {
@@ -266,21 +271,33 @@ public final class Constants {
     public static final int kDriverRobotOrientedButton = 6;
 
     //Gamemech Buttons
+    public static final int kIntake =                    5;
     public static final int kL1shoot =                   4;
     public static final int kL2shoot =                   3;
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
-    public static final int kRePivot =                   5;
-    public static final int kNudgeUp =                   9;
-    public static final int kNudgeDown =                 10;
+    public static final int kToMaxE =                    6;
+    public static final int kNudgeUpE =                  9;
+    public static final int kNudgeDownE =                10;
+    public static final int kRePivot =                   12;
 
     //Gamemech2 Buttons
-    public static final int kAlgaeOut =                  1;
-    public static final int kIntake =                    2;
+    public static final int kNudgeUpP =                  1;
+    public static final int kNudgeDownP =                2;
+    public static final int kOutCoral =                  5;
+    public static final int kInCoral =                   6;
+    public static final int kRetract =                   7;
+    public static final int kHandlerExtend =             8;
+    public static final int kAlgaeOut =                  9;
+    public static final int kHandlerHalfExtend =         10;
+
+
 
     //Test Buttons
-    public static final int RestSoftLimits = 1;       //Driver
-    public static final int EnableSoftLimits = 2;     //Driver
+    public static final int RestSoftLimitsE =            1;     //Driver
+    public static final int EnableSoftLimitsE =          2;     //Driver
+    public static final int RestSoftLimitsP =            3;     //Driver
+    public static final int EnableSoftLimitsP =          4;     //Driver
 
     public static final double kDeadband = 0.075;
 

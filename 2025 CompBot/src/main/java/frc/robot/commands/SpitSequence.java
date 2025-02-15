@@ -20,7 +20,7 @@ public class SpitSequence extends SequentialCommandGroup {
     addCommands(  
                   Commands.parallel(
                     new ElevatorPosition(elevatorSubsystem, positionE),
-                    new HandlerPosition(handlerSubsystem, positionP)    // TODO ensure handler position is clear of elevator parts
+                    new HandlerPosition(handlerSubsystem, positionP)    
                     ),
                   new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
   }
