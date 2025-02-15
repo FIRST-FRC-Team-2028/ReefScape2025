@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.io.IOException;
+import java.util.function.DoubleSupplier;
 
 import org.json.simple.parser.ParseException;
 
@@ -59,6 +60,7 @@ public class RobotContainer {
   private final Handler handlerSubsystem;
   private final AprilCamera april;
   private final SendableChooser<Command> autoChooser;
+  public boolean algae = false;
 
   // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -113,6 +115,9 @@ public class RobotContainer {
   public void configureButtonBindings() {
     CommandScheduler.getInstance().getActiveButtonLoop().clear();
     
+    new JoystickButton(mechJoytick1, OIConstants.kAlgeaSwitch)
+    .onTrue(new InstantCommand(()-> algae = true))
+    .onFalse(new InstantCommand(()-> algae = false));
 
     if (Constants.ELEVATOR_AVALIBLE){
       
@@ -128,7 +133,11 @@ public class RobotContainer {
           .andThen(new HandlerPosition(handlerSubsystem, 0)));
 
         new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
+          .onTrue(new ElevatorPosition(elevatorSubsystem, 
+                 ((DoubleSupplier) (()->getAlgae()?ElevatorConstants.algaeL2:ElevatorConstants.L2))
+            .getAsDouble()
+          ));
+         
 
         new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
           .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
@@ -284,5 +293,9 @@ public class RobotContainer {
 
   public Elevator getElevator(){
     return elevatorSubsystem;
+  }
+
+  public boolean getAlgae(){
+    return algae;
   }
 }

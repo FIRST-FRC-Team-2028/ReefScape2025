@@ -5,25 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ElevatorPosition extends Command {
   private final Elevator elevator;
-  private final double Destination;
+  private double Destination;
   private final double allowance = 0.15;
+  private boolean alage;
   /** closed loop set the elevator position.
    * @param Destination inches
    */
   public ElevatorPosition(Elevator elevator, double Destination) {
     this.elevator = elevator;
     this.Destination = Destination;
+    this.alage = alage;
     addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
     elevator.PIDController(Destination);
   }
 

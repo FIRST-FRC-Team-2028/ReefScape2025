@@ -242,6 +242,8 @@ public final class Constants {
     public static final double L2 = 13;
     public static final double L3 = 28.2;
     public static final double L4 = 57.;
+    public static final double algaeL2 = 13.;
+    public static final double algaeL3 = 28.2;
 
 
    // public static final double L2Algae = 20;
@@ -283,7 +285,7 @@ public final class Constants {
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
     public static final int kBarge =                     6;
-    public static final int kAlgeaSwitch =               7;
+    public static final int kAlgeaSwitch =               8;
     public static final int kNudgeUpE =                  9;
     public static final int kNudgeDownE =                10;
     public static final int kRePivot =                   12;
