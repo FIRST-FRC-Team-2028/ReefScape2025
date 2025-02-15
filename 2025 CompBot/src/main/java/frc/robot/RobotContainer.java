@@ -157,8 +157,8 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
-      new JoystickButton(driverJoytick, OIConstants.kFirstButton)
-        .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
+      //new JoystickButton(driverJoytick, 2)
+      //  .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
     }
 
 /*    if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE && OIConstants.kCompleteSwitch) {
@@ -223,11 +223,11 @@ public class RobotContainer {
      * Will the trigger remain active after the sequence is finished;
      * must the trigger be deactivated somehow
     */
-    new JoystickButton(mechJoytick1, 777)
+    /*new JoystickButton(mechJoytick1, 777)
       .onTrue(Commands.parallel(new ElevatorPosition(elevatorSubsystem, 999.),
                                 new InstantCommand(()->setHandlerTrigger(true)))
              .andThen(new InstantCommand(()->setHandlerTrigger(false)))
-      );
+      );*/
     }
 
   }
