@@ -242,8 +242,8 @@ public final class Constants {
     public static final double L2 = 13;
     public static final double L3 = 28.2;
     public static final double L4 = 57.;
-    public static final double algaeL2 = 13.;
-    public static final double algaeL3 = 28.2;
+    public static final double algaeL2 = 24.;
+    public static final double algaeL3 = 39.2;
 
 
    // public static final double L2Algae = 20;

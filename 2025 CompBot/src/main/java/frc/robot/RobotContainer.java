@@ -125,18 +125,30 @@ public class RobotContainer {
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge));
 
       // if (!OIConstants.kCompleteSwitch){
-        new JoystickButton(mechJoytick1, OIConstants.kIntake)
+        new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->!getAlgae())
           .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake));
+
+        new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->getAlgae())
+          .onTrue(new HandlerPosition(handlerSubsystem, 1)
+          .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
 
         new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
           .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
           .andThen(new HandlerPosition(handlerSubsystem, 0)));
 
-        new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, 
-                 ((DoubleSupplier) (()->getAlgae()?ElevatorConstants.algaeL2:ElevatorConstants.L2))
-            .getAsDouble()
-          ));
+        // use algae switch to determine height
+        /*new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
+            .onTrue(new ElevatorPosition(elevatorSubsystem, 
+                   ((DoubleSupplier) (()->getAlgae()?ElevatorConstants.algaeL2:ElevatorConstants.L2))
+              .getAsDouble()
+            ));*/
+
+        new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->getAlgae())
+                  .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL2)
+                  .andThen(new HandlerPosition(handlerSubsystem,1.)));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->!getAlgae())
+                        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
          
 
         new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
@@ -296,6 +308,7 @@ public class RobotContainer {
   }
 
   public boolean getAlgae(){
+    //System.out.println("Change per algae");
     return algae;
   }
 }
