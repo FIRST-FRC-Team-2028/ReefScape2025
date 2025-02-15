@@ -24,6 +24,7 @@ import frc.robot.SendableSparkMax;
 
 public class Handler extends SubsystemBase {
   SendableSparkMax coralShoot;
+  RelativeEncoder coralShootEncoder;
   SendableSparkMax pivot;
   RelativeEncoder pivotEncoder;
   SparkClosedLoopController pivotController;
@@ -61,6 +62,7 @@ public class Handler extends SubsystemBase {
    */
   public Handler() {
     coralShoot = new SendableSparkMax(Constants.CANIDS.wheels, MotorType.kBrushless);
+    coralShootEncoder = coralShoot.getEncoder();
     pivot = new SendableSparkMax(Constants.CANIDS.pivot, MotorType.kBrushless);
     pivotEncoder = pivot.getEncoder();
     pivotController = pivot.getClosedLoopController();
@@ -148,10 +150,10 @@ public class Handler extends SubsystemBase {
    * 
    */
   public void moveHandler(double position){
-    if(pivotSaftey){
+  //  if(pivotSaftey){
     pivotController.setReference(position, ControlType.kPosition);
     latestTarget = position;
-    }
+ //   }
   }
 
   /** vbus control of algae intake motor */
@@ -172,10 +174,10 @@ public class Handler extends SubsystemBase {
    * @param adjustment PID nudge amount
    */
   public void reTargetPivot(double adjustment){
-    if (pivotSaftey){
+   // if (pivotSaftey){
       latestTarget += adjustment;
       pivotController.setReference(latestTarget, ControlType.kPosition);
-    }
+   // }
   }
 
   /** Gets the current of the motor that contols the handlers pivot
@@ -211,7 +213,8 @@ public class Handler extends SubsystemBase {
     else iDontHaveIt();
 
     SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
-    SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
+    SmartDashboard.putNumber("Algae Current", coralShoot.getOutputCurrent());
+ //   SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();
 
     avgCurrent += currentCurrent/5. - currentHist[currP]/5.;
@@ -225,9 +228,10 @@ public class Handler extends SubsystemBase {
     currentHista[currP] = currentCurrenta;
     currPa = (currPa+1)%5;
 
-    if(avgCurrent>HandlerConstants.pivotCurrentLimit){
+ /*   if(avgCurrent>HandlerConstants.pivotCurrentLimit){
       pivotSaftey = false;
     }
+      */
 
     if(avgCurrenta>HandlerConstants.grabAlgaeCurrent){
       algaeCaptureCurrentLimit = false;

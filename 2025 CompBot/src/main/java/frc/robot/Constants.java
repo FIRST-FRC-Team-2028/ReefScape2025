@@ -196,7 +196,7 @@ public final class Constants {
     public static final double algaeHoldSpeed = .05;
     public static final double algaeShootSpeed = -0.5;
     public static final double outputSpeed = .75;
-    public static final double grabCoralSpeed = .3;
+    public static final double grabCoralSpeed = .25;
 
     //PID
     public static final double pivotP = .45;
@@ -205,13 +205,16 @@ public final class Constants {
 
 
     //PID positions
-    public static final double L4Position = .5;
+    public static final double L4Position = .3;
     public static final double L2Position = 0;
     public static final double intake = 0;
     public static final double algae = .9;
-    public static final double barge = .5;
+    public static final double barge = 0.28;
     public static final double nudgeUp = .025;
     public static final double nudgeDown = -.025;
+
+    public static final double kAlgeaFloor = 1;
+    public static final double kAlgeaL2 = 1;
 
     // Soft Limits
     public static final double forwardSoftLimit = 1;
@@ -220,7 +223,7 @@ public final class Constants {
 
   public final static class ElevatorConstants {
     public static final double softLimitForward = 65.;  // inches
-    public static final double softLimitReverse = 3.25; // inches
+    public static final double softLimitReverse = 3.; // inches
 
     public static double encoderConversionFactor = 50./124.238;  // inches : raw
 
@@ -233,12 +236,15 @@ public final class Constants {
     //PID Postiions
     public static final double kNudgeUpE = .25;
     public static final double kNudgeDownE = -.25;
-    public static final double kElevatorMax = 56;
+    public static final double kBarge = 64.75;
     public static final double Intake = 3.;
     public static final double L1 = 3.;
     public static final double L2 = 13;
     public static final double L3 = 28.2;
     public static final double L4 = 57.;
+
+
+   // public static final double L2Algae = 20;
   }
 
   public static class CANIDS {
@@ -276,7 +282,8 @@ public final class Constants {
     public static final int kL2shoot =                   3;
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
-    public static final int kToMaxE =                    6;
+    public static final int kBarge =                     6;
+    public static final int kAlgeaSwitch =               7;
     public static final int kNudgeUpE =                  9;
     public static final int kNudgeDownE =                10;
     public static final int kRePivot =                   12;
@@ -284,12 +291,14 @@ public final class Constants {
     //Gamemech2 Buttons
     public static final int kNudgeUpP =                  1;
     public static final int kNudgeDownP =                2;
+    public static final int kHandlerHalfExtend =         3;
     public static final int kOutCoral =                  5;
     public static final int kInCoral =                   6;
     public static final int kRetract =                   7;
     public static final int kHandlerExtend =             8;
-    public static final int kAlgaeOut =                  9;
-    public static final int kHandlerHalfExtend =         10;
+    public static final int kAlgaeIn =                   9;
+    public static final int kAlgaeOut =                  10;
+
 
 
 
