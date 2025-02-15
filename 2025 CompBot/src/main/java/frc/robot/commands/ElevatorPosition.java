@@ -35,13 +35,13 @@ public class ElevatorPosition extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    elevator.stopElevator();
+    //elevator.stopElevator();
   }
 
   // Returns true when position is close enough to target
   @Override
   public boolean isFinished() {
-    return false; /*Destination - allowance < elevator.getPosition() 
+    return true; /*Destination - allowance < elevator.getPosition() 
            && elevator.getPosition() < Destination + allowance;*/
   }
 }

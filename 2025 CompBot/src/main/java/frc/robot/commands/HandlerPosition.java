@@ -35,13 +35,14 @@ public class HandlerPosition extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    handler.stopPivot();
+    //handler.stopPivot();
   }
 
   // Returns true when position is close enough to target.
   @Override
   public boolean isFinished() {
-    return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID change to return false and take out "stopPivot"
-           && target + allowance > handler.getPivotPostition();
+    return true;
+    /*return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID change to return false and take out "stopPivot"
+           && target + allowance > handler.getPivotPostition();*/
   }
 }
