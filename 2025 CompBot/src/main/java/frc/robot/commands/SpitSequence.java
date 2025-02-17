@@ -8,6 +8,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants.HandlerConstants;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
@@ -22,6 +24,7 @@ public class SpitSequence extends SequentialCommandGroup {
                     new ElevatorPosition(elevatorSubsystem, positionE),
                     new HandlerPosition(handlerSubsystem, positionP)    
                     ),
+                    new WaitCommand(2),
                   new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
   }
 }

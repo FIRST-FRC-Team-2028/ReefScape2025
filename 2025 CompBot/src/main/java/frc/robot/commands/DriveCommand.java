@@ -22,9 +22,9 @@ public class DriveCommand extends Command {
   /** Creates a new DriveCommand. */
   public DriveCommand(Drivetrain subsystem) {
     drivetrain = subsystem;
-    this.xLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-    this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-    this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+    this.xLimiter = new SlewRateLimiter(OIConstants.kSlewRateLimiter);
+    this.yLimiter = new SlewRateLimiter(OIConstants.kSlewRateLimiter);
+    this.turningLimiter = new SlewRateLimiter(OIConstants.kTurnSlewRateLimiter);
      addRequirements(drivetrain);
   }
 
@@ -35,10 +35,15 @@ public class DriveCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xSpeed = xLimiter.calculate(MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverXAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxSpeedMetersPerSecond; // Negative values go forward
-    double ySpeed = yLimiter.calculate(MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverYAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    double xSpeed = (MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverXAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxSpeedMetersPerSecond; // Negative values go forward
+    double ySpeed = (MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverYAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+    double turningSpeed = (MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverRotAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+
+    xSpeed = xLimiter.calculate(xSpeed); // Negative values go forward
+    ySpeed = yLimiter.calculate(ySpeed);
+    turningSpeed = turningLimiter.calculate(turningSpeed);
     // TODO limit acceleration as elevator is raised
-    double turningSpeed = turningLimiter.calculate(MathUtil.applyDeadband(-driverJoytick.getRawAxis(OIConstants.kDriverRotAxis), OIConstants.kDeadband))*DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+    
     xSpeed *= 1. - (DriveConstants.kFineControlSpeed * driverJoytick.getRawAxis(OIConstants.kFineControlAxis))
                     + (DriveConstants.kFasterSpeed * driverJoytick.getRawAxis(OIConstants.kFastControlAxis));
     ySpeed *= 1. - (DriveConstants.kFineControlSpeed * driverJoytick.getRawAxis(OIConstants.kFineControlAxis))
@@ -56,9 +61,9 @@ public class DriveCommand extends Command {
       smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .08;
     }
 
-    xSpeed = smoothedXSpeed;
-    ySpeed = smoothedYSpeed;
-    turningSpeed = smoothedTurningSpeed;
+  //  xSpeed = smoothedXSpeed;
+  //  ySpeed = smoothedYSpeed;
+  //  turningSpeed = smoothedTurningSpeed;
     
     ChassisSpeeds chassisSpeeds;
     

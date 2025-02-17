@@ -50,8 +50,8 @@ public final class Constants {
     public static final double kDriveD = 0.0; // 2023 Competition Robot
     public static final double kDriveFF = 0.255; // 2023 Competition Robot
 
-    public static final double kPTurning = 0.5;
-    public static final double kTurningP = 0.75; // 2023 Competition Robot   0.75
+
+    public static final double kTurningP = 1.3; // 2023 Competition Robot   0.75
     public static final double kTurningI = 0.0; // 2023 Competition Robot
     public static final double kTurningD = 0.0; // 2023 Competition Robot
 
@@ -69,7 +69,7 @@ public final class Constants {
     public static final double kDriveVelocityConversionFactor =
       kDrivePositionConversionFactor / 60.0;
     public static final double kRampRate = 1;
-    public static final double kRampRateT = 0.75;
+    public static final double kRampRateT = 0.; //0.75; 
     public static final double AbsoluteSensorDiscontinuityPoint = 0.5; //1 is value between [0, 1] 0.5 is value between [-0.5, 0.5] 0 is value between [-1, 0] -CTRE Docs
   }
 
@@ -205,8 +205,8 @@ public final class Constants {
 
 
     //PID positions
-    public static final double L4Position = .3;
-    public static final double L2Position = 0;
+    public static final double L1Position = 0;
+    public static final double L4Position = .22;
     public static final double intake = 0;
     public static final double algae = .9;
     public static final double barge = 0.28;
@@ -241,7 +241,7 @@ public final class Constants {
     public static final double L1 = 3.;
     public static final double L2 = 13;
     public static final double L3 = 28.2;
-    public static final double L4 = 57.;
+    public static final double L4 = 56.3;
 
 
    // public static final double L2Algae = 20;
@@ -296,8 +296,9 @@ public final class Constants {
     public static final int kInCoral =                   6;
     public static final int kRetract =                   7;
     public static final int kHandlerExtend =             8;
-    public static final int kAlgaeIn =                   9;
-    public static final int kAlgaeOut =                  10;
+    public static final int kAlgaeOut =                  9;
+    public static final int kAlgaeIn =                   10;
+
 
 
 
@@ -309,6 +310,8 @@ public final class Constants {
     public static final int EnableSoftLimitsP =          4;     //Driver
 
     public static final double kDeadband = 0.075;
+    public static final double kSlewRateLimiter = 3.5;
+    public static final double kTurnSlewRateLimiter = 5.;
 
   }
 
@@ -317,8 +320,7 @@ public final class Constants {
       //public static final double target_Height_Meters = Units.inchesToMeters(78.);
 
       public static final int followDistance = 1; //Meters
-      public static final double camera_Height_Meters = Units.inchesToMeters(7);
-      public static final double target_Height_Meters = Units.inchesToMeters(12);
+      public static final double camera_Height_Meters = Units.inchesToMeters(32);
       public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;

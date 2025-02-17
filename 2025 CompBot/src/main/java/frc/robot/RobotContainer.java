@@ -116,16 +116,16 @@ public class RobotContainer {
 
     if (Constants.ELEVATOR_AVALIBLE){
       
-      new JoystickButton(mechJoytick1, OIConstants.kBarge)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge));
+      /*new JoystickButton(mechJoytick1, OIConstants.kBarge)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge));*/
 
       // if (!OIConstants.kCompleteSwitch){
-        new JoystickButton(mechJoytick1, OIConstants.kIntake)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake));
+        /*new JoystickButton(mechJoytick1, OIConstants.kIntake)
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake));*/
 
         new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
-          .andThen(new HandlerPosition(handlerSubsystem, 0)));
+          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1));
+
 
         new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
           .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
@@ -165,24 +165,26 @@ public class RobotContainer {
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
 
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, 56.3)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.75))
-        .andThen(new HandlerPosition(handlerSubsystem, 0.22)));
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4Position)));
 
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0, true))
         .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge)));
-        
-      
+
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
       /*new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
 
       new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L2));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L2));
 
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L2Position, ElevatorConstants.L3));
+        .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L3));
 
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
