@@ -69,7 +69,7 @@ public final class Constants {
     public static final double kDriveVelocityConversionFactor =
       kDrivePositionConversionFactor / 60.0;
     public static final double kRampRate = 1;
-    public static final double kRampRateT = 0.; //0.75; 
+    public static final double kRampRateT = 0.75; //0.75; 
     public static final double AbsoluteSensorDiscontinuityPoint = 0.5; //1 is value between [0, 1] 0.5 is value between [-0.5, 0.5] 0 is value between [-1, 0] -CTRE Docs
   }
 
@@ -205,7 +205,7 @@ public final class Constants {
 
 
     //PID positions
-    public static final double L1 = 0;
+    public static final double L1 = 1.02;
     public static final double L2 = 0;
     public static final double L3 = 0;
     public static final double L4 = 0.22;
@@ -245,7 +245,7 @@ public final class Constants {
     public static final double kNudgeDownE = -.25;
     public static final double kBarge = 64.75;
     public static final double Intake = 3.;
-    public static final double L1 = 3.;
+    public static final double L1 = 23.;
     public static final double L2 = 12;
     public static final double L3 = 27.2;
     public static final double L4 = 56.3;
