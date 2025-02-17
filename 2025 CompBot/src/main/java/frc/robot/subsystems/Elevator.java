@@ -143,8 +143,10 @@ public class Elevator extends SubsystemBase {
   }
 
   public void reTargetElevator(double adjustment){
-    m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
     latestTarget += adjustment;
+    PIDController(latestTarget);
+    //m_ClosedLoopController.setReference(latestTarget, ControlType.kPosition);
+
   }
 
   /**disables/enables Softlimits on elevator motors, resets position to reverse SL*/

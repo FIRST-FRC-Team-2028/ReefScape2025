@@ -23,7 +23,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
@@ -72,16 +71,7 @@ public class Drivetrain extends SubsystemBase {
 
   private SwerveModule[] modules = {m_frontLeft, m_frontRight, m_backLeft, m_backRight};
   private final Pigeon2 m_gyro = new Pigeon2(0);
-  private final SwerveDriveOdometry m_odometry =
-      new SwerveDriveOdometry(
-          DriveConstants.kDriveKinematics1,
-          m_gyro.getRotation2d(),
-          new SwerveModulePosition[] {
-            m_frontLeft.getPosition(),
-            m_frontRight.getPosition(),
-            m_backLeft.getPosition(),
-            m_backRight.getPosition()
-          });
+
   
   private final SwerveDrivePoseEstimator m_poseEstimator =
     new SwerveDrivePoseEstimator(
