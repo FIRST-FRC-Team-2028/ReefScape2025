@@ -205,16 +205,23 @@ public final class Constants {
 
 
     //PID positions
-    public static final double L4Position = .3;
-    public static final double L2Position = 0;
+    public static final double L1 = 0;
+    public static final double L2 = 0;
+    public static final double L3 = 0;
+    public static final double L4 = 0.22;
     public static final double intake = 0;
+    public static final double algaeL1 = 0.6;
+    public static final double algaeL2 = 1.;
+    public static final double algaeL3 = 1.;
+    public static final double algaeL4 = 0;
+    public static final double algaeIntake = 1.;
     public static final double algae = .9;
     public static final double barge = 0.28;
     public static final double nudgeUp = .025;
     public static final double nudgeDown = -.025;
 
-    public static final double kAlgeaFloor = 1;
-    public static final double kAlgeaL2 = 1;
+    public static final double kAlgaeFloor = 1;
+
 
     // Soft Limits
     public static final double forwardSoftLimit = 1;
@@ -241,9 +248,12 @@ public final class Constants {
     public static final double L1 = 3.;
     public static final double L2 = 13;
     public static final double L3 = 28.2;
-    public static final double L4 = 57.;
+    public static final double L4 = 56.3;
+    public static final double algaeIntake = 3.;
+    public static final double algaeL1 = 3.;
     public static final double algaeL2 = 24.;
     public static final double algaeL3 = 39.2;
+    public static final double algaeL4 = 3.;
 
 
    // public static final double L2Algae = 20;

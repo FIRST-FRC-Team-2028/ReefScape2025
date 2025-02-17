@@ -13,14 +13,12 @@ public class ElevatorPosition extends Command {
   private final Elevator elevator;
   private double Destination;
   private final double allowance = 0.15;
-  private boolean alage;
   /** closed loop set the elevator position.
    * @param Destination inches
    */
   public ElevatorPosition(Elevator elevator, double Destination) {
     this.elevator = elevator;
     this.Destination = Destination;
-    this.alage = alage;
     addRequirements(elevator);
   }
 

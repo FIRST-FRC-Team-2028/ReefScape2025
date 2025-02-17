@@ -120,56 +120,28 @@ public class RobotContainer {
     .onFalse(new InstantCommand(()-> algae = false));
 
     if (Constants.ELEVATOR_AVALIBLE){
-      
-      new JoystickButton(mechJoytick1, OIConstants.kBarge)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge));
-
       // if (!OIConstants.kCompleteSwitch){
-        new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->!getAlgae())
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake));
-
-        new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->getAlgae())
-          .onTrue(new HandlerPosition(handlerSubsystem, 1)
-          .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
-
-        new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
-          .andThen(new HandlerPosition(handlerSubsystem, 0)));
-
         // use algae switch to determine height
         /*new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
             .onTrue(new ElevatorPosition(elevatorSubsystem, 
                    ((DoubleSupplier) (()->getAlgae()?ElevatorConstants.algaeL2:ElevatorConstants.L2))
               .getAsDouble()
             ));*/
-
-        new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->getAlgae())
-                  .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL2)
-                  .andThen(new HandlerPosition(handlerSubsystem,1.)));
-
-        new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->!getAlgae())
-                        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2));
-         
-
-        new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3));
-
-       /* new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-          .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4));*/
-
       new JoystickButton(mechJoytick1, OIConstants.kNudgeUpE)
         .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(ElevatorConstants.kNudgeUpE)));
-        new JoystickButton(mechJoytick1, OIConstants.kNudgeDownE)
+
+      new JoystickButton(mechJoytick1, OIConstants.kNudgeDownE)
         .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(ElevatorConstants.kNudgeDownE)));
 
-        if (Constants.ELEVATOR_AVALIBLE){
-          new JoystickButton(mechJoytick1, OIConstants.kIntake)
-            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(false)));
-          new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
-            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
-          new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-            .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
-        }
+        new JoystickButton(mechJoytick1, OIConstants.kIntake)
+          .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(false)));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
+          .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
+
+        new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
+          .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
+        
       //}
     }
     
@@ -177,22 +149,55 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
-        .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));
+
+      /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
+        .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));*/
       //new JoystickButton(driverJoytick, 2)
       //  .onTrue(driveSubsystem.pathfindToPose(1.25, 1, 0, 0));
     }
 
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
-
+      //Coral Intake
+      new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->!getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
+      //Grabbing Algae off the floor
+      new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeIntake)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.algaeIntake)));
+      //Coral Onto Level 1
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot).and(()->!getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L1)));
+      //Algae Carrying position
+      new JoystickButton(mechJoytick1, OIConstants.kL1shoot).and(()->getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL1)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.algaeL1)));
+      //Coral onto level 2
+      new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->!getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
+      //Grab Algae between L2 and L3
+      new JoystickButton(mechJoytick1, OIConstants.kL2shoot).and(()->getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL2)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.algaeL2)));
+      //Coral onto level 3
+      new JoystickButton(mechJoytick1, OIConstants.kL3shoot).and(()->!getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L3)));
+      //Grab Algae between L3 and L4
+      new JoystickButton(mechJoytick1, OIConstants.kL3shoot).and(()->getAlgae())
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL3)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.algaeL3)));
+      //Coral onto Level 4
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, 56.3)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.75))
-        .andThen(new HandlerPosition(handlerSubsystem, 0.22)));
-
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
+      //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)
-        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0, true))
+        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0.5, false))  //if not false then will rum forever
         .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge)));
         
       
@@ -208,7 +213,6 @@ public class RobotContainer {
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.L4Position, ElevatorConstants.L4));
 */
-      
     }
 
    if (Constants.HANDLER_AVAILABLE) {
@@ -237,7 +241,7 @@ public class RobotContainer {
           .onTrue(new HandlerPosition(handlerSubsystem, 0));
 
         new JoystickButton(mechJoytick2, OIConstants.kHandlerExtend)
-          .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.kAlgeaFloor));
+          .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.kAlgaeFloor));
 
         new JoystickButton(mechJoytick2, OIConstants.kOutCoral)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
@@ -308,7 +312,6 @@ public class RobotContainer {
   }
 
   public boolean getAlgae(){
-    //System.out.println("Change per algae");
     return algae;
   }
 }

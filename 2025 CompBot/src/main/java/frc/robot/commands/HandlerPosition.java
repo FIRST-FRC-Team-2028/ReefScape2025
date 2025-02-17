@@ -42,7 +42,7 @@ public class HandlerPosition extends Command {
   @Override
   public boolean isFinished() {
     return true;
-    /*return target - allowance < handler.getPivotPostition()       //TODO if handler needs to maintain PID change to return false and take out "stopPivot"
+    /*return target - allowance < handler.getPivotPostition()       
            && target + allowance > handler.getPivotPostition();*/
   }
 }
