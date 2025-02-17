@@ -197,12 +197,10 @@ public class RobotContainer {
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)
-        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0.5, false))  //if not false then will rum forever
+       // .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0.5, false))  //if not false then will run forever
         .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge)));
 
-      new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L1)
-        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
+
       /*new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
 
@@ -228,7 +226,7 @@ public class RobotContainer {
           .onTrue(new InstantCommand(() -> handlerSubsystem.reTargetPivot(HandlerConstants.nudgeDown)));
 
         new JoystickButton(mechJoytick2, OIConstants.kInCoral)
-          .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 0.2, false));
+          .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabCoralSpeed, 0.3, false));
 
         new JoystickButton(mechJoytick2, OIConstants.kAlgaeOut)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 0, true));

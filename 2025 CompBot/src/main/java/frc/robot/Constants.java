@@ -51,9 +51,9 @@ public final class Constants {
     public static final double kDriveFF = 0.255; // 2023 Competition Robot
 
 
-    public static final double kTurningP = 1.3; // 2023 Competition Robot   0.75
-    public static final double kTurningI = 0.0; // 2023 Competition Robot
-    public static final double kTurningD = 0.0; // 2023 Competition Robot
+    public static final double kTurningP = 1.3; // 2025 Competition Robot   0.75
+    public static final double kTurningI = 0.0; // 2025 Competition Robot
+    public static final double kTurningD = 0.0; // 2025 Competition Robot
 
     public static final double kTurnGearRatio = 18.75; // 2025 Competion Robot Mark 4n ratio      12.8 on project X
     public static final double kTurnPositionConversionFactor = 1.0 / kTurnGearRatio;
@@ -191,10 +191,10 @@ public final class Constants {
 
     public static final double pivotEncoderConversionFactor = 1/41.833;
     public static final double pivotCurrentLimit = 30;
-    public static final double grabAlgaeSpeed = .5;
+    public static final double grabAlgaeSpeed = -.5;
     public static final double grabAlgaeCurrent = 30;
-    public static final double algaeHoldSpeed = .05;
-    public static final double algaeShootSpeed = -0.5;
+    public static final double algaeHoldSpeed = -.025;
+    public static final double algaeShootSpeed = 0.5;
     public static final double outputSpeed = .75;
     public static final double grabCoralSpeed = .25;
 
@@ -210,7 +210,7 @@ public final class Constants {
     public static final double L3 = 0;
     public static final double L4 = 0.22;
     public static final double intake = 0;
-    public static final double algaeL1 = 0.6;
+    public static final double algaeL1 = 0.4;
     public static final double algaeL2 = 1.;
     public static final double algaeL3 = 1.;
     public static final double algaeL4 = 0;
@@ -246,13 +246,13 @@ public final class Constants {
     public static final double kBarge = 64.75;
     public static final double Intake = 3.;
     public static final double L1 = 3.;
-    public static final double L2 = 13;
-    public static final double L3 = 28.2;
+    public static final double L2 = 12;
+    public static final double L3 = 27.2;
     public static final double L4 = 56.3;
     public static final double algaeIntake = 3.;
     public static final double algaeL1 = 3.;
     public static final double algaeL2 = 24.;
-    public static final double algaeL3 = 39.2;
+    public static final double algaeL3 = 39.45;
     public static final double algaeL4 = 3.;
 
 

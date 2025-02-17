@@ -50,7 +50,7 @@ public class RunWheels extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if(algae){
+    if(algae && speed < 0){
       handler.Shoot(HandlerConstants.algaeHoldSpeed);
     } else handler.stopWheels();
     timer.stop();
