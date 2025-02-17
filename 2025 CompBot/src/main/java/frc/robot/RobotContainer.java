@@ -84,9 +84,11 @@ public class RobotContainer {
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
-      new EventTrigger("Raise Elevator L4").onTrue(Commands.print("Elevator at L4"));
-      NamedCommands.registerCommand("Place Coral L4", Commands.print("I Placed It"));
-      NamedCommands.registerCommand("Print Comp Auto 1", Commands.print("Comp Auto 1"));
+      new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.5, 0, false));
+      NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
+                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
+      NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
+                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
       NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
