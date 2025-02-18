@@ -74,9 +74,9 @@ public class SwerveModule {
     m_driveConfig = new SparkMaxConfig();
     m_turningConfig = new SparkMaxConfig();
     m_driveConfig
-        .idleMode(IdleMode.kBrake)
-        .closedLoopRampRate(ModuleConstants.kRampRate)
-        .openLoopRampRate(ModuleConstants.kRampRate)
+        .idleMode(IdleMode.kCoast)
+        //.closedLoopRampRate(ModuleConstants.kRampRate)
+        //.openLoopRampRate(ModuleConstants.kRampRate)
         .smartCurrentLimit(ModuleConstants.kDriveMotorCurrentLimit)
         .voltageCompensation(RobotConstants.kNominalVoltage)
         .inverted(false);
@@ -88,8 +88,8 @@ public class SwerveModule {
     
     m_turningConfig
         .idleMode(IdleMode.kBrake)
-        .closedLoopRampRate(ModuleConstants.kRampRateT)
-        .openLoopRampRate(ModuleConstants.kRampRateT)
+        //.closedLoopRampRate(ModuleConstants.kRampRateT)
+        //.openLoopRampRate(ModuleConstants.kRampRateT)
         .voltageCompensation(RobotConstants.kNominalVoltage)
         .smartCurrentLimit(ModuleConstants.kDriveMotorCurrentLimit)
         .inverted(false);

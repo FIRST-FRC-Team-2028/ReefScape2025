@@ -61,8 +61,8 @@ public class DriveCommand extends Command {
       smoothedTurningSpeed = smoothedTurningSpeed + (turningSpeed - smoothedTurningSpeed) * .08;
     }
 
-  //  xSpeed = smoothedXSpeed;
-  //  ySpeed = smoothedYSpeed;
+    xSpeed = smoothedXSpeed;
+    ySpeed = smoothedYSpeed;
   //  turningSpeed = smoothedTurningSpeed;
     
     ChassisSpeeds chassisSpeeds;

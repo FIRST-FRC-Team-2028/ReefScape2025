@@ -77,7 +77,7 @@ public class RobotContainer {
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
-      new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.5, 0, false));
+      new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
       NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
       NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
