@@ -14,7 +14,6 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLimitSwitch;
-import com.revrobotics.spark.SparkMaxAlternateEncoder;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +32,7 @@ public class Elevator extends SubsystemBase {
   private final SparkClosedLoopController m_ClosedLoopController;
   private final SparkLimitSwitch m_rearLimitSwitch;
   private final SparkMaxConfig configL, configR;
-  private double Destination = 0;
+ // private double Destination = 0;
   private double latestTarget = 3;
   double[] currentHist = {0.,0.,0.,0.,0.};
   int currP = 0;

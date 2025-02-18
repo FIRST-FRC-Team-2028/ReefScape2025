@@ -1,9 +1,5 @@
 {
-<<<<<<<< HEAD:2025 CompBot/vendordeps/Phoenix6-frc2025-latest.json
-    "fileName": "Phoenix6-frc2025-latest.json",
-========
     "fileName": "Phoenix6-25.2.2.json",
->>>>>>>> 47ac1912478a4319b3c4cf973d33c0ab2e6e318b:2025 CompBot/vendordeps/Phoenix6-25.2.2.json
     "name": "CTRE-Phoenix (v6)",
     "version": "25.2.2",
     "frcYear": "2025",

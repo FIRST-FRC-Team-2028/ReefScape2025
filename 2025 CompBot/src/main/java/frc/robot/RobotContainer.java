@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.util.function.DoubleSupplier;
-
 import org.json.simple.parser.ParseException;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -23,18 +20,14 @@ import frc.robot.Constants.HandlerConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.RunWheels;
-import frc.robot.commands.Spit;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorPosition;
-import frc.robot.commands.ElevatorVbusVariable;
 import frc.robot.commands.HandlerPosition;
-import frc.robot.commands.SpitSequence;
+import frc.robot.commands.SpitSequence; // Commented out
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.util.concurrent.Event;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -123,12 +116,7 @@ public class RobotContainer {
 
     if (Constants.ELEVATOR_AVALIBLE){
       // if (!OIConstants.kCompleteSwitch){
-        // use algae switch to determine height
-        /*new JoystickButton(mechJoytick1, OIConstants.kL2shoot)
-            .onTrue(new ElevatorPosition(elevatorSubsystem, 
-                   ((DoubleSupplier) (()->getAlgae()?ElevatorConstants.algaeL2:ElevatorConstants.L2))
-              .getAsDouble()
-            ));*/
+
       new JoystickButton(mechJoytick1, OIConstants.kNudgeUpE)
         .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(ElevatorConstants.kNudgeUpE)));
 
@@ -143,6 +131,10 @@ public class RobotContainer {
 
         new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
           .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
+
+        new JoystickButton(mechJoytick1, 11)
+          .onTrue(new InstantCommand(()-> elevatorSubsystem.setElevatorSpeed(-.2)))
+          .onFalse(new InstantCommand(()->elevatorSubsystem.stopElevator()));
         
       //}
     }

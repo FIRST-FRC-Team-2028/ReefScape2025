@@ -61,11 +61,11 @@ public class Robot extends TimedRobot {
           new Thread(
               () -> {
                 UsbCamera camera = CameraServer.startAutomaticCapture();
-                camera.setResolution(720, 480);
+                camera.setResolution(480, 270);
 
                 CvSink cvSink = CameraServer.getVideo();
 
-                CvSource outputStream = CameraServer.putVideo("Rectangle", 720, 480);
+                CvSource outputStream = CameraServer.putVideo("Marking lines", 480, 270);
 
                  Mat mat = new Mat();
 
@@ -86,8 +86,8 @@ public class Robot extends TimedRobot {
                     mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);*/
                 // Give the output stream a new image to display
                 Imgproc.line(
-                    mat, new Point(70, 0), new Point(137, 180), new Scalar(255, 255, 255), 20);
-                Imgproc.line(mat, new Point(230, 280), new Point(230, 480), new Scalar(0, 255, 0), 20);
+                    mat, new Point(70, 0), new Point(116, 110), new Scalar(255, 255, 255), 10);
+                Imgproc.line(mat, new Point(145, 168), new Point(183, 270), new Scalar(0, 255, 0), 10);
                 
                 outputStream.putFrame(mat);
               }
@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    // SmartDashboard.putNumber("BatV", PDH.getVoltage());
+    SmartDashboard.putNumber("BatV", PDH.getVoltage());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

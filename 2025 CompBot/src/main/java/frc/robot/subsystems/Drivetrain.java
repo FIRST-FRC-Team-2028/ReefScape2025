@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems;
 
-import org.photonvision.PhotonCamera;
-import org.photonvision.PhotonPoseEstimator;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.commands.PathfindingCommand;
@@ -92,6 +90,7 @@ public class Drivetrain extends SubsystemBase {
     if (Constants.CAMERA_AVAILABLE){
       aprilSubsystem = new AprilCamera();  // TODO: MrG asks what about the object that exists in RobotContainer?
     }else aprilSubsystem = null;
+    
     resetGyro();
     for (SwerveModule module : modules) {
       module.resetDriveEncoder();
@@ -225,6 +224,8 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
+    Pose2d bady = m_poseEstimator.getEstimatedPosition();
+    m_poseEstimator.resetPose(new Pose2d(bady.getX(),bady.getY(),bady.getRotation()));  // because we had to negate the swerve turnmotor sign
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 
