@@ -225,6 +225,9 @@ public class Drivetrain extends SubsystemBase {
                           m_backLeft.getPosition(),
                           m_backRight.getPosition()
     });
+    // Since Revlib wont let us invert the turn encoder, so we munged it, now we have to munge more to get the right orientation
+    Pose2d badY = m_poseEstimator.getEstimatedPosition();
+    m_poseEstimator.resetPose(new Pose2d(badY.getX(),badY.getY(),badY.getRotation()));  //MrG forces you to look at this to build
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 

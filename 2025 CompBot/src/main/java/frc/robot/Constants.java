@@ -51,7 +51,7 @@ public final class Constants {
     public static final double kDriveFF = 0.255; // 2023 Competition Robot
 
 
-    public static final double kTurningP = 1.3; // 2025 Competition Robot   0.75
+    public static final double kTurningP = 2.05; // 2025 Competition Robot   0.75
     public static final double kTurningI = 0.0; // 2025 Competition Robot
     public static final double kTurningD = 0.0; // 2025 Competition Robot
 
@@ -181,9 +181,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(6, 0, 0);  //GUESSES Based on project X
+    new PIDConstants(0.1, 0, 0);  //GUESSES Based on project X
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(3, 0, 0);  //GUESSES Based on project X
+    new PIDConstants(0, 0, 0);  //GUESSES Based on project X
 
   }
 
@@ -350,7 +350,7 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = true;
+    public static final boolean isCompetition = false;
     public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
