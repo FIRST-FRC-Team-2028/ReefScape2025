@@ -27,8 +27,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
   public static final boolean CAMERA_AVAILABLE = false;
-  public static final boolean HANDLER_AVAILABLE = true;
-  public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean HANDLER_AVAILABLE = false;
+  public static final boolean ELEVATOR_AVALIBLE = false;
 
 
 
@@ -239,6 +239,7 @@ public final class Constants {
     public static final double kP = 0.2;
     public static final double kI = 0;
     public static final double kD = 0;
+    public static final double kFF = .02;
 
     //PID Postiions
     public static final double kNudgeUpE = .25;

@@ -57,6 +57,7 @@ public class Elevator extends SubsystemBase {
                       .reverseSoftLimit(ElevatorConstants.softLimitReverse)
                       .reverseSoftLimitEnabled(true);
       configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
+      configL.closedLoop.velocityFF(ElevatorConstants.kFF);
       configR.follow(Constants.CANIDS.elevatorL, true);
       configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
                          .reverseLimitSwitchEnabled(true);

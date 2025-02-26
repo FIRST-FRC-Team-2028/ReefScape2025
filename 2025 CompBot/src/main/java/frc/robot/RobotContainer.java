@@ -23,7 +23,7 @@ import frc.robot.commands.RunWheels;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
-import frc.robot.commands.SpitSequence; // Commented out
+import frc.robot.commands.SpitSequence; // Stuff using is Commented out
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -61,6 +61,7 @@ public class RobotContainer {
     private final Joystick mechJoytick2 = new Joystick(OIConstants.kMechControllerPort2);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  @SuppressWarnings("unused")
   public RobotContainer() {
     if (Constants.HANDLER_AVAILABLE){
       handlerSubsystem = new Handler();
@@ -77,12 +78,14 @@ public class RobotContainer {
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
+      if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE){
       new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
       NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
       NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
       NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+      }
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
       autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
