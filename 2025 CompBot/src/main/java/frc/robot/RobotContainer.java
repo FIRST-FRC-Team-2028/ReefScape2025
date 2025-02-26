@@ -63,6 +63,7 @@ public class RobotContainer {
     private final Joystick mechJoytick2 = new Joystick(OIConstants.kMechControllerPort2);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  @SuppressWarnings("unused")
   public RobotContainer() {
     if (Constants.HANDLER_AVAILABLE){
       handlerSubsystem = new Handler();
