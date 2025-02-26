@@ -90,8 +90,8 @@ public class Drivetrain extends SubsystemBase {
     if (Constants.CAMERA_AVAILABLE){
       aprilSubsystem = new AprilCamera();  // TODO: MrG asks what about the object that exists in RobotContainer?
     }else aprilSubsystem = null;
-    
     resetGyro();
+    resetPoseEstimatorPose(new Pose2d(0, 0, getRotation2d()));
     for (SwerveModule module : modules) {
       module.resetDriveEncoder();
       module.initializeAbsoluteTurningEncoder();
@@ -140,6 +140,7 @@ public class Drivetrain extends SubsystemBase {
     //updateOdometry();
     updatePoseEstimator();
     // This method will be called once per scheduler run
+    SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
   }
 
 
@@ -226,7 +227,7 @@ public class Drivetrain extends SubsystemBase {
     });
     // Since Revlib wont let us invert the turn encoder, so we munged it, now we have to munge more to get the right orientation
     Pose2d badY = m_poseEstimator.getEstimatedPosition();
-    m_poseEstimator.resetPose(new Pose2d(badY.getX(),badY.getY(),badY.getRotation()));  //MrG forces you to look at this to build
+    //m_poseEstimator.resetPose(new Pose2d(badY.getX(),-badY.getY(),badY.getRotation().times(-1)));  //MrG forces you to look at this to build
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
 

@@ -29,6 +29,7 @@ public final class Constants {
   public static final boolean CAMERA_AVAILABLE = false;
   public static final boolean HANDLER_AVAILABLE = true;
   public static final boolean ELEVATOR_AVALIBLE = true;
+  public static final boolean LIGHTS_AVALIBLE = true;
 
 
 
@@ -51,7 +52,7 @@ public final class Constants {
     public static final double kDriveFF = 0.255; // 2023 Competition Robot
 
 
-    public static final double kTurningP = 2.05; // 2025 Competition Robot   0.75
+    public static final double kTurningP = 2.3;//2.05; // 2025 Competition Robot   0.75
     public static final double kTurningI = 0.0; // 2025 Competition Robot
     public static final double kTurningD = 0.0; // 2025 Competition Robot
 
@@ -110,14 +111,14 @@ public final class Constants {
 
 //    COMP BOT  FRONT                PRAC BOT    FRONT
 //     +----------------------+        +----------------------+
-//     | D11 S21      D12 S22 |        | D15 S25      D16 S26 |
-//     | E31          E32     |        | E35          E36     |
+//     | D10 S11      D20 S21 |        | D15 S25      D16 S26 |
+//     | E11          E22     |        | E35          E36     |
 //     |                      |        |                      |
 //     |                      |        |                      |
 //     |                      |        |                      |
 //     |                      |        |                      |
-//     | D13 S23      D14 S24 |        | D17 S27      D18 S28 |
-//     | E33          E34     |        | E37          E38     |
+//     | D40 S41      D30 S31 |        | D17 S27      D18 S28 |
+//     | E42          E32     |        | E37          E38     |
 //     +----------------------+        +----------------------+
 //
 //Front Left
@@ -181,9 +182,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(0.1, 0, 0);  //GUESSES Based on project X
+    new PIDConstants(4., 0, 0);  
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(0, 0, 0);  //GUESSES Based on project X
+    new PIDConstants(2., 0, 0);  
 
   }
 
@@ -282,7 +283,7 @@ public final class Constants {
     public static final int kDriverRotAxis =             4;
     //Driver Buttons
     public static final int kResetGyro = 1;
-    public static final int kFirstButton = 2;
+    public static final int kBlueLight = 2;
     public static final int kSecondButton = 3;
     public static final int kThirdButton = 4;
     public static final int kpathfindTopCoralStation =   4;

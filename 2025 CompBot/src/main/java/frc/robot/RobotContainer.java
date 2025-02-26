@@ -23,11 +23,12 @@ import frc.robot.commands.RunWheels;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
-import frc.robot.commands.SpitSequence; // Commented out
+import frc.robot.commands.SpitSequence; // Stuff using is Commented out
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
+import frc.robot.subsystems.Lights;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -52,6 +53,7 @@ public class RobotContainer {
   private final Elevator elevatorSubsystem;
   private final Handler handlerSubsystem;
   private final AprilCamera april;
+  private final Lights lights;
   private final SendableChooser<Command> autoChooser;
   public boolean algae = false;
 
@@ -74,15 +76,20 @@ public class RobotContainer {
     if (Constants.CAMERA_AVAILABLE){
       april = new AprilCamera();
     } else april = null;
+    if (Constants.LIGHTS_AVALIBLE){
+      lights = new Lights();
+    } else lights = null;
 
     if (Constants.DRIVE_AVAILABLE){
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
-      new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
-      NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
+      if (Constants.ELEVATOR_AVALIBLE && Constants.HANDLER_AVAILABLE){
+        new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
+        NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
-      NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
+        NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
-      NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+        NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+      }
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
       autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
@@ -113,6 +120,12 @@ public class RobotContainer {
     new JoystickButton(mechJoytick1, OIConstants.kAlgeaSwitch)
     .onTrue(new InstantCommand(()-> algae = true))
     .onFalse(new InstantCommand(()-> algae = false));
+
+    if (Constants.LIGHTS_AVALIBLE){
+      new JoystickButton(driverJoytick, OIConstants.kBlueLight)
+        .onTrue(new InstantCommand(()-> lights.blueLight(true)))
+        .onFalse(new InstantCommand(()-> lights.blueLight(false)));
+    }
 
     if (Constants.ELEVATOR_AVALIBLE){
       // if (!OIConstants.kCompleteSwitch){
