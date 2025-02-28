@@ -16,6 +16,7 @@ public class Lights extends SubsystemBase {
   public Lights() {
     m_ControlModule = new PneumaticHub(1);
     k_BlueLight = m_ControlModule.makeSolenoid(8);
+    blueLight(true);
   }
 
   public void blueLight(boolean on) {

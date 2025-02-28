@@ -57,11 +57,10 @@ public class Elevator extends SubsystemBase {
                       .reverseSoftLimit(ElevatorConstants.softLimitReverse)
                       .reverseSoftLimitEnabled(true);
       configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
-      configL.closedLoop.velocityFF(ElevatorConstants.kFF);
+      //configL.closedLoop.velocityFF(ElevatorConstants.kFF);
       configR.follow(Constants.CANIDS.elevatorL, true);
       configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
                          .reverseLimitSwitchEnabled(true);
-  
       m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
       m_elevatorMotorR.configure(configR, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   
@@ -93,6 +92,9 @@ public class Elevator extends SubsystemBase {
 
   public boolean LWPressed(){
     return m_rearLimitSwitch.isPressed();
+  }
+  public void resetLatestTarget(){
+    latestTarget = getPosition(); 
   }
 
   /**Closed loop control of the elevator
@@ -134,6 +136,10 @@ public class Elevator extends SubsystemBase {
     return getPosition() == Destination;
   }
 
+  /**
+   * 
+   * @return the current position of the elevator based on the encoder
+   */
   public double getPosition(){
     return m_elevatorEncoder.getPosition();
   }

@@ -206,14 +206,14 @@ public final class Constants {
 
 
     //PID positions
-    public static final double L1 = 1.02;
+    public static final double L1 = 0.9;
     public static final double L2 = 0;
     public static final double L3 = 0;
     public static final double L4 = 0.22;
     public static final double intake = 0;
-    public static final double algaeL1 = 0.4;
-    public static final double algaeL2 = 1.;
-    public static final double algaeL3 = 1.;              
+    public static final double algaeL1 = 0.28;
+    public static final double algaeL2 = .95;
+    public static final double algaeL3 = .95;              
     public static final double algaeL4 = 0;
     public static final double algaeIntake = 1.;
     public static final double algae = .9;
@@ -250,7 +250,7 @@ public final class Constants {
     public static final double L1 = 23.;
     public static final double L2 = 12;
     public static final double L3 = 27.2;
-    public static final double L4 = 56.3;
+    public static final double L4 = 60.3;
     public static final double algaeIntake = 3.;
     public static final double algaeL1 = 3.;
     public static final double algaeL2 = 24.;

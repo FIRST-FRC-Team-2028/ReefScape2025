@@ -73,7 +73,7 @@ public class DriveCommand extends Command {
                    xSpeed, ySpeed, turningSpeed, drivetrain.getRotation2d());
     } else {
     // Relative to robot
-      chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+      chassisSpeeds = new ChassisSpeeds(xSpeed/2, ySpeed/2, turningSpeed/2);
     }
     drivetrain.drive(chassisSpeeds);
   }
