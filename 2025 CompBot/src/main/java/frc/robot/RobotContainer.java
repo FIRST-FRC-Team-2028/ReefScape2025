@@ -210,7 +210,7 @@ public class RobotContainer {
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.25))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
-        .andThen(new TimedDrive(driveSubsystem, 0.25)));
+        .andThen(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0)));
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)
