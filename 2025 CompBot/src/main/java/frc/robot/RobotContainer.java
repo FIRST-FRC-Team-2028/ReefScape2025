@@ -153,7 +153,7 @@ public class RobotContainer {
           .onFalse(new InstantCommand(()->elevatorSubsystem.PIDController(elevatorSubsystem.getPosition())));
           //.onFalse(new InstantCommand(()->elevatorSubsystem.stopElevator()));
 
-           /*new JoystickButton(mechJoytick1, 12)
+          /*new JoystickButton(mechJoytick1, 12)
           .onTrue(new InstantCommand(()->elevatorSubsystem.PIDController(elevatorSubsystem.getPosition())));*/
          
       //}
@@ -164,7 +164,7 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kBlueLight)
-      .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0., 0.));
+      .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));
 
       /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));*/
@@ -205,14 +205,12 @@ public class RobotContainer {
       new JoystickButton(mechJoytick1, OIConstants.kL3shoot).and(()->getAlgae())
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeL3)
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.algaeL3)));
-        if (Constants.DRIVE_AVAILABLE){
       //Coral onto Level 4
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.25))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
-        .andThen(new TimedDrive(driveSubsystem, 0.25, -0.5, 0., 0.)));
-        }
+        .andThen(new TimedDrive(driveSubsystem, 0.25)));
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)

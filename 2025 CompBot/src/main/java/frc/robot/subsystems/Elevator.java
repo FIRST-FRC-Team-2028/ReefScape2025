@@ -57,7 +57,7 @@ public class Elevator extends SubsystemBase {
                       .reverseSoftLimit(ElevatorConstants.softLimitReverse)
                       .reverseSoftLimitEnabled(true);
       configL.closedLoop.pid(ElevatorConstants.kP, ElevatorConstants.kI, ElevatorConstants.kD);
-      //configL.closedLoop.velocityFF(ElevatorConstants.kFF);
+      configL.closedLoop.velocityFF(ElevatorConstants.kFF);
       configR.follow(Constants.CANIDS.elevatorL, true);
       configL.limitSwitch.reverseLimitSwitchType(Type.kNormallyOpen)
                          .reverseLimitSwitchEnabled(true);
@@ -82,6 +82,7 @@ public class Elevator extends SubsystemBase {
       SmartDashboard.putNumber("Elevator Current L", m_elevatorMotorL.getOutputCurrent());
       SmartDashboard.putNumber("Elevator Temp L", m_elevatorMotorL.getMotorTemperature());
       SmartDashboard.putNumber("Elevator Temp R", m_elevatorMotorR.getMotorTemperature());
+      
 
      double currentCurrent = m_elevatorMotorL.getOutputCurrent();
       avgCurrent += currentCurrent/5. - currentHist[currP]/5.;

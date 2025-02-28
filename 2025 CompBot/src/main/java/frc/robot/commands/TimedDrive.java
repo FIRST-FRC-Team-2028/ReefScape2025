@@ -18,7 +18,7 @@ public class TimedDrive extends Command {
   double xSpeed;
   double ySpeed;
   double turningSpeed;
-  /** Drives the robot for a set amount of time 
+  /** Drives the robot for a set amount of time in robot orient
    * @param time to dirve
    * @param xSpeed speed positive is forwards and negative backwards
    * @param ySpeed speed positive is left and negative is right
