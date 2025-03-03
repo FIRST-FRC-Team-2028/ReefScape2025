@@ -46,10 +46,10 @@ public final class Constants {
     public static final double kDriveEncoderRPM2MeterPerSec = kDriveEncoderRot2Meter / 42;
     public static final double kTurningEncoderRPM2RadPerSec = kTurningEncoderRot2Rad / 42;
     public static final double kPTurning_Comp = 0.5;
-    public static final double kDriveP = 0.1; // 2023 Competition Robot
-    public static final double kDriveI = 0.0; // 2023 Competition Robot
-    public static final double kDriveD = 0.0; // 2023 Competition Robot
-    public static final double kDriveFF = 0.255; // 2023 Competition Robot
+    public static final double kDriveP = 0.22; // 2025 Competition Robot
+    public static final double kDriveI = 0.0; // 2025 Competition Robot
+    public static final double kDriveD = 0.0; // 2025 Competition Robot
+    public static final double kDriveFF = 0.255; // 2025 Competition Robot
 
 
     public static final double kTurningP = 2.3;//2.05; // 2025 Competition Robot   0.75
@@ -182,9 +182,9 @@ public final class Constants {
   public static final double kMaxRotationalVelocity = 5.0; // 2023 Competion Robot // max 5.0
   public static final double kRotateToZero = -2;
   public static final PIDConstants translationConstants = 
-    new PIDConstants(4., 0, 0);  
+    new PIDConstants(4.25, 0.1, 0);  
   public static final PIDConstants rotationConstants = 
-    new PIDConstants(2., 0, 0);  
+    new PIDConstants(3., 0, 0);  
 
   }
 
@@ -200,8 +200,8 @@ public final class Constants {
     public static final double grabCoralSpeed = .25;
 
     //PID
-    public static final double pivotP = .45;
-    public static final double pivotI = 0;
+    public static final double pivotP = .6;
+    public static final double pivotI = 0.00;
     public static final double pivotD = 0;
 
 

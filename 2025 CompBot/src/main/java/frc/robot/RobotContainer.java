@@ -6,6 +6,7 @@ package frc.robot;
 
 import org.json.simple.parser.ParseException;
 
+import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
@@ -86,11 +87,19 @@ public class RobotContainer {
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
       if (Constants.ELEVATOR_AVALIBLE && Constants.HANDLER_AVAILABLE){
         new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
+        new EventTrigger("Raise L2").onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L3)));
+        NamedCommands.registerCommand("Shoot", new RunWheels(handlerSubsystem, 0.5, 1., true));
         NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
         NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
         NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
+        NamedCommands.registerCommand("Raise Elevator L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
+                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
+        NamedCommands.registerCommand("Place Coral L4", new TimedDrive(driveSubsystem, 0.25, -0.25, 0, 0)
+                                    .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));
+        
       }
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
@@ -139,8 +148,8 @@ public class RobotContainer {
         .onTrue(new InstantCommand(()-> elevatorSubsystem.reTargetElevator(ElevatorConstants.kNudgeDownE)));
 
         new JoystickButton(mechJoytick1, OIConstants.kIntake)
-          .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(false))
-          .andThen(new InstantCommand(()-> lights.blueLight(false))));
+          .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(false)));
+          //.andThen(new InstantCommand(()-> lights.blueLight(false))));
 
         new JoystickButton(mechJoytick1, OIConstants.kL3shoot)
           .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
@@ -165,6 +174,7 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, OIConstants.kBlueLight)
       .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));
+      
 
       /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)
         .onTrue( driveSubsystem.pathfindToPath("Top Coral Station"));*/
@@ -175,8 +185,9 @@ public class RobotContainer {
     if (Constants.HANDLER_AVAILABLE && Constants.ELEVATOR_AVALIBLE) {
       //Coral Intake
       new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->!getAlgae())
-        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
-        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
+        .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)
+        .andThen(new WaitCommand(.35))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
       //Grabbing Algae off the floor
       new JoystickButton(mechJoytick1, OIConstants.kIntake).and(()->getAlgae())
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.algaeIntake)
@@ -331,5 +342,8 @@ public class RobotContainer {
 
   public boolean getAlgae(){
     return algae;
+  }
+  public Lights getLights(){
+    return lights;
   }
 }

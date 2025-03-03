@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.983775252525252,
-        "y": 5.153219696969697
+        "x": 5.014267676767677,
+        "y": 5.214204545454545
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.190972222222222,
-        "y": 5.630934343434343
+        "x": 4.546717171717172,
+        "y": 5.783396464646464
       },
       "isLocked": false,
       "linkedName": "Score 1 Pose"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": "3 Coral Auto",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.7448812969422
+    "rotation": -118.8865817669107
   },
   "useDefaultConstraints": true
 }

@@ -21,13 +21,7 @@ public class ElevatorPosition extends Command {
     addRequirements(elevator);
   }
 
-  /** closed loop set the elevator position.
-   * @param Destination inches
-   */
-  public ElevatorPosition(Elevator elevator) { 
-    this.elevator = elevator;
-    addRequirements(elevator);
-  }
+
 
   // Called when the command is initially scheduled.
   @Override

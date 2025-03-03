@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 //import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 //import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Handler;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -112,11 +113,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("BatV", PDH.getVoltage());
+   
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.getLights().stopMatchTimer();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -124,6 +128,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    m_robotContainer.getLights().setMatchTimer(0);
+    m_robotContainer.getLights().startMatchTimer();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -140,6 +146,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     CommandScheduler.getInstance().enable();
     m_robotContainer.configureButtonBindings();
+    m_robotContainer.getLights().setMatchTimer(0);
+    m_robotContainer.getLights().startMatchTimer();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -160,6 +168,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    if (Constants.HANDLER_AVAILABLE && Constants.LIGHTS_AVALIBLE){
+      m_robotContainer.getLights().blueLight(m_robotContainer.getHandler().doIHaveIt());
+      }
     /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs
             double xSpeed = -driverJoytick.getRawAxis(OIConstants.kDriverXAxis); // Negative values go forward

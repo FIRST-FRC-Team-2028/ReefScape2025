@@ -28,6 +28,9 @@ public class TimedDrive extends Command {
     drivesubsytem = drivetrain;
     timer = new Timer();
     this.time = time;
+    this.xSpeed=xSpeed;
+    this.ySpeed=ySpeed;
+    this.turningSpeed = turningSpeed;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

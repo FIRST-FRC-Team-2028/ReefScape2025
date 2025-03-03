@@ -139,6 +139,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     //updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
     SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
   }
@@ -240,6 +241,7 @@ public class Drivetrain extends SubsystemBase {
     }
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
+    SmartDashboard.putNumber("Robot Rotation", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees());
   }
 
   public SwerveModulePosition[] getModulePositions() {
