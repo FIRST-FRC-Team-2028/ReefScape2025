@@ -337,9 +337,14 @@ public final class Constants {
       public static final int followDistance = 1; //Meters
       public static final double camera_Height_Meters = Units.inchesToMeters(32);
       public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
+      public static final double cameraYawRadians = 2.29;
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;
+      public static final double robotToCamX = Units.inchesToMeters(11);
+      public static final double robotToCamY = Units.inchesToMeters(-3.5);
+      public static final double robotToCamZ = Units.inchesToMeters(30.5);
+
 
   }
 

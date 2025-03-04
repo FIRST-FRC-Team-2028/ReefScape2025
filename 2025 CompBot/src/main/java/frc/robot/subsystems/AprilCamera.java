@@ -76,8 +76,8 @@ public class AprilCamera extends SubsystemBase {
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
      // and 0.1778 meters of elevation (off floor)            on project X
-    robotToCam = new Transform3d(new Translation3d(.381, 0.0, 0.0254),
-                new Rotation3d(0,CamConstants.camera_Pitch_Radians, 2.29));
+    robotToCam = new Transform3d(new Translation3d(CamConstants.robotToCamX, CamConstants.robotToCamY, CamConstants.robotToCamZ),
+                new Rotation3d(0,CamConstants.camera_Pitch_Radians, CamConstants.cameraYawRadians));
  
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
     PoseStrategy.LOWEST_AMBIGUITY, robotToCam);
