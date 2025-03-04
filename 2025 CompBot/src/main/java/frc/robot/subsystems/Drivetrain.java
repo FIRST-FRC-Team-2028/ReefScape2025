@@ -139,9 +139,11 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     //updateOdometry();
     updatePoseEstimator();
-    SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
+    //SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
-    SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
+    //SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
+    SmartDashboard.putNumber("FL Drive Encoder", m_frontLeft.getRelativeDrivePosition());
+    SmartDashboard.putNumber("FL Rotation Encoder", m_frontLeft.getRelativeTurningPosition().getDegrees());
   }
 
 

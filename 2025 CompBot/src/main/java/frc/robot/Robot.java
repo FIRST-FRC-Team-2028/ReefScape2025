@@ -86,8 +86,7 @@ public class Robot extends TimedRobot {
                 /*Imgproc.rectangle(
                     mat, new Point(100, 100), new Point(400, 400), new Scalar(255, 255, 255), 5);*/
                 // Give the output stream a new image to display
-                Imgproc.line(
-                    mat, new Point(70, 0), new Point(116, 110), new Scalar(255, 255, 255), 10);
+                Imgproc.line(mat, new Point(70, 0), new Point(116, 110), new Scalar(255, 255, 255), 10);
                 Imgproc.line(mat, new Point(145, 168), new Point(183, 270), new Scalar(0, 255, 0), 10);
                 
                 outputStream.putFrame(mat);

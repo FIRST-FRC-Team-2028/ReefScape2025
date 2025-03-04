@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Test Path 1"
+            "pathName": null
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Print Comp Auto 1"
+            "name": "Raise L3"
           }
         },
         {
@@ -23,9 +23,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Test Path 2"
+            "name": "Shoot"
           }
         }
       ]

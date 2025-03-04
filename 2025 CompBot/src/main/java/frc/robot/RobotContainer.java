@@ -87,25 +87,25 @@ public class RobotContainer {
       driveSubsystem.setDefaultCommand(new DriveCommand(driveSubsystem));
       if (Constants.ELEVATOR_AVALIBLE && Constants.HANDLER_AVAILABLE){
         new EventTrigger("Intake Wheels").onTrue(new RunWheels(handlerSubsystem, 0.25, 0.3, false));
-        new EventTrigger("Raise L2").onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
-        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L3)));
-        NamedCommands.registerCommand("Shoot", new RunWheels(handlerSubsystem, 0.5, 1., true));
-        NamedCommands.registerCommand("L2", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)
-                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L2)));
-        NamedCommands.registerCommand("Intake", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)
-                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.intake)));
+        new EventTrigger("Raise L4").onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
+        NamedCommands.registerCommand( "Raise L3", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
+                                    .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L3)));
+        NamedCommands.registerCommand("Intake", new HandlerPosition(handlerSubsystem, HandlerConstants.intake)
+                                    .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
         NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
         NamedCommands.registerCommand("Raise Elevator L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
+                                    .andThen(new WaitCommand(1))
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
-        NamedCommands.registerCommand("Place Coral L4", new TimedDrive(driveSubsystem, 0.25, -0.25, 0, 0)
-                                    .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));
+        NamedCommands.registerCommand("Shoot",new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)
+                                    .raceWith(new WaitCommand(.5)));
         
       }
       //autoChooser = AutoBuilder.buildAutoChooser();
       //If competition is true, only autos that start with comp will appear
       autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
         (stream) -> PathPlannerConstants.isCompetition
-          ? stream.filter(auto -> auto.getName().startsWith("comp"))
+          ? stream.filter(auto -> auto.getName().startsWith("Comp"))
           : stream);
       SmartDashboard.putData("Auto Chooser", autoChooser);
     } else autoChooser=null;

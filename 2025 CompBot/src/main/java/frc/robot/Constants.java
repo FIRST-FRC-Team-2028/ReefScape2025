@@ -353,7 +353,7 @@ public final class Constants {
   }
 
   public static final class PathPlannerConstants {
-    public static final boolean isCompetition = false;
+    public static final boolean isCompetition = true;
     public static final PathConstraints pathConstraints = new PathConstraints(DriveConstants.kTeleDriveMaxSpeedMetersPerSecond,
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,

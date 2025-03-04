@@ -53,6 +53,7 @@ public class TimedDrive extends Command {
   public void end(boolean interrupted) {
     timer.stop();
     timer.reset();
+    drivesubsytem.drive(new ChassisSpeeds(0, 0, 0));
   }
 
   // Returns true when the command should end.
