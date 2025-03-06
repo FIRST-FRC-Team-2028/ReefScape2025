@@ -167,8 +167,11 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (Constants.HANDLER_AVAILABLE && Constants.LIGHTS_AVALIBLE){
+    /*if (Constants.HANDLER_AVAILABLE && Constants.LIGHTS_AVALIBLE){
       m_robotContainer.getLights().blueLight(m_robotContainer.getHandler().doIHaveIt());
+      }*/
+      if (Constants.LIGHTS_AVALIBLE && Constants.ELEVATOR_AVALIBLE){
+      m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() == 3);
       }
     /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs
