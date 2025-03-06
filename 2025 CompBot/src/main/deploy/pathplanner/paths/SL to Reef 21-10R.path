@@ -3,44 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0041035353535355,
-        "y": 2.774810606060606
+        "x": 7.118,
+        "y": 4.188
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.903651515151515,
-        "y": 0.900568181818181
+        "x": 5.904,
+        "y": 4.188
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2535353535353533,
-        "y": 0.9147727272727275
+        "x": 6.03,
+        "y": 4.187626262626263
       },
       "prevControl": {
-        "x": 1.8328914141414139,
-        "y": 1.6262626262626259
+        "x": 6.28,
+        "y": 4.187626262626263
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef 21-10R"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": 119.99999999999999
-    },
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 54.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Raise L4",
+      "waypointRelativePos": 0.95,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 4.0,
@@ -51,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Left Path",
+  "folder": "SL to Reef 20-11R 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

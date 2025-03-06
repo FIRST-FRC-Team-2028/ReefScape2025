@@ -142,8 +142,8 @@ public class Drivetrain extends SubsystemBase {
     //SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
     //SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
-    SmartDashboard.putNumber("FL Drive Encoder", m_frontLeft.getRelativeDrivePosition());
-    SmartDashboard.putNumber("FL Rotation Encoder", m_frontLeft.getRelativeTurningPosition().getDegrees());
+    //SmartDashboard.putNumber("FL Drive Encoder", m_frontLeft.getRelativeDrivePosition());
+    //SmartDashboard.putNumber("FL Rotation Encoder", m_frontLeft.getRelativeTurningPosition().getDegrees());
   }
 
 
@@ -229,7 +229,7 @@ public class Drivetrain extends SubsystemBase {
                           m_backRight.getPosition()
     });
     // Since Revlib wont let us invert the turn encoder, so we munged it, now we have to munge more to get the right orientation
-    Pose2d badY = m_poseEstimator.getEstimatedPosition();
+    //Pose2d badY = m_poseEstimator.getEstimatedPosition();
     //m_poseEstimator.resetPose(new Pose2d(badY.getX(),-badY.getY(),badY.getRotation().times(-1)));  //MrG forces you to look at this to build
     if(Constants.CAMERA_AVAILABLE){
       if (aprilSubsystem.isPoseEstimated()) {
@@ -296,12 +296,13 @@ public class Drivetrain extends SubsystemBase {
   /**Contructs and runs a path to the given pose avoiding obsticals outlinned in navgrid.json
    * @param x The x cordinate of the target position 
    * @param y The y cordinate of the target position
-   * @param rotation the Rotation 2d value of the target position
+   * @param rotation the Rotation 2d value of the target position in degrees
    * @param goalEndVelocity The velocity of the robot at the end of the path. 0 is required to stop at the target pose.
    * A value > 0 may be used to keep the robot up to speed for the driver to take over.
    */
   public Command pathfindToPose(double x, double y, double rotation, double goalEndVelocity) {
-    Rotation2d rotation2d = new Rotation2d(rotation);
+    Rotation2d rotation2d = new Rotation2d().fromDegrees(rotation);
+    
     Pose2d targetPose = new Pose2d(x, y, rotation2d);
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
   }

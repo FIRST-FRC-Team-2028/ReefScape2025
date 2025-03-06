@@ -3,35 +3,42 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.014267676767677,
-        "y": 5.214204545454545
+        "x": 1.37,
+        "y": 0.91
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.546717171717172,
-        "y": 5.783396464646464
+        "x": 2.541224854695445,
+        "y": 1.4565976946415393
       },
       "isLocked": false,
-      "linkedName": "Score 1 Pose"
+      "linkedName": "Station 12 Center"
     },
     {
       "anchor": {
-        "x": 1.243371212121212,
-        "y": 7.145391414141414
+        "x": 5.166729797979798,
+        "y": 2.6528409090909086
       },
       "prevControl": {
-        "x": 0.9918027431832235,
-        "y": 7.281183998575784
+        "x": 4.512356598067595,
+        "y": 2.3350610034304973
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Pickup Pose"
+      "linkedName": "Reef 22-9L"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Raise L4",
+      "waypointRelativePos": 0.9,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 4.0,
@@ -42,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -56.76828893202065
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "3 Coral Auto",
+  "folder": "SL to Reef 22-9L 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -118.8865817669107
+    "rotation": 54.0
   },
   "useDefaultConstraints": true
 }

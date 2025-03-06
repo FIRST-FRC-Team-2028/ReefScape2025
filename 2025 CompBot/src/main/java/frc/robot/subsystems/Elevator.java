@@ -183,12 +183,12 @@ public class Elevator extends SubsystemBase {
   /**disables/enables Softlimits on elevator motors, resets position to reverse SL
    * @param enabled whether or not the soft limits are enabled
   */
-  public void switchSL(boolean enabled){
+  public void switchSL(boolean enabled, boolean setPosition3){
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);
     m_elevatorMotorL.configure(configL, ResetMode.kResetSafeParameters, null);    //Persist mode Null because can't persist while enabled
                                         // TODO: MrG asks do you want to override all original configs or just the SL?
-    if (enabled) m_elevatorEncoder.setPosition(3.);
+    if (setPosition3) m_elevatorEncoder.setPosition(3.);
   }
   
 }

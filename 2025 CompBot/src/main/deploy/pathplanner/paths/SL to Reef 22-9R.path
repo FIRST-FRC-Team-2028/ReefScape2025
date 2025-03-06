@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.243371212121212,
-        "y": 7.145391414141414
+        "x": 7.118,
+        "y": 2.79
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.395763166860783,
-        "y": 6.880648714594321
+        "x": 6.843911702187165,
+        "y": 2.765042353449486
       },
       "isLocked": false,
-      "linkedName": "Pickup Pose"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.7132575757575754,
-        "y": 5.021085858585858
+        "x": 5.41,
+        "y": 2.79
       },
       "prevControl": {
-        "x": 2.2223088957853037,
-        "y": 5.593386202958574
+        "x": 6.754034755232518,
+        "y": 2.7698061147730875
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Score 2 Pose"
+      "linkedName": "22-9 R Peg"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Raise Elevator L4",
+      "name": "Raise L4",
       "waypointRelativePos": 0.95,
       "endWaypointRelativePos": null,
       "command": null
@@ -49,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.237280465761025
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "3 Coral Auto",
+  "folder": "SL to Reef 17-8R 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -56.76828893202065
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

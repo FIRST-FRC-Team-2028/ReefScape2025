@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.37,
-        "y": 0.91
+        "x": 7.118,
+        "y": 5.275
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.541224854695445,
-        "y": 1.4565976946415393
+        "x": 6.87062893477619,
+        "y": 5.311160145050001
       },
       "isLocked": false,
-      "linkedName": "Staion 12 Center"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.166729797979798,
-        "y": 2.6528409090909086
+        "x": 5.400505050505051,
+        "y": 5.275189393939394
       },
       "prevControl": {
-        "x": 4.512356598067595,
-        "y": 2.3350610034304973
+        "x": 5.648834297378811,
+        "y": 5.246334842355444
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef 20-11L"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Raise L4",
-      "waypointRelativePos": 0.9,
+      "waypointRelativePos": 0.95,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -49,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "SL to Reef 22-9L 3Coral",
+  "folder": "SL to Reef 19-6L 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }
