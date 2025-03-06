@@ -293,7 +293,7 @@ public class Robot extends TimedRobot {
       if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimitsE)){
         m_robotContainer.getElevator().switchSL(true);
       }
-      if (m_robotContainer.getElevator().LWPressed()){
+      if (m_robotContainer.getElevator().LSPressed()){
         m_robotContainer.getElevator().setPosition(3);
       }
     // TODO
