@@ -6,6 +6,7 @@ package frc.robot;
 
 import org.json.simple.parser.ParseException;
 
+import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
 import com.fasterxml.jackson.databind.util.Named;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -164,8 +165,17 @@ public class RobotContainer {
         new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
           .onTrue(new InstantCommand(() -> driveSubsystem.elevatorPositionBoolean(true)));
 
+        new JoystickButton(mechJoytick1, OIConstants.kBarge)
+          .onTrue(new InstantCommand(()->driveSubsystem.elevatorPositionBoolean(true)));
+
         new JoystickButton(mechJoytick1, 11)
           .onTrue(new InstantCommand(()-> elevatorSubsystem.setElevatorSpeed(-.2)))
+          .onFalse(new InstantCommand(()->elevatorSubsystem.PIDController(elevatorSubsystem.getPosition())));
+
+        new JoystickButton(mechJoytick1, OIConstants.kElevatorZero)
+          .onTrue(new InstantCommand(()->elevatorSubsystem.switchSL(false, false)))
+          .onTrue(new InstantCommand(()->elevatorSubsystem.setElevatorSpeed(-.5)))
+          .onFalse(new InstantCommand(()->elevatorSubsystem.switchSL(true, false)))
           .onFalse(new InstantCommand(()->elevatorSubsystem.PIDController(elevatorSubsystem.getPosition())));
           //.onFalse(new InstantCommand(()->elevatorSubsystem.stopElevator()));
 
@@ -177,27 +187,36 @@ public class RobotContainer {
     
 
     if (Constants.DRIVE_AVAILABLE) {
+      //reset gyro
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-
+      //Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
                                                  PathPlannerConstants.blueRightStationRot, PathPlannerConstants.coralStationEndVelocity));
-      
+      //Pathplanner drive to blue, left coral station
       new JoystickButton(driverJoytick, OIConstants.kLeftCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueLeftStationX, PathPlannerConstants.blueLeftStationY, 
                                                  PathPlannerConstants.blueLeftStationRot, PathPlannerConstants.coralStationEndVelocity));
-
+      //Pathplanner drive to red, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.redRightStationX, PathPlannerConstants.redRightStationY, 
                                                  PathPlannerConstants.redRightStationRot, PathPlannerConstants.coralStationEndVelocity));
-                                               
+      //Pathplanner drive to red, left coral station                     
       new JoystickButton(driverJoytick, OIConstants.kLeftCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueLeftStationX, PathPlannerConstants.blueLeftStationY, 
                                                  PathPlannerConstants.blueLeftStationRot, PathPlannerConstants.coralStationEndVelocity));
-
-      new JoystickButton(driverJoytick, OIConstants.kBackUp)
-      .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));
+      //Pathplanner drive to blue barge
+      new JoystickButton(driverJoytick, OIConstants.kDriveToBarge).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueBargeX, PathPlannerConstants.blueBargeY, 
+                                                 PathPlannerConstants.blueBargeRot, PathPlannerConstants.bargeEndVelocity));
+      //Pathplanner drive to red barge
+      new JoystickButton(driverJoytick, OIConstants.kDriveToBarge).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.redBargeX, PathPlannerConstants.redBargeY, 
+                                                 PathPlannerConstants.redBargeRot, PathPlannerConstants.bargeEndVelocity));
+      //Drive robot back enough to score on L4
+      /*new JoystickButton(driverJoytick, OIConstants.kBackUp)
+      .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));*/
       
 
       /*new JoystickButton(driverJoytick, OIConstants.kpathfindTopCoralStation)

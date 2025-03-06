@@ -287,7 +287,7 @@ public final class Constants {
     public static final int kResetGyro = 1;
     public static final int kRightCoralStation = 2;
     public static final int kLeftCoralStation = 3;
-    public static final int kBackUp = 4;
+    public static final int kDriveToBarge = 4;
     public static final int kpathfindTopCoralStation =   4;
     public static final int kDriverRobotOrientedButton = 6;
 
@@ -301,7 +301,7 @@ public final class Constants {
     public static final int kAlgeaSwitch =               8;
     public static final int kNudgeUpE =                  9;
     public static final int kNudgeDownE =                10;
-    public static final int kRePivot =                   12;
+    public static final int kElevatorZero =              12;
 
     //Gamemech2 Buttons
     public static final int kNudgeUpP =                  1;
@@ -377,9 +377,19 @@ public final class Constants {
 
     public static final double redLeftStationX = 16.;
     public static final double redLeftStationY = 1.;
-    public static final double redLeftStationRot = 126.;     //-54=180
+    public static final double redLeftStationRot = 126.;     //-54+180
 
     public static final double coralStationEndVelocity = 0;
+
+    public static final double blueBargeX = 7.5;
+    public static final double blueBargeY = 6.2;
+    public static final double blueBargeRot = 0.;
+
+    public static final double redBargeX = 10.;
+    public static final double redBargeY =1.9;
+    public static final double redBargeRot = 180.;
+
+    public static final double bargeEndVelocity = 0.;
   }
 
 

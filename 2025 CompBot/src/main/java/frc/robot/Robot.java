@@ -288,10 +288,10 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     if(Constants.ELEVATOR_AVALIBLE){
       if (driverJoytick.getRawButtonPressed(OIConstants.RestSoftLimitsE)){
-      m_robotContainer.getElevator().switchSL(false);
+      m_robotContainer.getElevator().switchSL(false, false);
       }
       if (driverJoytick.getRawButtonPressed(OIConstants.EnableSoftLimitsE)){
-        m_robotContainer.getElevator().switchSL(true);
+        m_robotContainer.getElevator().switchSL(true, true);
       }
       if (m_robotContainer.getElevator().LSPressed()){
         m_robotContainer.getElevator().setPosition(3);
