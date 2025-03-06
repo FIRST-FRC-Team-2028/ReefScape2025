@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.235297880568722,
-        "y": 3.166209131426663
+        "x": 5.743636363636364,
+        "y": 2.220142045454545
       },
       "isLocked": false,
       "linkedName": "22-9 R Peg"
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Staion 12 Center"
+      "linkedName": "Station 12 Center"
     }
   ],
   "rotationTargets": [],

@@ -31,6 +31,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
 import frc.robot.subsystems.Lights;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -58,6 +59,8 @@ public class RobotContainer {
   private final Lights lights;
   private final SendableChooser<Command> autoChooser;
   public boolean algae = false;
+  public boolean blueDriverStation = true;
+  
 
   // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -92,6 +95,7 @@ public class RobotContainer {
         NamedCommands.registerCommand( "Raise L3", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L3)));
         NamedCommands.registerCommand("Intake", new HandlerPosition(handlerSubsystem, HandlerConstants.intake)
+                                    .andThen(new WaitCommand(.125))
                                     .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
         NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
         NamedCommands.registerCommand("Raise Elevator L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
@@ -109,6 +113,9 @@ public class RobotContainer {
           : stream);
       SmartDashboard.putData("Auto Chooser", autoChooser);
     } else autoChooser=null;
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+      
+    };
     // Configure the trigger bindings
     configureButtonBindings();
   }
@@ -172,7 +179,24 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE) {
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      new JoystickButton(driverJoytick, OIConstants.kBlueLight)
+
+      new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
+                                                 PathPlannerConstants.blueRightStationRot, PathPlannerConstants.coralStationEndVelocity));
+      
+      new JoystickButton(driverJoytick, OIConstants.kLeftCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueLeftStationX, PathPlannerConstants.blueLeftStationY, 
+                                                 PathPlannerConstants.blueLeftStationRot, PathPlannerConstants.coralStationEndVelocity));
+
+      new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.redRightStationX, PathPlannerConstants.redRightStationY, 
+                                                 PathPlannerConstants.redRightStationRot, PathPlannerConstants.coralStationEndVelocity));
+                                               
+      new JoystickButton(driverJoytick, OIConstants.kLeftCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
+        .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueLeftStationX, PathPlannerConstants.blueLeftStationY, 
+                                                 PathPlannerConstants.blueLeftStationRot, PathPlannerConstants.coralStationEndVelocity));
+
+      new JoystickButton(driverJoytick, OIConstants.kBackUp)
       .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));
       
 

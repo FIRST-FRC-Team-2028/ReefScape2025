@@ -3,32 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.029999999999999,
-        "y": 3.85
+        "x": 5.166729797979798,
+        "y": 2.6528409090909086
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.481128787878787,
-        "y": 3.770896464646464
+        "x": 4.38409090909091,
+        "y": 1.8905303030303025
       },
       "isLocked": false,
-      "linkedName": "21-10 L Peg"
-    },
-    {
-      "anchor": {
-        "x": 5.0041035353535355,
-        "y": 2.439393939393939
-      },
-      "prevControl": {
-        "x": 5.6342803030303035,
-        "y": 2.429229797979797
-      },
-      "nextControl": {
-        "x": 4.754136047220505,
-        "y": 2.443425673073504
-      },
-      "isLocked": false,
-      "linkedName": null
+      "linkedName": "Reef 22-9L"
     },
     {
       "anchor": {
@@ -36,8 +20,8 @@
         "y": 0.91
       },
       "prevControl": {
-        "x": 1.5878938842811374,
-        "y": 1.0325653099081396
+        "x": 2.923375354133273,
+        "y": 1.6920768984245416
       },
       "nextControl": null,
       "isLocked": false,
@@ -50,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Intake Wheels",
-      "waypointRelativePos": 1.9,
+      "waypointRelativePos": 0.95,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -68,10 +52,10 @@
     "rotation": 54.0
   },
   "reversed": false,
-  "folder": "SL to Reef 22-9L 3Coral",
+  "folder": "SL to Reef 17-8R 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

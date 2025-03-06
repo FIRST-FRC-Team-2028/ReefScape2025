@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.029999999999999,
-        "y": 3.85
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 6.481128787878787,
-        "y": 3.770896464646464
-      },
-      "isLocked": false,
-      "linkedName": "21-10 L Peg"
-    },
-    {
-      "anchor": {
-        "x": 5.0041035353535355,
-        "y": 2.439393939393939
-      },
-      "prevControl": {
-        "x": 5.6342803030303035,
-        "y": 2.429229797979797
-      },
-      "nextControl": {
-        "x": 4.754136047220505,
-        "y": 2.443425673073504
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 1.37,
         "y": 0.91
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.541224854695445,
+        "y": 1.4565976946415393
+      },
+      "isLocked": false,
+      "linkedName": "Station 12 Center"
+    },
+    {
+      "anchor": {
+        "x": 5.166729797979798,
+        "y": 2.6528409090909086
+      },
       "prevControl": {
-        "x": 1.5878938842811374,
-        "y": 1.0325653099081396
+        "x": 4.512356598067595,
+        "y": 2.3350610034304973
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station 12 Center"
+      "linkedName": "Reef 22-9L"
     }
   ],
   "rotationTargets": [],
@@ -49,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Intake Wheels",
-      "waypointRelativePos": 1.9,
+      "name": "Raise L4",
+      "waypointRelativePos": 0.9,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -65,13 +49,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
   "folder": "SL to Reef 22-9L 3Coral",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 54.0
   },
   "useDefaultConstraints": true
 }

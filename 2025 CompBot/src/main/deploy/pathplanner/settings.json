@@ -4,12 +4,16 @@
   "holonomicMode": true,
   "pathFolders": [
     "3 Coral Auto",
-    "SL to Reef 22-9L 3Coral",
     "Left Path",
-    "Pathfind To Paths"
+    "SL to Reef 19-6L 3Coral",
+    "Pathfind To Paths",
+    "SL to Reef 17-8R 3Coral",
+    "SL to Reef 20-11R 3Coral",
+    "SL to Reef 22-9L 3Coral"
   ],
   "autoFolders": [
-    "New Folder"
+    "Driver Right Side Autos",
+    "Driver Left Side Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 4.0,

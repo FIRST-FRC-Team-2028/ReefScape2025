@@ -295,12 +295,13 @@ public class Drivetrain extends SubsystemBase {
   /**Contructs and runs a path to the given pose avoiding obsticals outlinned in navgrid.json
    * @param x The x cordinate of the target position 
    * @param y The y cordinate of the target position
-   * @param rotation the Rotation 2d value of the target position
+   * @param rotation the Rotation 2d value of the target position in degrees
    * @param goalEndVelocity The velocity of the robot at the end of the path. 0 is required to stop at the target pose.
    * A value > 0 may be used to keep the robot up to speed for the driver to take over.
    */
   public Command pathfindToPose(double x, double y, double rotation, double goalEndVelocity) {
-    Rotation2d rotation2d = new Rotation2d(rotation);
+    Rotation2d rotation2d = new Rotation2d().fromDegrees(rotation);
+    
     Pose2d targetPose = new Pose2d(x, y, rotation2d);
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
   }

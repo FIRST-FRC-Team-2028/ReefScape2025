@@ -303,10 +303,10 @@ public class Robot extends TimedRobot {
     }   
     
     if (Constants.HANDLER_AVAILABLE){
-      if (driverJoytick.getRawButtonPressed(OIConstants.kSecondButton)){
+      if (driverJoytick.getRawButtonPressed(OIConstants.kRightCoralStation)){
         m_robotContainer.getHandler().switchSL(false);
       }
-      if (driverJoytick.getRawButtonPressed(OIConstants.kThirdButton)){
+      if (driverJoytick.getRawButtonPressed(OIConstants.kRightCoralStation)){
         m_robotContainer.getHandler().switchSL(true);
       }
     }
