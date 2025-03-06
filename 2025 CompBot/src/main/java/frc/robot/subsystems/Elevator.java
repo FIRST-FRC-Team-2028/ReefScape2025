@@ -39,7 +39,18 @@ public class Elevator extends SubsystemBase {
   double avgCurrent = 0;
   boolean elevatorSaftey = true;
 
-  
+    /** Controls the height of the handler
+     * <p>Methods:<ul>
+     * <li>LSPressed - Gets if the limit switch is pressed
+     * <li>resetLatestTarget - Resets the PID target to the current elevator position
+     * <li>PIDController - Closed loop control of the elevator
+     * <li>setElevatorSpeed - vbus control of the elevator
+     * <li>stopElevator - stops the elevator motor
+     * <li>getPosition - Gets the current position of the elevator
+     * <li>setPosition - Set the position of the elevator encoder
+     * <li>reTargetElevator - Adjusts the PID target on the elevator by a set value
+     * <li>switchSL - disables/enables Softlimits on elevator motors, resets position to reverse SL
+     */
     public Elevator() {
       m_elevatorMotorL = new SendableSparkMax(Constants.CANIDS.elevatorL, MotorType.kBrushless);
       m_elevatorMotorR = new SendableSparkMax(Constants.CANIDS.elevatorR, MotorType.kBrushless);
@@ -91,9 +102,14 @@ public class Elevator extends SubsystemBase {
     //System.out.println("Position: " + CurrentPosition);
   }
 
-  public boolean LWPressed(){
+  /**
+   * Gets if the limit switch is pressed
+   * @return true if the limit switch is pressed
+   */
+  public boolean LSPressed(){
     return m_rearLimitSwitch.isPressed();
   }
+  /** Resets the PID target to the current elevator position */
   public void resetLatestTarget(){
     latestTarget = getPosition(); 
   }
@@ -133,22 +149,30 @@ public class Elevator extends SubsystemBase {
    * @return <b>True</b> if the motor is at the target height
    * <li><b>False</b> if the motor is not at the target height </li>
    */
-  public boolean Finished(double Destination) {
+ /* public boolean Finished(double Destination) {
     return getPosition() == Destination;
-  }
+  }*/
 
   /**
-   * 
+   * Gets the current position of the elevator 
    * @return the current position of the elevator based on the encoder
    */
   public double getPosition(){
     return m_elevatorEncoder.getPosition();
   }
 
+  /**
+   * Set the position of the elevator encoder
+   * @param newPose the new pose of the elevator encoder
+   */
   public void setPosition(double newPose){
     m_elevatorEncoder.setPosition(newPose);
   }
 
+  /**
+   * Adjusts the PID target on the elevator by a set value
+   * @param adjustment ammount to move the elevator
+   */
   public void reTargetElevator(double adjustment){
     latestTarget += adjustment;
     PIDController(latestTarget);
@@ -156,7 +180,9 @@ public class Elevator extends SubsystemBase {
 
   }
 
-  /**disables/enables Softlimits on elevator motors, resets position to reverse SL*/
+  /**disables/enables Softlimits on elevator motors, resets position to reverse SL
+   * @param enabled whether or not the soft limits are enabled
+  */
   public void switchSL(boolean enabled){
     configL.softLimit.reverseSoftLimitEnabled(enabled);
     configL.softLimit.forwardSoftLimitEnabled(enabled);

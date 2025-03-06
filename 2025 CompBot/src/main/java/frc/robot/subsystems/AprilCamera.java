@@ -149,7 +149,7 @@ public class AprilCamera extends SubsystemBase {
   }
 
   /**
-   * Calculates the distance to targeted Apriltag
+   * Calculates the distance to targeted Apriltag from the front of the robot
    * @return The distance from the front of the robot to the april tag
    */
   double getDistanceToTarget(){
@@ -157,7 +157,7 @@ public class AprilCamera extends SubsystemBase {
                                                       getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
                                                       Units.degreesToRadians(target.getPitch()));
-    return Math.sqrt(distance*distance-(getHeight()-CamConstants.camera_Height_Meters)*(getHeight()-CamConstants.camera_Height_Meters));
+    return (Math.sqrt(distance*distance-(getHeight()-CamConstants.camera_Height_Meters)*(getHeight()-CamConstants.camera_Height_Meters)) - CamConstants.robotToCamX);
           
     
   }
@@ -285,7 +285,7 @@ public class AprilCamera extends SubsystemBase {
       SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Get Yaw", target.getYaw());
-      SmartDashboard.putNumber("Get Distance", Units.metersToInches(getDistanceToTarget()));
+      SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
       
       
 
