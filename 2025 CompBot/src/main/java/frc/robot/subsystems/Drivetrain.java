@@ -219,7 +219,7 @@ public class Drivetrain extends SubsystemBase {
           m_backRight.getPosition()
         });
   }*/
-
+  int estimaterCounter = 0;
   public void updatePoseEstimator() {
     m_poseEstimator.update(m_gyro.getRotation2d(),
                           new SwerveModulePosition[] {                                  
@@ -237,6 +237,7 @@ public class Drivetrain extends SubsystemBase {
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         
+        SmartDashboard.putNumber("Counter", ++estimaterCounter);
         m_poseEstimator.addVisionMeasurement(
                   aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
       }  

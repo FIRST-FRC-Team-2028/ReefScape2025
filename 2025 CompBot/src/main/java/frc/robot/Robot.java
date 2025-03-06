@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
                 camera.setResolution(480, 270);
 
                 CvSink cvSink = CameraServer.getVideo();
+                //cvSink = CameraServer.getServer("photonvision_Port_1181_Input_MJPEG_Server");//.getVideo();
 
                 CvSource outputStream = CameraServer.putVideo("Marking lines", 480, 270);
 
