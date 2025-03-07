@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.11824494949495,
+        "x": 7.118,
         "y": 3.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.86824494949495,
+        "x": 6.868,
         "y": 3.85
       },
       "isLocked": false,
@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 6.03,
+        "x": 6.0,
         "y": 3.85
       },
       "prevControl": {
-        "x": 6.28,
+        "x": 6.25,
         "y": 3.85
       },
       "nextControl": null,
@@ -31,17 +31,10 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Raise L4",
-      "waypointRelativePos": 0.9,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
     "nominalVoltage": 12.0,
@@ -57,5 +50,5 @@
     "velocity": 0,
     "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

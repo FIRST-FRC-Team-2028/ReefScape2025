@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.029999999999999,
+        "x": 6.01,
         "y": 3.85
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.481128787878787,
+        "x": 6.4611287878787875,
         "y": 3.770896464646464
       },
       "isLocked": false,
@@ -47,17 +47,10 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Intake Wheels",
-      "waypointRelativePos": 1.9,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
     "nominalVoltage": 12.0,

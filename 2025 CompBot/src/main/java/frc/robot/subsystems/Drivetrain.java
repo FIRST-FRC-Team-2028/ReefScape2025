@@ -238,8 +238,8 @@ public class Drivetrain extends SubsystemBase {
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         
         SmartDashboard.putNumber("Counter", ++estimaterCounter);
-        m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime); 
+       /*m_poseEstimator.addVisionMeasurement(
+                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);*/
       }  
     }
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());

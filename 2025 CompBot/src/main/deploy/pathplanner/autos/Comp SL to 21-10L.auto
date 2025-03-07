@@ -11,6 +11,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Raise L4"
+          }
+        },
+        {
           "type": "wait",
           "data": {
             "waitTime": 1.5
@@ -25,7 +31,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -41,15 +47,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Intake Wheels"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.75
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Station 12-2C to Reef 22-9R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Raise L4"
           }
         },
         {
@@ -67,7 +85,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {
@@ -83,15 +101,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "Intake Wheels"
+          }
+        },
+        {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.75
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "Staition 12-2C Reef 22-9L"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Raise L4"
           }
         },
         {
@@ -109,7 +139,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.25
           }
         },
         {

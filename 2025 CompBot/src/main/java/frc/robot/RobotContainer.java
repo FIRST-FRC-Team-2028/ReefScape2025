@@ -99,11 +99,12 @@ public class RobotContainer {
                                     .andThen(new WaitCommand(.125))
                                     .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
         NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
-        NamedCommands.registerCommand("Raise Elevator L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
-                                    .andThen(new WaitCommand(1))
+        NamedCommands.registerCommand("Raise L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
         NamedCommands.registerCommand("Shoot",new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)
                                     .raceWith(new WaitCommand(.5)));
+        NamedCommands.registerCommand("Intake Wheels", new RunWheels(handlerSubsystem, 0.25, 0.3, false));
+
         
       }
       //autoChooser = AutoBuilder.buildAutoChooser();
