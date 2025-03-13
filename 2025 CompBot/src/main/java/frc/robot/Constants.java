@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  *  HandlerConstants
  *  ElevatorConstants
  *  CANIDS
- *  OIConstants
+ *  OIConstantsnh
  *  CamConstants
  *  RobotConstants
  *  PathPlannerConstants
@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean CAMERA_AVAILABLE = false;
+  public static final boolean CAMERA_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = true;
   public static final boolean ELEVATOR_AVALIBLE = true;
   public static final boolean LIGHTS_AVALIBLE = true;
@@ -335,15 +335,15 @@ public final class Constants {
       //public static final double target_Height_Meters = Units.inchesToMeters(78.);
 
       public static final int followDistance = 1; //Meters
-      public static final double camera_Height_Meters = Units.inchesToMeters(32);
+      public static final double camera_Height_Meters = Units.inchesToMeters(11.3);
       public static final double camera_Pitch_Radians = Units.degreesToRadians(1);
       public static final double cameraYawRadians = 2.29;
       public static final double tag_Follow_P = 1.75;
       public static final double tag_Follow_D = 0.5;
       public static final double drive_Range_Meters = 1;
-      public static final double robotToCamX = Units.inchesToMeters(11);
-      public static final double robotToCamY = Units.inchesToMeters(-3.5);
-      public static final double robotToCamZ = Units.inchesToMeters(30.5);
+      public static final double robotToCamX = Units.inchesToMeters(8.);
+      public static final double robotToCamY = Units.inchesToMeters(0.);
+      public static final double robotToCamZ = Units.inchesToMeters(3.);
 
 
   }

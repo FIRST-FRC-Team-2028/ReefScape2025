@@ -71,7 +71,7 @@ public class AprilCamera extends SubsystemBase {
    */
   public AprilCamera() {
 
-    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
@@ -157,7 +157,7 @@ public class AprilCamera extends SubsystemBase {
                                                       getHeight(),
                                                       CamConstants.camera_Pitch_Radians,
                                                       Units.degreesToRadians(target.getPitch()));
-    return (Math.sqrt(distance*distance-(getHeight()-CamConstants.camera_Height_Meters)*(getHeight()-CamConstants.camera_Height_Meters)) - CamConstants.robotToCamX);
+    return (Math.sqrt(distance*distance-(getHeight()-CamConstants.camera_Height_Meters)*(getHeight()-CamConstants.camera_Height_Meters))); //- CamConstants.robotToCamX);
           
     
   }

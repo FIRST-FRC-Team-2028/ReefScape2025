@@ -173,7 +173,7 @@ public class Robot extends TimedRobot {
       m_robotContainer.getLights().blueLight(m_robotContainer.getHandler().doIHaveIt());
       }*/
       if (Constants.LIGHTS_AVALIBLE && Constants.ELEVATOR_AVALIBLE){
-      m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() == 3);
+      m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() <= 3.5);
       }
     /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs

@@ -77,12 +77,12 @@ public class Lights extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (matchTimer){
+   if (matchTimer){
       matchTime += 0.02;
     }
-    if (matchTime > 90.){
+   /*if (matchTime > 90.){
       orangeLight(true);
     }
-    else orangeLight(false);
+    else orangeLight(false);*/
   }
 }
