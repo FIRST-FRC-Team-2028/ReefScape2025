@@ -336,4 +336,7 @@ public class SwerveModule {
   public double getAppliedVoltage(){
     return m_driveMotor.getAppliedOutput();
   }
+  public double getDriveLoad(){
+    return m_driveMotor.getOutputCurrent();
+  }
 }
