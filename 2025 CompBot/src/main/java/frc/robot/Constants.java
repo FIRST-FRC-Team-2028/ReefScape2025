@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean CAMERA_AVAILABLE = false;
+  public static final boolean CAMERA_AVAILABLE = true;
   public static final boolean HANDLER_AVAILABLE = true;
   public static final boolean ELEVATOR_AVALIBLE = true;
   public static final boolean LIGHTS_AVALIBLE = true;
@@ -249,8 +249,8 @@ public final class Constants {
     public static final double kBarge = 64.75;
     public static final double Intake = 3.;
     public static final double L1 = 23.;
-    public static final double L2 = 12;
-    public static final double L3 = 27.2;
+    public static final double L2 = 13;
+    public static final double L3 = 28.2;
     public static final double L4 = 60.3;
     public static final double algaeIntake = 3.;
     public static final double algaeL1 = 3.;
@@ -363,6 +363,12 @@ public final class Constants {
                           DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond,
                           DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond,
                           DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+
+    public static final PathConstraints pathConstraints1 = new PathConstraints(0.5,
+                          0.5,
+                          Math.PI/2,
+                          Math.PI/2);
+
     public static final double blueRightStationX = 1.;
     public static final double blueRightStationY = 1.;
     public static final double blueRightStationRot = 54;

@@ -113,7 +113,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("BatV", PDH.getVoltage());
+    //SmartDashboard.putNumber("BatV", PDH.getVoltage());
    
   }
 
@@ -173,9 +173,15 @@ public class Robot extends TimedRobot {
       m_robotContainer.getLights().blueLight(m_robotContainer.getHandler().doIHaveIt());
       }*/
       if (Constants.LIGHTS_AVALIBLE && Constants.ELEVATOR_AVALIBLE){
-      m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() == 3);
+        m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() <= 3.5);
       }
-    /*if (Constants.DRIVE_AVAILABLE) {
+      if (Constants.LIGHTS_AVALIBLE){
+        if(m_robotContainer.getLights().matchTime() >= 105){
+          m_robotContainer.getLights().orangeLight(true);
+        }else m_robotContainer.getLights().orangeLight(false);
+      }
+
+      /*if (Constants.DRIVE_AVAILABLE) {
             // 1. Get real-time joystick inputs
             double xSpeed = -driverJoytick.getRawAxis(OIConstants.kDriverXAxis); // Negative values go forward
             double ySpeed = -driverJoytick.getRawAxis(OIConstants.kDriverYAxis);
@@ -203,7 +209,7 @@ public class Robot extends TimedRobot {
                     ySpeed *= 1. - (DriveConstants.kFineControlSpeed);
                     turningSpeed *= 1. - (DriveConstants.kFineControlSpeed);
                 }
-                if (driverJoytick.getRawButton(OIConstants.kFastControlAxis)) {
+                if (driverJoytick.getRawButon(OIConstants.kFastControlAxis)) {
                     xSpeed *= 1. + (DriveConstants.kFasterSpeed);
                     ySpeed *= 1. + (DriveConstants.kFasterSpeed);
                     turningSpeed *= 1. + (DriveConstants.kFasterSpeed);

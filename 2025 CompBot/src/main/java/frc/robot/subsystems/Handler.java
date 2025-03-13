@@ -92,7 +92,8 @@ public class Handler extends SubsystemBase {
   
   public void switchSL(boolean enabled){
     pivotConfig.softLimit.forwardSoftLimitEnabled(enabled);
-    pivotConfig.softLimit.forwardSoftLimitEnabled(enabled);
+    pivotConfig.softLimit.reverseSoftLimitEnabled(enabled);
+    pivot.configure(pivotConfig, ResetMode.kResetSafeParameters, null);
     if (enabled) pivotEncoder.setPosition(0);
   }
   public void resetPivotEncoder(){
@@ -154,7 +155,6 @@ public class Handler extends SubsystemBase {
     latestTarget = position;
  //   }
   }
-
   /** vbus control of algae intake motor */
   public void algaeGrab(){
     if(algaeCaptureCurrentLimit){
@@ -212,7 +212,7 @@ public class Handler extends SubsystemBase {
     else iDontHaveIt();
 
     SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
-    SmartDashboard.putNumber("Algae Current", coralShoot.getOutputCurrent());
+    //SmartDashboard.putNumber("Algae Current", coralShoot.getOutputCurrent());
     SmartDashboard.putNumber("Coral Temp", coralShoot.getMotorTemperature());
  //   SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();

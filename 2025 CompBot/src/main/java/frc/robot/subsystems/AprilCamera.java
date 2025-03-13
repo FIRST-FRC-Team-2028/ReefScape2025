@@ -71,7 +71,7 @@ public class AprilCamera extends SubsystemBase {
    */
   public AprilCamera() {
 
-    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
@@ -237,6 +237,13 @@ public class AprilCamera extends SubsystemBase {
   public boolean isPoseEstimated(){
     return poseEstimated;
   }
+
+  public PhotonTrackedTarget getResult(){
+    return result.getBestTarget();
+  } 
+  public Optional<Pose3d> getTagPose(Integer tagID){
+    return aprilTagFieldLayout.getTagPose(tagID);
+  }
  /* public EstimatedRobotPose getPoseTrue(){
   poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
     return poseEstimateTrue;
@@ -281,19 +288,19 @@ public class AprilCamera extends SubsystemBase {
 
 
      
-      SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
-      SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
-      SmartDashboard.putNumber("April Tag X", target.getFiducialId());
-      SmartDashboard.putNumber("Get Yaw", target.getYaw());
-      SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
+      //SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
+      //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
+      //SmartDashboard.putNumber("April Tag X", target.getFiducialId());
+      //SmartDashboard.putNumber("Get Yaw", target.getYaw());
+      //SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
       
       
 
       // This method will be called once per scheduler run
     } else {
-      SmartDashboard.putNumber("April Tag X", 999.);
-      SmartDashboard.putNumber("Get Yaw", 999.);
-      SmartDashboard.putNumber("Get Distance", 999.);
+      //SmartDashboard.putNumber("April Tag X", 999.);
+      //SmartDashboard.putNumber("Get Yaw", 999.);
+      //SmartDashboard.putNumber("Get Distance", 999.);
       poseEstimated = false;
     }
     

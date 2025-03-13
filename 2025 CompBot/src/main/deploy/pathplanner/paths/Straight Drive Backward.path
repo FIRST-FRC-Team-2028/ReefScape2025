@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.166729797979798,
-        "y": 2.6528409090909086
+        "x": 8.1,
+        "y": 1.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.38409090909091,
-        "y": 1.8905303030303025
+        "x": 9.1,
+        "y": 1.0
       },
       "isLocked": false,
-      "linkedName": "Reef 22-9L"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.8430555555555557,
-        "y": 0.5488636363636362
+        "x": 2.0,
+        "y": 1.0
       },
       "prevControl": {
-        "x": 3.3964309096888288,
-        "y": 1.3309405347881778
+        "x": 1.0,
+        "y": 1.0000000000000002
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station 12 Center"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "SL to Reef 17-8R 3Coral",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -237,9 +237,9 @@ public class Drivetrain extends SubsystemBase {
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         
-        SmartDashboard.putNumber("Counter", ++estimaterCounter);
-       /*m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);*/
+        //SmartDashboard.putNumber("Counter", ++estimaterCounter);
+       m_poseEstimator.addVisionMeasurement(
+                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);
       }  
     }
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
@@ -304,8 +304,16 @@ public class Drivetrain extends SubsystemBase {
     Rotation2d rotation2d = new Rotation2d().fromDegrees(rotation);
     
     Pose2d targetPose = new Pose2d(x, y, rotation2d);
-    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints, goalEndVelocity);
+    System.out.println("working");
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints1, goalEndVelocity);
   }
+
+  public Command pathfindToPose(double x, double y, Rotation2d rotation, double goalEndVelocity) {    
+    Pose2d targetPose = new Pose2d(x, y, rotation);
+    System.out.println("working");
+    return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints1, goalEndVelocity);
+  }
+
   /** returns the state, does the DriveTrain believe the elevator is up? */
   public boolean elevatorUp(){
     return elevatorUp;
@@ -315,6 +323,11 @@ public class Drivetrain extends SubsystemBase {
     elevatorUp = up;
   }
 
+  /**square2Tag
+   * see a tag
+   * align robot x-axis with tag axis
+   * optionally, reset gyro
+   */
 
   
 }

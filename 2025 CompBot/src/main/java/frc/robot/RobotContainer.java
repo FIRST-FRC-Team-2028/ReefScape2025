@@ -23,6 +23,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.RunWheels;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveToAprilTagPP;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
 import frc.robot.commands.SpitSequence; // Stuff using is Commented out
@@ -188,10 +189,16 @@ public class RobotContainer {
     
 
     if (Constants.DRIVE_AVAILABLE) {
+      //new JoystickButton(driverJoytick, 3)
+      //  .onTrue(new TimedDrive(driveSubsystem, 0.25, 0, 0.5, 0));
+      new JoystickButton(driverJoytick, 2)
+        .onTrue(new TimedDrive(driveSubsystem, 0.25, 0, -0.5, 0));
       //reset gyro
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      //Pathplanner drive to blue, right coral station
+      new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
+      /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
                                                  PathPlannerConstants.blueRightStationRot, PathPlannerConstants.coralStationEndVelocity));
@@ -214,7 +221,7 @@ public class RobotContainer {
       //Pathplanner drive to red barge
       new JoystickButton(driverJoytick, OIConstants.kDriveToBarge).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Red)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.redBargeX, PathPlannerConstants.redBargeY, 
-                                                 PathPlannerConstants.redBargeRot, PathPlannerConstants.bargeEndVelocity));
+                                                 PathPlannerConstants.redBargeRot, PathPlannerConstants.bargeEndVelocity));*/
       //Drive robot back enough to score on L4
       /*new JoystickButton(driverJoytick, OIConstants.kBackUp)
       .onTrue(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0));*/
@@ -307,18 +314,24 @@ public class RobotContainer {
         new JoystickButton(mechJoytick2, OIConstants.kAlgaeIn)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0, true));
 
-        new JoystickButton(mechJoytick2, OIConstants.kHandlerHalfExtend)
+        /*new JoystickButton(mechJoytick2, OIConstants.kHandlerHalfExtend)
           .onTrue(new HandlerPosition(handlerSubsystem, 0.5));
 
         new JoystickButton(mechJoytick2, OIConstants.kRetract)
           .onTrue(new HandlerPosition(handlerSubsystem, 0));
 
         new JoystickButton(mechJoytick2, OIConstants.kHandlerExtend)
-          .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.kAlgaeFloor));
+          .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.kAlgaeFloor));*/
 
         new JoystickButton(mechJoytick2, OIConstants.kOutCoral)
           .whileTrue(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false));
-
+        new JoystickButton(mechJoytick2, 3)
+          .onTrue(new InstantCommand(()-> handlerSubsystem.switchSL(false))
+          .andThen(new InstantCommand(()-> handlerSubsystem.moveHandlerSpeed(-0.2))))
+          .onFalse(new InstantCommand(()-> handlerSubsystem.switchSL(true))
+          .andThen(new InstantCommand(()-> handlerSubsystem.resetPivotEncoder()))
+          .andThen(new HandlerPosition(handlerSubsystem, 0)));
+          
 
     }
 
