@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.37,
-        "y": 0.91
+        "x": 1.8430555555555557,
+        "y": 0.5488636363636362
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.541224854695445,
-        "y": 1.4565976946415393
+        "x": 3.0142804102510006,
+        "y": 1.0954613310051755
       },
       "isLocked": false,
       "linkedName": "Station 12 Center"

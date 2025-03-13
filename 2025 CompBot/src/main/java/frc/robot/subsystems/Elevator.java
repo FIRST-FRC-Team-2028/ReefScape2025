@@ -90,7 +90,7 @@ public class Elevator extends SubsystemBase {
        m_elevatorEncoder.setPosition(3);
      }
       SmartDashboard.putNumber("Position", m_elevatorEncoder.getPosition());
-      SmartDashboard.putNumber("Elevator Current L", m_elevatorMotorL.getOutputCurrent());
+      //SmartDashboard.putNumber("Elevator Current L", m_elevatorMotorL.getOutputCurrent());
       SmartDashboard.putNumber("Elevator Temp L", m_elevatorMotorL.getMotorTemperature());
       SmartDashboard.putNumber("Elevator Temp R", m_elevatorMotorR.getMotorTemperature());
       
