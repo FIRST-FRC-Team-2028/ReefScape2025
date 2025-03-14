@@ -166,6 +166,10 @@ public class Drivetrain extends SubsystemBase {
   public void resetGyro(){
     m_gyro.reset();
   }
+  /**Set the heading on the gyro */
+  public void setGyro(double heading){
+    m_gyro.setYaw(heading);
+  }
 
   public Rotation2d getHeading() {
     return m_gyro.getRotation2d();

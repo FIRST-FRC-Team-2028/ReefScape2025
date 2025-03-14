@@ -107,7 +107,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Shoot",new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)
                                     .raceWith(new WaitCommand(.5)));
         NamedCommands.registerCommand("Intake Wheels", new RunWheels(handlerSubsystem, 0.25, 0.3, false));
-
+        NamedCommands.registerCommand("Set Gyro 180", new InstantCommand(()->driveSubsystem.setGyro(180)) );
         
       }
       //autoChooser = AutoBuilder.buildAutoChooser();
