@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Drivetrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class TimedDrive extends Command {
+public class TimedSpeedDrive extends Command {
   private final Drivetrain drivesubsytem;
   private Timer timer;
   private ChassisSpeeds chassisSpeeds;
@@ -24,7 +24,7 @@ public class TimedDrive extends Command {
    * @param ySpeed speed positive is left and negative is right
    * @param turningSpeed positive is CCW and negative is CW
   */
-  public TimedDrive(Drivetrain drivetrain, double time, double xSpeed, double ySpeed, double turningSpeed) {
+  public TimedSpeedDrive(Drivetrain drivetrain, double time, double xSpeed, double ySpeed, double turningSpeed) {
     drivesubsytem = drivetrain;
     timer = new Timer();
     this.time = time;
@@ -38,14 +38,12 @@ public class TimedDrive extends Command {
   @Override
   public void initialize() {
     timer.start();
-    chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     drivesubsytem.drive(chassisSpeeds);
-
   }
 
   // Called once the command ends or is interrupted.

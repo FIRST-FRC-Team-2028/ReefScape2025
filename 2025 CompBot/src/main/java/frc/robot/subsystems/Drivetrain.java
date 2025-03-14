@@ -197,6 +197,21 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setDesiredState(swerveModuleStates[3]);*/
   }
   
+  public void driveComponent(double x, double y, double rot){
+    driveComponent(x,y,rot,false);  //TODO should this be true
+  }
+  public void driveComponent(double x, double y, double rot, boolean fieldOriented){
+    ChassisSpeeds chassisSpeeds;
+    if (fieldOriented) { //normal use
+      chassisSpeeds = new ChassisSpeeds(x, y, rot);
+    }else {
+    // Relative to field
+      chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                   x, y, rot, getRotation2d());
+    }
+    drive(chassisSpeeds);
+  }
+  
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     for (SwerveModuleState state:desiredStates){
       state.angle= new Rotation2d(-state.angle.getRadians()); //The encoder won't let us invert it 
@@ -310,7 +325,7 @@ public class Drivetrain extends SubsystemBase {
 
   public Command pathfindToPose(double x, double y, Rotation2d rotation, double goalEndVelocity) {    
     Pose2d targetPose = new Pose2d(x, y, rotation);
-    System.out.println("working");
+    System.out.println(targetPose.toString());
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints1, goalEndVelocity);
   }
 
@@ -323,11 +338,13 @@ public class Drivetrain extends SubsystemBase {
     elevatorUp = up;
   }
 
-  /**square2Tag
-   * see a tag
-   * align robot x-axis with tag axis
-   * optionally, reset gyro
-   */
-
+  /** get average current load for the drive motors */
+  public double getLoad(){
+    double load=0.;
+    for (SwerveModule mod: modules){
+      load+=mod.getDriveLoad()*.25;
+    }
+    return load;
+  }
   
 }
