@@ -24,10 +24,12 @@ import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.commands.RunWheels;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveToAprilTagPP;
+import frc.robot.commands.DriveToReefTag;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
 import frc.robot.commands.SpitSequence; // Stuff using is Commented out
 import frc.robot.commands.TimedSpeedDrive;
+import frc.robot.commands.TurnToReef;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -196,10 +198,11 @@ public class RobotContainer {
       //reset gyro
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
-      new JoystickButton(driverJoytick, 3)
-        .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
-      new JoystickButton(driverJoytick, 4)
-        .whileTrue(driveSubsystem.pathfindToPose(5.3, 4, 0, 0));
+      //new JoystickButton(driverJoytick, 3)
+      //  .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
+      /*new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)    TODO TEST THIS
+        .alongWith(new TurnToReef(driveSubsystem, april)));*/
       /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 

@@ -108,7 +108,7 @@ public class AprilCamera extends SubsystemBase {
    * If the camera has a target 
    * @return the yaw of the target
    * <p>
-   * Otherwise returns garbage
+   * Otherwise returns -999.
    */
   public double tagYaw() {
     if (hasTargets){
@@ -128,7 +128,7 @@ public class AprilCamera extends SubsystemBase {
    * If the camera has a target 
    * @return the area of the target
    * <p>
-   * Otherwise returns garbage
+   * Otherwise returns -999.
    */
   public double tagArea(){
     if (hasTargets){
@@ -145,7 +145,17 @@ public class AprilCamera extends SubsystemBase {
     truePose = targetPose.get();
     
     return truePose.getZ();
+  }
     
+  /** return the relative angle between the camera axis and the target normal.
+   * <p>
+   * @return angle in degrees
+   */
+  public double getFaceVec()
+  {
+    if (hasTargets)
+       return (target.getSkew()-360.)%360.;
+    else return -999.;
   }
 
   /**
