@@ -202,7 +202,7 @@ public class Drivetrain extends SubsystemBase {
   }
   public void driveComponent(double x, double y, double rot, boolean fieldOriented){
     ChassisSpeeds chassisSpeeds;
-    if (fieldOriented) { //normal use
+    if (!fieldOriented) { //normal use
       chassisSpeeds = new ChassisSpeeds(x, y, rot);
     }else {
     // Relative to field
