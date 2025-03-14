@@ -310,7 +310,7 @@ public class Drivetrain extends SubsystemBase {
 
   public Command pathfindToPose(double x, double y, Rotation2d rotation, double goalEndVelocity) {    
     Pose2d targetPose = new Pose2d(x, y, rotation);
-    System.out.println("working");
+    System.out.println(targetPose.toString());
     return AutoBuilder.pathfindToPose(targetPose, PathPlannerConstants.pathConstraints1, goalEndVelocity);
   }
 

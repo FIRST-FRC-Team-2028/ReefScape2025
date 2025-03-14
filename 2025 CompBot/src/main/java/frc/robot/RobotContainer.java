@@ -27,7 +27,7 @@ import frc.robot.commands.DriveToAprilTagPP;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
 import frc.robot.commands.SpitSequence; // Stuff using is Commented out
-import frc.robot.commands.TimedDrive;
+import frc.robot.commands.TimedSpeedDrive;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
@@ -192,12 +192,14 @@ public class RobotContainer {
       //new JoystickButton(driverJoytick, 3)
       //  .onTrue(new TimedDrive(driveSubsystem, 0.25, 0, 0.5, 0));
       new JoystickButton(driverJoytick, 2)
-        .onTrue(new TimedDrive(driveSubsystem, 0.25, 0, -0.5, 0));
+        .onTrue(new TimedSpeedDrive(driveSubsystem, 0.25, 0, -0.5, 0));
       //reset gyro
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
+      new JoystickButton(driverJoytick, 4)
+        .whileTrue(driveSubsystem.pathfindToPose(5.3, 4, 0, 0));
       /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
@@ -272,7 +274,7 @@ public class RobotContainer {
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.25))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
-        .andThen(new TimedDrive(driveSubsystem, 0.25, -0.5, 0, 0)));
+        .andThen(new TimedSpeedDrive(driveSubsystem, 0.25, -0.5, 0, 0)));
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)

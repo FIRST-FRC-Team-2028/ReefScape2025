@@ -288,8 +288,8 @@ public class AprilCamera extends SubsystemBase {
 
 
      
-      //SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
-      //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
+      SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
+      SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       //SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       //SmartDashboard.putNumber("Get Yaw", target.getYaw());
       //SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
