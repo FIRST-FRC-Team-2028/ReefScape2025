@@ -282,6 +282,7 @@ public class AprilCamera extends SubsystemBase {
       targets = result.getTargets();
       target = result.getBestTarget();
       
+      
       poseEstimate = photonPoseEstimator.update(result);
       if (poseEstimate.isPresent()){
       estimatedPose = poseEstimate.get();
@@ -304,7 +305,7 @@ public class AprilCamera extends SubsystemBase {
      
       //SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
       //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
-      //SmartDashboard.putNumber("April Tag X", target.getFiducialId());
+      SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       //SmartDashboard.putNumber("Get Yaw", target.getYaw());
       //SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
       
@@ -312,6 +313,7 @@ public class AprilCamera extends SubsystemBase {
 
       // This method will be called once per scheduler run
     } else {
+      SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       //SmartDashboard.putNumber("April Tag X", 999.);
       //SmartDashboard.putNumber("Get Yaw", 999.);
       //SmartDashboard.putNumber("Get Distance", 999.);
