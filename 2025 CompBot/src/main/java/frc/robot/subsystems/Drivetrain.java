@@ -139,6 +139,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     //updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("Drive Current", getLoad());
     //SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
     //SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());
@@ -206,7 +207,7 @@ public class Drivetrain extends SubsystemBase {
   }
   public void driveComponent(double x, double y, double rot, boolean fieldOriented){
     ChassisSpeeds chassisSpeeds;
-    if (fieldOriented) { //normal use
+    if (!fieldOriented) { //normal use
       chassisSpeeds = new ChassisSpeeds(x, y, rot);
     }else {
     // Relative to field

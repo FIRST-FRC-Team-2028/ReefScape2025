@@ -156,6 +156,7 @@ public class AprilCamera extends SubsystemBase {
     if (hasTargets)
        return (target.getSkew()-360.)%360.;
     else return -999.;
+    
   }
 
   /**
@@ -254,6 +255,9 @@ public class AprilCamera extends SubsystemBase {
   public Optional<Pose3d> getTagPose(Integer tagID){
     return aprilTagFieldLayout.getTagPose(tagID);
   }
+  public boolean hasResult(){
+    return hasTargets;
+  }
  /* public EstimatedRobotPose getPoseTrue(){
   poseEstimateTrue = poseEstimate.orElse(poseEstimateTrue);
     return poseEstimateTrue;
@@ -298,8 +302,8 @@ public class AprilCamera extends SubsystemBase {
 
 
      
-      SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
-      SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
+      //SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
+      //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       //SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       //SmartDashboard.putNumber("Get Yaw", target.getYaw());
       //SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
