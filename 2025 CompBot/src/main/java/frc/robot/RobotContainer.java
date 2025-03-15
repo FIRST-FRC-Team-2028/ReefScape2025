@@ -35,6 +35,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Handler;
 import frc.robot.subsystems.Lights;
+import frc.robot.subsystems.MatchTimer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -61,6 +62,7 @@ public class RobotContainer {
   private final Handler handlerSubsystem;
   private final AprilCamera april;
   private final Lights lights;
+  private final MatchTimer matchTimer;
   private final SendableChooser<Command> autoChooser;
   public boolean algae = false;
   public boolean blueDriverStation = true;
@@ -74,17 +76,18 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   @SuppressWarnings("unused")
   public RobotContainer() {
+    matchTimer = new MatchTimer();
     if (Constants.HANDLER_AVAILABLE){
       handlerSubsystem = new Handler();
     } else handlerSubsystem = null;
     if (Constants.DRIVE_AVAILABLE){
-      driveSubsystem = new Drivetrain();
+      driveSubsystem = new Drivetrain(this);
     } else driveSubsystem = null;
     if (Constants.ELEVATOR_AVALIBLE){
       elevatorSubsystem = new Elevator();
     } else elevatorSubsystem = null;
     if (Constants.CAMERA_AVAILABLE){
-      april = new AprilCamera();
+      april = new AprilCamera(this);
     } else april = null;
     if (Constants.LIGHTS_AVALIBLE){
       lights = new Lights();
@@ -407,5 +410,8 @@ public class RobotContainer {
   }
   public Lights getLights(){
     return lights;
+  }
+  public MatchTimer getMatchTimer(){
+    return matchTimer;
   }
 }
