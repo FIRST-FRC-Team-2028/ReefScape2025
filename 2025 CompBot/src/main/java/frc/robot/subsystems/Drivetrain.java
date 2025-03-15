@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.PathPlannerConstants;
 import frc.robot.Constants.RobotConstants;
@@ -39,8 +40,8 @@ public class Drivetrain extends SubsystemBase {
   static double kMaxAngularSpeed = Constants.DriveConstants.kMaxRotationalVelocity;
   private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
   boolean elevatorUp;
+  private RobotContainer m_RobotContainer;
 
-  private final AprilCamera aprilSubsystem;
 
   private final SwerveModule m_frontLeft =
       new SwerveModule(
@@ -86,10 +87,8 @@ public class Drivetrain extends SubsystemBase {
         VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
   /** Creates a new Drivetrain. */
-  public Drivetrain() {
-    if (Constants.CAMERA_AVAILABLE){
-      aprilSubsystem = new AprilCamera();  // TODO: MrG asks what about the object that exists in RobotContainer?
-    }else aprilSubsystem = null;
+  public Drivetrain(RobotContainer m_RobotContainer) {
+    this.m_RobotContainer = m_RobotContainer;
     resetGyro();
     resetPoseEstimatorPose(new Pose2d(0, 0, getRotation2d()));
     for (SwerveModule module : modules) {
@@ -170,6 +169,10 @@ public class Drivetrain extends SubsystemBase {
   /**Set the heading on the gyro */
   public void setGyro(double heading){
     m_gyro.setYaw(heading);
+  }
+
+  public Pigeon2 getGyro(){
+    return m_gyro;
   }
 
   public Rotation2d getHeading() {
@@ -279,14 +282,14 @@ public class Drivetrain extends SubsystemBase {
     //Pose2d badY = m_poseEstimator.getEstimatedPosition();
     //m_poseEstimator.resetPose(new Pose2d(badY.getX(),-badY.getY(),badY.getRotation().times(-1)));  //MrG forces you to look at this to build
     if(Constants.CAMERA_AVAILABLE){
-      if (aprilSubsystem.isPoseEstimated()) {
+      if (m_RobotContainer.getApril().isPoseEstimated()) {
 
         //var camToTargetTrans = res.getBestTarget().getBestCameraToTarget();
         //var camPose = aprilTagFieldLayout.getTagPose(4).transformBy(camToTargetTrans.inverse());
         
         //SmartDashboard.putNumber("Counter", ++estimaterCounter);
        m_poseEstimator.addVisionMeasurement(
-                  aprilSubsystem.getPose3d().toPose2d(), aprilSubsystem.estimatedPoseTime);
+                  m_RobotContainer.getApril().getPose3d().toPose2d(), m_RobotContainer.getApril().estimatedPoseTime);
       }  
     }
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());

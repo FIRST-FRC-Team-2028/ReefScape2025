@@ -121,7 +121,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    m_robotContainer.getLights().stopMatchTimer();
+    m_robotContainer.getMatchTimer().stopMatchTimer();
   }
 
   @Override
@@ -130,8 +130,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_robotContainer.getLights().setMatchTimer(0);
-    m_robotContainer.getLights().startMatchTimer();
+    m_robotContainer.getMatchTimer().setMatchTimer(0);
+    m_robotContainer.getMatchTimer().startMatchTimer();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -148,8 +148,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     CommandScheduler.getInstance().enable();
     m_robotContainer.configureButtonBindings();
-    m_robotContainer.getLights().setMatchTimer(0);
-    m_robotContainer.getLights().startMatchTimer();
+    m_robotContainer.getMatchTimer().setMatchTimer(0);
+    m_robotContainer.getMatchTimer().startMatchTimer();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -177,7 +177,7 @@ public class Robot extends TimedRobot {
         m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() <= 3.5);
       }
       if (Constants.LIGHTS_AVALIBLE){
-        if(m_robotContainer.getLights().matchTime() >= 105){
+        if(m_robotContainer.getMatchTimer().matchTime() >= 105){
           m_robotContainer.getLights().orangeLight(true);
         }else m_robotContainer.getLights().orangeLight(false);
       }

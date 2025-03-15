@@ -15,6 +15,8 @@ import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,6 +29,8 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.CamConstants;
 
 
@@ -38,6 +42,7 @@ public class AprilCamera extends SubsystemBase {
   Pose3d robotPose;
   AprilTagFieldLayout aprilTagFieldLayout;
   double distanceToTarget;
+  double matchTime;
   Transform3d robotToCam;
   PhotonPoseEstimator photonPoseEstimator;
   Optional<Pose3d> targetPose;
@@ -51,6 +56,7 @@ public class AprilCamera extends SubsystemBase {
   double estimatedPoseTime;
   Pose2d poseTarget;
   PhotonPipelineResult result;
+  RobotContainer m_RobotContainer;
   //private final Solenoid blue;
   
   //private PhotonPipelineResult result;
@@ -69,7 +75,7 @@ public class AprilCamera extends SubsystemBase {
    * </ul>
    * </p>
    */
-  public AprilCamera() {
+  public AprilCamera(RobotContainer m_RobotContainer) {
 
     camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
@@ -78,13 +84,39 @@ public class AprilCamera extends SubsystemBase {
      // and 0.1778 meters of elevation (off floor)            on project X
     robotToCam = new Transform3d(new Translation3d(CamConstants.robotToCamX, CamConstants.robotToCamY, CamConstants.robotToCamZ),
                 new Rotation3d(0,CamConstants.camera_Pitch_Radians, CamConstants.cameraYawRadians));
- 
+    this.m_RobotContainer = m_RobotContainer;
+            
+    photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
+    PoseStrategy.PNP_DISTANCE_TRIG_SOLVE, robotToCam);
+  }
+
+  /** Uses the PhotonVision VendorDep to process April Tags
+   * <p>Methods<ul>
+   * <li>getRobotPosition - Gets the position of the robot
+   * <li>print - Prints the robot position
+   * <li>tagYaw - Gets the yaw of an AprilTag
+   * <li>generalTargets - Gets if the camera has targets
+   * <li>tagArea - Gets the area of an Apriltag
+   * <li>getHeight - Gets the height of an AprilTag
+   * <li>getDistanceToTarget - Calculates the distance to targeted Apriltag
+   * <li>getPoseToPose - Changes the position the robot is getting the distance to and calculates the distance there
+   * <li>getPose3d - gets the estimated position of the robot as a Pose3d
+   * <li>isPoseEstimated - gets the boolean to determine if a pose is estimated
+   * </ul>
+   * </p>
+   */
+  /*public AprilCamera(){
+    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
+    //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
+    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+     //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
+     // and 0.1778 meters of elevation (off floor)            on project X
+    robotToCam = new Transform3d(new Translation3d(CamConstants.robotToCamX, CamConstants.robotToCamY, CamConstants.robotToCamZ),
+                new Rotation3d(0,CamConstants.camera_Pitch_Radians, CamConstants.cameraYawRadians));
+            
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
     PoseStrategy.LOWEST_AMBIGUITY, robotToCam);
-
-
-
-  }
+  }*/
 
 
 
@@ -281,14 +313,15 @@ public class AprilCamera extends SubsystemBase {
     if (hasTargets) {
       targets = result.getTargets();
       target = result.getBestTarget();
-      
-      
+      if (Constants.DRIVE_AVAILABLE){
+        photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
+      }
       poseEstimate = photonPoseEstimator.update(result);
       if (poseEstimate.isPresent()){
-      estimatedPose = poseEstimate.get();
-      estimatedPoseTime = estimatedPose.timestampSeconds;
-      estimatedPose3d = estimatedPose.estimatedPose;
-      poseEstimated = true;
+        estimatedPose = poseEstimate.get();
+        estimatedPoseTime = estimatedPose.timestampSeconds;
+        estimatedPose3d = estimatedPose.estimatedPose;
+        poseEstimated = true;
       } else poseEstimated = false; //estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
   
 

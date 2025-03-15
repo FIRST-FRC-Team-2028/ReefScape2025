@@ -3,38 +3,49 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.41,
-        "y": 2.79
+        "x": 2.5,
+        "y": 5.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.743636363636364,
-        "y": 2.220142045454545
+        "x": 2.5074296452190774,
+        "y": 5.250110423642925
       },
       "isLocked": false,
-      "linkedName": "22-9 R Peg"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.8430555555555557,
-        "y": 0.5488636363636362
+        "x": 2.5,
+        "y": 2.25
       },
       "prevControl": {
-        "x": 1.6046553273246515,
-        "y": 0.47359524207059417
+        "x": 2.5,
+        "y": 2.5
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Station 12 Center"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 3.658,
+        "y": 4.026
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 1.0,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 0.5,
     "maxAngularVelocity": 270.0,
     "maxAngularAcceleration": 324.0,
     "nominalVoltage": 12.0,
@@ -42,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.0
+    "rotation": 58.37544239332333
   },
   "reversed": false,
-  "folder": "SL to Reef 22-9L 3Coral",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 119.99999999999999
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
