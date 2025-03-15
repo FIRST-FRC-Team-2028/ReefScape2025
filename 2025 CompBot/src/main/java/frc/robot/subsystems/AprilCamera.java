@@ -272,6 +272,21 @@ public class AprilCamera extends SubsystemBase {
   public Pose3d getPose3d(){
     return estimatedPose3d;
   }
+  
+  PhotonTrackedTarget lowestAmbiguity(List<PhotonTrackedTarget> targets){
+    PhotonTrackedTarget currentBest = null;
+    double bestAmbiguity = 2000000000;
+    for (PhotonTrackedTarget photonTrackedTarget : targets) {
+      if (photonTrackedTarget.getPoseAmbiguity() < bestAmbiguity){
+        currentBest = photonTrackedTarget;
+        bestAmbiguity = photonTrackedTarget.getPoseAmbiguity();
+        
+        //System.out.println(photonTrackedTarget.getFiducialId() +": " + photonTrackedTarget.getPoseAmbiguity());
+        
+      }
+    }
+    return currentBest;
+  }
 
   /**
    * gets the boolean to determine if a pose is estimated
@@ -312,10 +327,10 @@ public class AprilCamera extends SubsystemBase {
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
-      target = result.getBestTarget();
-      if (Constants.DRIVE_AVAILABLE){
-      //  photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
-      }
+      target = lowestAmbiguity(targets);
+      /*if (Constants.DRIVE_AVAILABLE){
+        photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
+      }*/
       poseEstimate = photonPoseEstimator.update(result);
       if (poseEstimate.isPresent()){
         estimatedPose = poseEstimate.get();
@@ -346,7 +361,7 @@ public class AprilCamera extends SubsystemBase {
 
       // This method will be called once per scheduler run
     } else {
-      SmartDashboard.putNumber("April Tag X", 999.);
+      SmartDashboard.putNumber("April Tag X", 999);
       //SmartDashboard.putNumber("Get Yaw", 999.);
       //SmartDashboard.putNumber("Get Distance", 999.);
       poseEstimated = false;
