@@ -37,7 +37,7 @@ public class DriveToReefTag extends Command {
         tagAngle = (Math.toDegrees(camera.getTagPose(camera.getResult().getFiducialId()).get().getRotation().getAngle()));
       }
     } else tagAngle = drive.getHeading().getDegrees()%360;
-    turnController = new PIDController(0.06, 0, 0);
+    turnController = new PIDController(0.09, 0, 0);
     driveController = new PIDController(0.06, 0, 0); // presume at most 30 degrees away in yaw
     // TODO: although the target x distance is not accurate, it may offer a hint of how fast to drive
   }
@@ -54,7 +54,8 @@ public class DriveToReefTag extends Command {
     yaw = camera.tagYaw();
     yaw = (yaw<-50.)?0.:yaw;
     xSpeed = (yaw<-50.)?0.:xSpeed;
-    drive.driveComponent(xSpeed, driveController.calculate(yaw), -turnController.calculate(faceDiff));
+    //drive.driveComponent(xSpeed, driveController.calculate(yaw), -turnController.calculate(faceDiff));
+    drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
     SmartDashboard.putNumber("yaw" ,yaw);
   }
 

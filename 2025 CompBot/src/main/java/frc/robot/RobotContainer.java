@@ -27,6 +27,7 @@ import frc.robot.commands.DriveToAprilTagPP;
 import frc.robot.commands.DriveToReefTag;
 import frc.robot.commands.ElevatorPosition;
 import frc.robot.commands.HandlerPosition;
+import frc.robot.commands.MeasuredDrive;
 import frc.robot.commands.SpitSequence; // Stuff using is Commented out
 import frc.robot.commands.TimedSpeedDrive;
 import frc.robot.commands.TurnToReef;
@@ -65,8 +66,7 @@ public class RobotContainer {
   private final MatchTimer matchTimer;
   private final SendableChooser<Command> autoChooser;
   public boolean algae = false;
-  public boolean blueDriverStation = true;
-  
+    
 
   // Joysticks
     private final Joystick driverJoytick = new Joystick(OIConstants.kDriverControllerPort);
@@ -204,11 +204,39 @@ public class RobotContainer {
       //new JoystickButton(driverJoytick, 3)
       //  .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
       new JoystickButton(driverJoytick, 2)
-        .whileTrue(new TurnToReef(driveSubsystem, april));
-      //new JoystickButton(driverJoytick, 3)
-      //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    //TODO TEST THIS
+        .whileTrue(new MeasuredDrive(driveSubsystem, 0, -6.5));
       new JoystickButton(driverJoytick, 3)
+        .whileTrue(new MeasuredDrive(driveSubsystem, 0, 6.5));
+      //new JoystickButton(driverJoytick, 3)
+      //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    
+      new JoystickButton(driverJoytick, 4)
         .whileTrue(new DriveToReefTag(driveSubsystem, april));
+        /*
+      new JoystickButton(driverJoytick, 2)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5)));
+      new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5)));*/
+
+              
+      /*new JoystickButton(driverJoytick, 2)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)));
+      new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)));
+
+      new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2))
+        .andThen(new WaitCommand(1))
+        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
+
+      
       /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
