@@ -39,6 +39,7 @@ public class DriveToReefTag extends Command {
     } else tagAngle = drive.getHeading().getDegrees()%360;
     turnController = new PIDController(0.06, 0, 0);
     driveController = new PIDController(0.06, 0, 0); // presume at most 30 degrees away in yaw
+    // TODO: although the target x distance is not accurate, it may offer a hint of how fast to drive
   }
 
   // Called every time the scheduler runs while the command is scheduled.
