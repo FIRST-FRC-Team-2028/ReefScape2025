@@ -202,9 +202,12 @@ public class Drivetrain extends SubsystemBase {
     m_backRight.setDesiredState(swerveModuleStates[3]);*/
   }
   
-  public void driveComponent(double x, double y, double rot){
-    driveComponent(x,y,rot,false);  //TODO should this be true
-  }
+  /** drive a specified speed (vector)
+   * @param x x-component of the vector, positive is forward
+   * @param y y-component of the vector, positive is right
+   * @param rot rot-component of the vector, positive is clockwise arount up-vector (optional)
+   * @param fieldOriented if true (optional, default is robot-oriented)
+   */
   public void driveComponent(double x, double y, double rot, boolean fieldOriented){
     ChassisSpeeds chassisSpeeds;
     if (!fieldOriented) { //normal use
@@ -215,6 +218,30 @@ public class Drivetrain extends SubsystemBase {
                    x, y, rot, getRotation2d());
     }
     drive(chassisSpeeds);
+  }
+  /** drive a specified speed (vector)
+   * @param x x-component of the vector, positive is forward
+   * @param y y-component of the vector, positive is right
+   * @param rot rot-component of the vector, positive is clockwise arount up-vector (optional)
+   * @param fieldOriented if true (optional, default is robot-oriented)
+   */
+  public void driveComponent(double x, double y, double rot){
+    driveComponent(x,y,rot,false);
+  }
+  /** drive a specified speed (vector) in the robot coordinate system
+   * @param x x-component of the vector, positive is forward
+   * @param y y-component of the vector, positive is right
+   */
+  public void driveComponent(double x, double y){
+    driveComponent(x,y,0.,false);
+  }
+  /** drive a specified speed (vector) in the field coordinate system
+   * @param x x-component of the vector, positive is forward
+   * @param y y-component of the vector, positive is right
+   * @param fieldOriented if true (optional, default is robot-oriented)
+   */
+  public void driveComponent(double x, double y, boolean ro){
+    driveComponent(x,y,0.,ro);
   }
   
   public void setModuleStates(SwerveModuleState[] desiredStates) {
