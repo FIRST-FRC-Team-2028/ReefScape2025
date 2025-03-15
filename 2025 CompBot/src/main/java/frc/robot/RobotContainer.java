@@ -110,7 +110,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("Shoot",new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)
                                     .raceWith(new WaitCommand(.5)));
         NamedCommands.registerCommand("Intake Wheels", new RunWheels(handlerSubsystem, 0.25, 0.3, false));
-
+        NamedCommands.registerCommand("Set Gyro 180", new InstantCommand(()->driveSubsystem.setGyro(180)) );
         
       }
       //autoChooser = AutoBuilder.buildAutoChooser();
@@ -196,16 +196,19 @@ public class RobotContainer {
     if (Constants.DRIVE_AVAILABLE) {
       //new JoystickButton(driverJoytick, 3)
       //  .onTrue(new TimedDrive(driveSubsystem, 0.25, 0, 0.5, 0));
-      new JoystickButton(driverJoytick, 2)
-        .onTrue(new TimedSpeedDrive(driveSubsystem, 0.25, 0, -0.5, 0));
+      /*new JoystickButton(driverJoytick, 2)
+        .onTrue(new TimedSpeedDrive(driveSubsystem, 0.25, 0, -0.5, 0));*/
       //reset gyro
       new JoystickButton(driverJoytick, OIConstants.kResetGyro)
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       //new JoystickButton(driverJoytick, 3)
       //  .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
-      /*new JoystickButton(driverJoytick, 3)
-        .whileTrue(new DriveToReefTag(driveSubsystem, april)    TODO TEST THIS
-        .alongWith(new TurnToReef(driveSubsystem, april)));*/
+      new JoystickButton(driverJoytick, 2)
+        .whileTrue(new TurnToReef(driveSubsystem, april));
+      //new JoystickButton(driverJoytick, 3)
+      //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    //TODO TEST THIS
+      new JoystickButton(driverJoytick, 3)
+        .whileTrue(new DriveToReefTag(driveSubsystem, april));
       /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)
         .whileTrue(driveSubsystem.pathfindToPose(PathPlannerConstants.blueRightStationX, PathPlannerConstants.blueRightStationY, 
