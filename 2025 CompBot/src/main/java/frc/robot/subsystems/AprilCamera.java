@@ -77,7 +77,7 @@ public class AprilCamera extends SubsystemBase {
    */
   public AprilCamera(RobotContainer m_RobotContainer) {
 
-    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000 (1)");
+    camera = new PhotonCamera("Microsoft_LifeCam_HD-3000");
     //blue = new Solenoid(PneumaticsModuleType.CTREPCM, Lights.blue); //April tags
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
      //Cam mounted facing forward, 0.3302 meters in front of the center, 0 meters left/right of center, 
@@ -87,7 +87,7 @@ public class AprilCamera extends SubsystemBase {
     this.m_RobotContainer = m_RobotContainer;
             
     photonPoseEstimator = new PhotonPoseEstimator(aprilTagFieldLayout,
-    PoseStrategy.PNP_DISTANCE_TRIG_SOLVE, robotToCam);
+    PoseStrategy.LOWEST_AMBIGUITY, robotToCam);
   }
 
   /** Uses the PhotonVision VendorDep to process April Tags
@@ -314,7 +314,7 @@ public class AprilCamera extends SubsystemBase {
       targets = result.getTargets();
       target = result.getBestTarget();
       if (Constants.DRIVE_AVAILABLE){
-        photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
+      //  photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
       }
       poseEstimate = photonPoseEstimator.update(result);
       if (poseEstimate.isPresent()){
@@ -346,8 +346,7 @@ public class AprilCamera extends SubsystemBase {
 
       // This method will be called once per scheduler run
     } else {
-      SmartDashboard.putNumber("April Tag X", target.getFiducialId());
-      //SmartDashboard.putNumber("April Tag X", 999.);
+      SmartDashboard.putNumber("April Tag X", 999.);
       //SmartDashboard.putNumber("Get Yaw", 999.);
       //SmartDashboard.putNumber("Get Distance", 999.);
       poseEstimated = false;
