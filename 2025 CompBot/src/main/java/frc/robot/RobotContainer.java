@@ -203,37 +203,39 @@ public class RobotContainer {
         .onTrue(new InstantCommand(() -> driveSubsystem.resetGyro()));
       //new JoystickButton(driverJoytick, 3)
       //  .whileTrue(new DriveToAprilTagPP(driveSubsystem, april));
-      new JoystickButton(driverJoytick, 2)
+      /*new JoystickButton(driverJoytick, 2)
         .whileTrue(new MeasuredDrive(driveSubsystem, 0, -6.5));
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new MeasuredDrive(driveSubsystem, 0, 6.5));
-      //new JoystickButton(driverJoytick, 3)
+      //new JoystickButton(driverJoytick, 3)*/
       //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    
       new JoystickButton(driverJoytick, 4)
         .whileTrue(new DriveToReefTag(driveSubsystem, april));
-        /*
-      new JoystickButton(driverJoytick, 2)
+        
+      /*new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
         .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5)));
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5)));*/
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))); */
 
               
-      /*new JoystickButton(driverJoytick, 2)
+      new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5))
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)));
-      new JoystickButton(driverJoytick, 3)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, -7.))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)));
+        /*.andThen(new WaitCommand(.5))
+        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
+      /*new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
         .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)));
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2)));*/
 
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L2))
-        .andThen(new WaitCommand(1))
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 7.))));
+       /* .andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
 
       
@@ -309,9 +311,9 @@ public class RobotContainer {
       //Coral onto Level 4
       new JoystickButton(mechJoytick1, OIConstants.kL4shoot)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
-        .andThen(new WaitCommand(1.25))
+        .andThen(new WaitCommand(1.35))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
-        .andThen(new TimedSpeedDrive(driveSubsystem, 0.25, -0.5, 0, 0)));
+        .andThen(new MeasuredDrive(driveSubsystem, -4)));
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)

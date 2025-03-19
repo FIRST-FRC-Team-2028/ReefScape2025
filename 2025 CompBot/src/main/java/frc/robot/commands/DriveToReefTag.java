@@ -5,8 +5,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.CamConstants;
 import frc.robot.subsystems.AprilCamera;
 import frc.robot.subsystems.Drivetrain;
 
@@ -16,9 +19,10 @@ public class DriveToReefTag extends Command {
   AprilCamera camera;
   PIDController driveController;
   double yaw;
-  double xSpeed = 0.7;
+  double xSpeed = 1.;
   PIDController turnController;
   double faceDiff, tagAngle, driveHeading;
+  Integer tagID = -1;
   /** Drive toward the april tag */
   public DriveToReefTag(Drivetrain drive, AprilCamera camera) {
     this.drive = drive;
@@ -31,7 +35,8 @@ public class DriveToReefTag extends Command {
   @Override
   public void initialize() {
     if (camera.hasResult()){
-      if (camera.getResult().getFiducialId()>11){
+      tagID = camera.getResult().getFiducialId();
+      if (tagID>11){
         tagAngle = (Math.toDegrees(camera.getTagPose(camera.getResult().getFiducialId()).get().getRotation().getAngle())+180);
       } else {
         tagAngle = (Math.toDegrees(camera.getTagPose(camera.getResult().getFiducialId()).get().getRotation().getAngle()));
@@ -54,18 +59,25 @@ public class DriveToReefTag extends Command {
     yaw = camera.tagYaw();
     yaw = (yaw<-50.)?0.:yaw;
     xSpeed = (yaw<-50.)?0.:xSpeed;
-    //drive.driveComponent(xSpeed, driveController.calculate(yaw), -turnController.calculate(faceDiff));
-    drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
-    SmartDashboard.putNumber("yaw" ,yaw);
+    drive.driveComponent(xSpeed, driveController.calculate(yaw), -turnController.calculate(faceDiff));
+    //drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
+    //SmartDashboard.putNumber("yaw" ,yaw);
+   // SmartDashboard.putNumber("faceDiff", faceDiff);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if (!interrupted && tagID!=-1){
+      Rotation2d heading = new Rotation2d(Math.toRadians((tagID>11)?(tagAngle+180):tagAngle));
+      Pose2d resetPose = new Pose2d(camera.calculateXPose(tagID), camera.calculateYPose(tagID), heading);
+      drive.resetPoseEstimatorPose(resetPose);
+    }
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<1.5;
+    return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2;
   }
 }

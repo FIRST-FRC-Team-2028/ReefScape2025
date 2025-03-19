@@ -47,7 +47,7 @@ public class MeasuredDrive extends Command {
   public void initialize() {
     targetDistance = xDist*xDist+yDist*yDist;  // actually this is the square of it
     initialDist = drive.getModulePositions()[0].distanceMeters;
-    controller = new PIDController(2.0/targetDistance/targetDistance, 0.,0.);
+    controller = new PIDController(2.1/targetDistance/targetDistance, 0.,0.);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,11 +55,14 @@ public class MeasuredDrive extends Command {
   public void execute() {
     drivenDistance = Units.metersToInches(drive.getModulePositions()[0].distanceMeters - initialDist);
     mag = controller.calculate(drivenDistance*drivenDistance, targetDistance);
+    /*if (mag>0){ mag = Math.sqrt(mag); }
+    if(mag<0){mag = Math.sqrt(-mag);}*/
     drive.driveComponent(mag*xDist, mag*yDist);
-    SmartDashboard.putNumber("Magnitude*xDist", mag*yDist);
+   SmartDashboard.putNumber("Magnitude*xDist", mag*xDist);
     SmartDashboard.putNumber("Magnitude", mag);
-    SmartDashboard.putNumber("xDist", yDist);
-    SmartDashboard.putNumber("Error Measured Drive", targetDistance-drivenDistance*drivenDistance);
+    //SmartDashboard.putNumber("SQRT(Mag)", Math.sqrt(Math.abs(mag)));
+    /*SmartDashboard.putNumber("xDist", xDist);
+    SmartDashboard.putNumber("Error Measured Drive", targetDistance-drivenDistance*drivenDistance);*/
   }
 
   // Called once the command ends or is interrupted.
@@ -70,6 +73,6 @@ public class MeasuredDrive extends Command {
   @Override
   public boolean isFinished() {
     
-    return Math.abs(targetDistance-drivenDistance)<CLOSE_ENOUGH*CLOSE_ENOUGH || mag <0.007;
+    return Math.abs(targetDistance-drivenDistance)<CLOSE_ENOUGH*CLOSE_ENOUGH || Math.abs(mag) <0.007;
   }
 }

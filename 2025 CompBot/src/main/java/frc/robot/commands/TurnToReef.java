@@ -54,9 +54,9 @@ public class TurnToReef extends Command {
     //faceDiff=april.getFaceVec()-180.;
     //faceDiff= (faceDiff<-40.)?0.:faceDiff;
     drive.driveComponent(0.,0., -controller.calculate(faceDiff));
-    SmartDashboard.putNumber("driveHeading", driveHeading);
+    /*SmartDashboard.putNumber("driveHeading", driveHeading);
     SmartDashboard.putNumber("faceDiff", faceDiff);
-    SmartDashboard.putNumber("tagAngle", tagAngle);
+    SmartDashboard.putNumber("tagAngle", tagAngle);*/
   }
 
   // Called once the command ends or is interrupted.

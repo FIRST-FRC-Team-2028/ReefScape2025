@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.CamConstants;
+import frc.robot.Constants.DriveConstants;
 
 
 public class AprilCamera extends SubsystemBase {
@@ -288,6 +289,22 @@ public class AprilCamera extends SubsystemBase {
     return currentBest;
   }
 
+  PhotonTrackedTarget getBestArea(List<PhotonTrackedTarget> targets){
+    PhotonTrackedTarget currentBestArea = null;
+    double bestArea = -2000000000;
+    for (PhotonTrackedTarget photonTrackedTarget : targets) {
+      if (photonTrackedTarget.getArea() > bestArea){
+        currentBestArea = photonTrackedTarget;
+        bestArea = photonTrackedTarget.getArea();
+        
+        //System.out.println(photonTrackedTarget.getFiducialId() +": " + photonTrackedTarget.getPoseAmbiguity());
+        
+      }
+    }
+    return currentBestArea;
+  }
+  
+
   /**
    * gets the boolean to determine if a pose is estimated
    * @return poseEstimated
@@ -297,7 +314,7 @@ public class AprilCamera extends SubsystemBase {
   }
 
   public PhotonTrackedTarget getResult(){
-    return result.getBestTarget();
+    return target;
   } 
   public Optional<Pose3d> getTagPose(Integer tagID){
     return aprilTagFieldLayout.getTagPose(tagID);
@@ -315,6 +332,17 @@ public class AprilCamera extends SubsystemBase {
   //public void showYaw() {
   //  SmartDashboard.putNumber("YE Yaw", target.getYaw());         IF DONT HAVE TARGET, DONT RUN SHOWYAW
   //}
+  public double calculateXPose(int tagID){
+    double tagAngle = getTagPose(tagID).get().getRotation().getAngle();
+    double tagX = getTagPose(tagID).get().getX();
+    return tagX + Units.inchesToMeters(38/2)*Math.cos(tagAngle);
+  }
+  public double calculateYPose(int tagID){
+    double tagAngle = getTagPose(tagID).get().getRotation().getAngle();
+    double tagY = getTagPose(tagID).get().getY();
+    return tagY + Units.inchesToMeters(38/2)*Math.sin(tagAngle);
+  }
+  
 
 
 
@@ -327,7 +355,7 @@ public class AprilCamera extends SubsystemBase {
     hasTargets = result.hasTargets();
     if (hasTargets) {
       targets = result.getTargets();
-      target = lowestAmbiguity(targets);
+      target = getBestArea(targets);
       /*if (Constants.DRIVE_AVAILABLE){
         photonPoseEstimator.addHeadingData(m_RobotContainer.getMatchTimer().matchTime(), m_RobotContainer.getDrivetrain().getHeading());
       }*/

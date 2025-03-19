@@ -249,7 +249,7 @@ public final class Constants {
     public static final double kBarge = 64.75;
     public static final double Intake = 3.;
     public static final double L1 = 23.;
-    public static final double L2 = 13;
+    public static final double L2 = 12; //12 for our reef, 13 for compititon 
     public static final double L3 = 28.2;
     public static final double L4 = 60.3;
     public static final double algaeIntake = 3.;
