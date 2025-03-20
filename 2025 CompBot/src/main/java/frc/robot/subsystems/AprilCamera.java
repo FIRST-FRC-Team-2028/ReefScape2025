@@ -148,6 +148,7 @@ public class AprilCamera extends SubsystemBase {
     return target.getYaw();
     } else return -999;
   }
+  
 
   /**
    * Gets if the camera has targets
@@ -165,8 +166,14 @@ public class AprilCamera extends SubsystemBase {
    */
   public double tagArea(){
     if (hasTargets){
-    return target.getArea();
+      return target.getArea();
     }else return -999;
+  }
+
+  public double tagPitch(){
+    if (hasTargets){
+      return target.getPitch();
+    } else return -999;
   }
   
   /**
@@ -382,6 +389,7 @@ public class AprilCamera extends SubsystemBase {
       //SmartDashboard.putNumber("April Robot Pose X", getPose3d().getX());
       //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
+      //SmartDashboard.putNumber("Pitch", target.getPitch());
       //SmartDashboard.putNumber("Get Yaw", target.getYaw());
       //SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
       

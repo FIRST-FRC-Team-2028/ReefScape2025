@@ -17,9 +17,9 @@ import frc.robot.subsystems.Drivetrain;
 public class DriveToReefTag extends Command {
   Drivetrain drive;
   AprilCamera camera;
-  PIDController driveController;
-  double yaw;
-  double xSpeed = 1.;
+  PIDController YdriveController, XdriveController;
+  double yaw, pitch;
+  //double xSpeed = .5;
   PIDController turnController;
   double faceDiff, tagAngle, driveHeading;
   Integer tagID = -1;
@@ -43,7 +43,8 @@ public class DriveToReefTag extends Command {
       }
     } else tagAngle = drive.getHeading().getDegrees()%360;
     turnController = new PIDController(0.09, 0, 0);
-    driveController = new PIDController(0.06, 0, 0); // presume at most 30 degrees away in yaw
+    YdriveController = new PIDController(0.06, 0, 0); // presume at most 30 degrees away in yaw
+    XdriveController = new PIDController(0.14, 0., 0.); //kp:.1 // kp:0.08 //kp:0.06
     // TODO: although the target x distance is not accurate, it may offer a hint of how fast to drive
   }
 
@@ -57,27 +58,37 @@ public class DriveToReefTag extends Command {
     faceDiff = (Math.abs(faceDiff)>180)?0.:faceDiff;
 
     yaw = camera.tagYaw();
+    pitch = camera.tagPitch();
     yaw = (yaw<-50.)?0.:yaw;
-    xSpeed = (yaw<-50.)?0.:xSpeed;
-    drive.driveComponent(xSpeed, driveController.calculate(yaw), -turnController.calculate(faceDiff));
+    pitch = (pitch<-50)?8.:pitch;
+    //xSpeed = (pitch>7)?0.:xSpeed;
+    //System.out.println(xSpeed);
+    //xSpeed = (pitch<-50.)?0.:xSpeed;
+    //xSpeed = (yaw<-50)?0.:xSpeed;
+    //drive.driveComponent(xSpeed, YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
+    drive.driveComponent(XdriveController.calculate(pitch-7.), YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
     //drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
-    //SmartDashboard.putNumber("yaw" ,yaw);
-   // SmartDashboard.putNumber("faceDiff", faceDiff);
+    SmartDashboard.putNumber("yaw", yaw);
+    SmartDashboard.putNumber("faceDiff", faceDiff);
+    SmartDashboard.putNumber("pitch", pitch);
+ 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted && tagID!=-1){
+    /*if (!interrupted && tagID!=-1){
       Rotation2d heading = new Rotation2d(Math.toRadians((tagID>11)?(tagAngle+180):tagAngle));
       Pose2d resetPose = new Pose2d(camera.calculateXPose(tagID), camera.calculateYPose(tagID), heading);
       drive.resetPoseEstimatorPose(resetPose);
-    }
+    }*/
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2;
+    //return Math.abs(yaw)<.3 && drive.getDistance()<16. && Math.abs(faceDiff)<2.;
+    return Math.abs(yaw)<.3 && Math.abs(pitch)>6.5 && Math.abs(faceDiff)<2.;
+    //return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2.;
   }
 }
