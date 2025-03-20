@@ -24,6 +24,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -41,6 +42,7 @@ public class Drivetrain extends SubsystemBase {
   private final SwerveDriveKinematics m_kinematics = DriveConstants.kDriveKinematics;
   boolean elevatorUp;
   private RobotContainer m_RobotContainer;
+  private AnalogInput ultrasoundSensor = new AnalogInput(0);
 
 
   private final SwerveModule m_frontLeft =
@@ -138,6 +140,7 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     //updateOdometry();
     updatePoseEstimator();
+    SmartDashboard.putNumber("UltrasoundDistance", getDistance());
     SmartDashboard.putNumber("Drive Current", getLoad());
     //SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
@@ -380,6 +383,24 @@ public class Drivetrain extends SubsystemBase {
       load+=mod.getDriveLoad()*.25;
     }
     return load;
+  }
+
+  double[] averageVoltH = {
+    0., 0., 0., 0., 0.
+    ,0., 0., 0., 0., 0.
+                           };
+  int nA = 10;
+  double averageVolt = 0;
+  int currPoint = 0;
+  double newA;
+  public double getDistance(){
+    newA = ultrasoundSensor.getVoltage();
+    averageVolt += (newA/nA -averageVoltH[currPoint]/nA);
+    averageVoltH[currPoint] = newA;
+    currPoint = (currPoint+1)%nA;
+
+    double distanceVolt = averageVolt*102.;
+    return distanceVolt;
   }
 
 
