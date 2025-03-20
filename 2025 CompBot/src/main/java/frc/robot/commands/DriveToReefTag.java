@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.CamConstants;
@@ -23,6 +24,7 @@ public class DriveToReefTag extends Command {
   PIDController turnController;
   double faceDiff, tagAngle, driveHeading;
   Integer tagID = -1;
+  Timer timer;
   /** Drive toward the april tag */
   public DriveToReefTag(Drivetrain drive, AprilCamera camera) {
     this.drive = drive;
@@ -75,9 +77,10 @@ public class DriveToReefTag extends Command {
     }
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end.    getDistance()
   @Override
   public boolean isFinished() {
+    //return Math.abs(yaw)<.3 && drive.getDistance() < 11.5 && Math.abs(faceDiff)<2;
     return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2;
   }
 }
