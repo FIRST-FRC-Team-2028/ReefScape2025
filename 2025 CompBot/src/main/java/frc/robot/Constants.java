@@ -297,7 +297,8 @@ public final class Constants {
     public static final int kL2shoot =                   3;
     public static final int kL3shoot =                   2;
     public static final int kL4shoot =                   1;
-    public static final int kBarge =                     6;
+    public static final int kL4AutoShoot =               6;
+    public static final int kBarge =                     7;
     public static final int kAlgeaSwitch =               8;
     public static final int kNudgeUpE =                  9;
     public static final int kNudgeDownE =                10;

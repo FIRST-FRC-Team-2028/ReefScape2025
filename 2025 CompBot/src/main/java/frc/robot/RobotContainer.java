@@ -106,6 +106,7 @@ public class RobotContainer {
                                     .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.Intake)));
         NamedCommands.registerCommand("Print Auto 1", Commands.print("Auto 1"));
         NamedCommands.registerCommand("Raise L4", new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
+                                    .andThen(new WaitCommand(1.))
                                     .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4)));
         NamedCommands.registerCommand("Shoot",new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)
                                     .raceWith(new WaitCommand(.5)));
@@ -223,7 +224,7 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
         .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, -7.))));
+        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5))));
         /*.andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
       /*new JoystickButton(driverJoytick, 3)
@@ -233,7 +234,7 @@ public class RobotContainer {
 
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, 7.))
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
         .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)));
        /* .andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
@@ -314,6 +315,12 @@ public class RobotContainer {
         .andThen(new WaitCommand(1.35))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
         .andThen(new MeasuredDrive(driveSubsystem, -4)));
+
+      new JoystickButton(mechJoytick1, OIConstants.kL4AutoShoot)
+        .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
+        .andThen(new WaitCommand(1.35))
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
+        .andThen(new MeasuredDrive(driveSubsystem, -1.5, 0, 0.5)));
       //Algae into barge
       new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)

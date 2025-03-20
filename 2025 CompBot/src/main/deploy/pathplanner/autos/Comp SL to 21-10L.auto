@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Set Gyro 180"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SL to Reef 21-10L"
@@ -25,7 +19,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.5
+            "waitTime": 2.0
           }
         },
         {

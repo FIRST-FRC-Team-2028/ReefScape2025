@@ -374,8 +374,7 @@ public class AprilCamera extends SubsystemBase {
         poseEstimated = true;
       } else poseEstimated = false; //estimatedPose3d = new Pose3d(999, 999, 999, new Rotation3d(999,999,999));
   
-
-
+      
       robotPose = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(),
                 aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), robotToCam);
       //showYaw();

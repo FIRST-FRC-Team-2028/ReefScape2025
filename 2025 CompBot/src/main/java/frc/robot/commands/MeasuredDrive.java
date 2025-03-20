@@ -13,7 +13,7 @@ import frc.robot.subsystems.Drivetrain;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class MeasuredDrive extends Command {
   Drivetrain drive;
-  double xDist,yDist,rot,mag;
+  double xDist,yDist,rot,mag, kp;
   boolean robotOriented;
   double targetDistance, drivenDistance, initialDist;
   PIDController controller;
@@ -24,22 +24,26 @@ public class MeasuredDrive extends Command {
    * @param rot degrees clockwise around up vector (optional, 0. by default)
    * @param robotOriented (optional, true by default)
   */
-  public MeasuredDrive(Drivetrain drive, double x, double y, double rot, boolean robotOriented) {
+  public MeasuredDrive(Drivetrain drive, double x, double y, double rot, boolean robotOriented, double kp) {
     xDist = x;
     yDist = y;
     this.rot = rot;
     this.drive = drive;
     this.robotOriented = robotOriented;
+    this.kp = kp;
     addRequirements(drive);
   }
   public MeasuredDrive(Drivetrain drive, double x){
-    this(drive, x, 0., 0.,true);
+    this(drive, x, 0., 0.,true, 2.1);
   }
   public MeasuredDrive(Drivetrain drive, double x,double y){
-    this(drive, x, y, 0.,true);
+    this(drive, x, y, 0.,true, 2.1);
   }
   public MeasuredDrive(Drivetrain drive, double x,double y,boolean ro){
-    this(drive, x, y, 0.,ro);
+    this(drive, x, y, 0.,ro, 2.1);
+  }
+  public MeasuredDrive(Drivetrain drive, double x, double y, double kp){
+    this(drive, x, y, 0, true, kp);
   }
 
   // Called when the command is initially scheduled.
@@ -47,7 +51,7 @@ public class MeasuredDrive extends Command {
   public void initialize() {
     targetDistance = xDist*xDist+yDist*yDist;  // actually this is the square of it
     initialDist = drive.getModulePositions()[0].distanceMeters;
-    controller = new PIDController(2.1/targetDistance/targetDistance, 0.,0.);
+    controller = new PIDController(kp/targetDistance/targetDistance, 0.,0.);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
