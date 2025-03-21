@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Set Gyro 180"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Straight Drive Forward"

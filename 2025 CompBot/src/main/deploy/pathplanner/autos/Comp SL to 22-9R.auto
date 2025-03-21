@@ -5,12 +5,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Set Gyro 180"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SL to Reef 22-9R"
