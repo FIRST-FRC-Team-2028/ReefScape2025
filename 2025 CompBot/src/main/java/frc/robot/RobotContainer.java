@@ -223,8 +223,8 @@ public class RobotContainer {
               
       new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5))));
+        //.andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
+        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5)));
         /*.andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
       /*new JoystickButton(driverJoytick, 3)
@@ -234,8 +234,8 @@ public class RobotContainer {
 
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5))
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)));
+        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5)));
+        //.andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)));
        /* .andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
 

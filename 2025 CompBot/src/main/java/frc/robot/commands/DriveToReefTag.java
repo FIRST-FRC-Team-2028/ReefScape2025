@@ -89,7 +89,7 @@ public class DriveToReefTag extends Command {
       yaw = (yaw<-50.)?0.:yaw;
     drive.driveComponent(xSpeed, ySpeed, -turnController.calculate(faceDiff));
   }
-  pitch = (xSpeed<0.0095)?6.25:pitch;
+  pitch = (xSpeed<0.01)?6.25:pitch; //0.0095
     //drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
     SmartDashboard.putNumber("yaw", yaw);
     SmartDashboard.putNumber("faceDiff", faceDiff);

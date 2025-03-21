@@ -77,6 +77,6 @@ public class MeasuredDrive extends Command {
   @Override
   public boolean isFinished() {
     
-    return Math.abs(targetDistance-drivenDistance)<CLOSE_ENOUGH*CLOSE_ENOUGH || Math.abs(mag) <0.007;
+    return Math.abs(targetDistance-drivenDistance)<CLOSE_ENOUGH*CLOSE_ENOUGH || Math.abs(mag) <0.0075;  //0.007
   }
 }
