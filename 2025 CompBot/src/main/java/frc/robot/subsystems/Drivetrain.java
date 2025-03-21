@@ -140,8 +140,8 @@ public class Drivetrain extends SubsystemBase {
   public void periodic() {
     //updateOdometry();
     updatePoseEstimator();
-    SmartDashboard.putNumber("UltrasoundDistance", getDistance());
-    SmartDashboard.putNumber("Drive Current", getLoad());
+    //SmartDashboard.putNumber("UltrasoundDistance", getDistance());
+    //SmartDashboard.putNumber("Drive Current", getLoad());
     //SmartDashboard.putNumber("FL voltage", m_frontLeft.getAppliedVoltage());
     // This method will be called once per scheduler run
     //SmartDashboard.putString("Front Left Rotation Position", m_frontLeft.getRelativeTurningPosition().toString());

@@ -213,7 +213,7 @@ public class Handler extends SubsystemBase {
 
     SmartDashboard.putNumber("Pivot Position", pivotEncoder.getPosition());
     //SmartDashboard.putNumber("Algae Current", coralShoot.getOutputCurrent());
-    SmartDashboard.putNumber("Coral Temp", coralShoot.getMotorTemperature());
+    //SmartDashboard.putNumber("Coral Temp", coralShoot.getMotorTemperature());
  //   SmartDashboard.putBoolean("Pivot Current limit", pivotSaftey);
     double currentCurrent = getPivotCurrent();
 
