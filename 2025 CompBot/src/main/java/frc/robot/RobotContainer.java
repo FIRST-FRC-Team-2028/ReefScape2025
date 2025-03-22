@@ -314,7 +314,7 @@ public class RobotContainer {
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
         .andThen(new WaitCommand(1.35))
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
-        .andThen(new MeasuredDrive(driveSubsystem, -4)));
+        .andThen(new MeasuredDrive(driveSubsystem, -4.5)));
 
       new JoystickButton(mechJoytick1, OIConstants.kL4AutoShoot)
         .onTrue(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L4)
