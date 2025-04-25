@@ -209,7 +209,7 @@ public final class Constants {
     public static final double L1 = 0.9;
     public static final double L2 = 0;
     public static final double L3 = 0;
-    public static final double L4 = 0.295;
+    public static final double L4 = 0.295;//trying to shoot without moving handler 0;
     public static final double intake = 0;
     public static final double algaeL1 = 0.28;
     public static final double algaeL2 = .95;
@@ -217,7 +217,7 @@ public final class Constants {
     public static final double algaeL4 = 0;
     public static final double algaeIntake = 1.;
     public static final double algae = .9;
-    public static final double barge = 0.28;
+    public static final double barge = 1.;//0.28;
     public static final double nudgeUp = .025;
     public static final double nudgeDown = -.025;
 
@@ -230,14 +230,15 @@ public final class Constants {
   }
 
   public final static class ElevatorConstants {
-    public static final double softLimitForward = 65.;  // inches
+    public static final double softLimitForward = 64.;  // inches
     public static final double softLimitReverse = 3.; // inches
 
-    public static double encoderConversionFactor = 50./124.238;  // inches : raw
+    public static double encoderConversionFactor =(57.-42.)/(28.143-3.)*2;//times 2 because we measured off first stage not second
+     //50./124.238; before changing gear ration  // inches : raw
 
     //public static double ENCODERCONVERSION = 7./286. ;  // inches : raw
 
-    public static final double kP = 0.2;
+    public static final double kP = 3./30.; //0.2; before changing gear ratio
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0.02;
@@ -249,9 +250,9 @@ public final class Constants {
     public static final double kBarge = 64.75;
     public static final double Intake = 3.;
     public static final double L1 = 23.;
-    public static final double L2 = 13.5; //12 for our reef, 13 for compititon 
-    public static final double L3 = 28.7;
-    public static final double L4 = 60.3;
+    public static final double L2 = 13.25; //12 for our reef, 13 for compititon 
+    public static final double L3 = 29.;
+    public static final double L4 = 60.3;//trying 54 to shoot without moving handler 54;
     public static final double algaeIntake = 3.;
     public static final double algaeL1 = 3.;
     public static final double algaeL2 = 24.;

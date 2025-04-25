@@ -76,7 +76,7 @@ public class DriveToReefTag extends Command {
       yaw = camera.tagYaw();
       pitch = camera.tagPitch();
       tagLostCount = 0;
-      xSpeed = XdriveController.calculate(pitch-6.25);
+      xSpeed = XdriveController.calculate(pitch-6.0); //6.25
       //drive.driveComponent(xSpeed, YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
       drive.driveComponent(xSpeed, YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
     }
@@ -89,7 +89,7 @@ public class DriveToReefTag extends Command {
       yaw = (yaw<-50.)?0.:yaw;
     drive.driveComponent(xSpeed, ySpeed, -turnController.calculate(faceDiff));
   }
-  pitch = (xSpeed<0.01)?6.25:pitch; //0.0095
+  pitch = (xSpeed<0.01)?6.0:pitch; //0.0095 6.25
     //drive.driveComponent(0, driveController.calculate(yaw), -turnController.calculate(faceDiff));
     SmartDashboard.putNumber("yaw", yaw);
     SmartDashboard.putNumber("faceDiff", faceDiff);
@@ -114,7 +114,7 @@ public class DriveToReefTag extends Command {
   public boolean isFinished() {
     //return Math.abs(yaw)<.3 && drive.getDistance()<16. && Math.abs(faceDiff)<2.;
     if (tagLostCount < 25.){
-    return Math.abs(yaw)<.4 && pitch>=6.25 && Math.abs(faceDiff)<2.; //Math.abs(yaw)<.3
+    return Math.abs(yaw)<.4 && pitch>=6.00 && Math.abs(faceDiff)<2.; //Math.abs(yaw)<.3 pitch>=6.25
     } else return true;   //if never started with tag end command
     //return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2.;
   }

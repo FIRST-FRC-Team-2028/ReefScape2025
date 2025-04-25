@@ -322,11 +322,18 @@ public class RobotContainer {
         .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.L4))
         .andThen(new MeasuredDrive(driveSubsystem, -1.5, 0, 0.5)));
       //Algae into barge
-      new JoystickButton(mechJoytick1, OIConstants.kBarge)
-        .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)
+      /*new JoystickButton(mechJoytick1, OIConstants.kBarge)
+        .onTrue(new HandlerPosition(handlerSubsystem, HandlerConstants.barge)         OLD BARGE
        // .andThen(new RunWheels(handlerSubsystem, HandlerConstants.grabAlgaeSpeed, 0.5, false))  //if not false then will run forever
-        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge)));
-
+        .andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge)));*/
+       
+        new JoystickButton(mechJoytick1, OIConstants.kBarge)
+        .onTrue((new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge))
+        .andThen(new WaitCommand(.25))
+        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.barge))
+        .andThen(new WaitCommand(.5))
+        .andThen(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 1, false, true)));     //Barge using momentum from elevator
+        
 
       /*new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));

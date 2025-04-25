@@ -15,7 +15,9 @@ public class RunWheels extends Command {
   private final double speed;
   private final double runTime;
   private final boolean algae;
-  Timer timer;
+  private boolean endFromTimer = false;
+  Timer coralTimer;
+  Timer algaeTimer;
   
   /**@param handler Handler subsystem.
    * @param speed
@@ -30,15 +32,26 @@ public class RunWheels extends Command {
     this.speed = speed;
     this.runTime = extraTime;
     this.algae = algae;
-    timer = new Timer();
+    coralTimer = new Timer();
+    algaeTimer = new Timer();
     addRequirements(handler);
     // Use addRequirements() here to declare subsystem dependencies.
+  }
+  public RunWheels(Handler handler, double speed, double extraTime, boolean algae, boolean endFromTimer){   //if endFromTimer = true then it will end the command after running for the runtime amount
+    this.handler = handler;
+    this.speed = speed;
+    this.runTime = extraTime;
+    this.algae = algae;
+    this.endFromTimer = endFromTimer;
+    coralTimer = new Timer();
+    algaeTimer = new Timer();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     handler.Shoot(speed);
+    algaeTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -53,21 +66,25 @@ public class RunWheels extends Command {
     if(algae && speed < 0){
       handler.Shoot(HandlerConstants.algaeHoldSpeed);
     } else handler.stopWheels();
-    timer.stop();
-    timer.reset();
+    coralTimer.stop();
+    coralTimer.reset();
+    algaeTimer.stop();
+    algaeTimer.reset();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (handler.doIHaveIt()){
-      timer.start();
-    }
+    if(!endFromTimer){
+      if (handler.doIHaveIt()){
+        coralTimer.start();
+      }
 
-    if (algae) {
-      return false;
-    }else {
-      return handler.doIHaveIt() && timer.hasElapsed(runTime);
-    }
+      if (algae) {
+        return false;
+      }else {
+        return handler.doIHaveIt() && coralTimer.hasElapsed(runTime);
+      }
+    } else return algaeTimer.hasElapsed(runTime);
   }
 }
