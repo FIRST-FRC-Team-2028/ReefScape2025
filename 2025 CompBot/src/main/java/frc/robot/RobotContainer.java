@@ -329,9 +329,9 @@ public class RobotContainer {
        
         new JoystickButton(mechJoytick1, OIConstants.kBarge)
         .onTrue((new ElevatorPosition(elevatorSubsystem, ElevatorConstants.kBarge))
-        .andThen(new WaitCommand(.25))
-        .andThen(new HandlerPosition(handlerSubsystem, HandlerConstants.barge))
-        .andThen(new WaitCommand(.5))
+        //.andThen(new WaitCommand(.25))
+        .andThen(new HandlerPosition(handlerSubsystem, 0.65))//HandlerConstants.barge))
+        .andThen(new WaitCommand(.475))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 1, false, true)));     //Barge using momentum from elevator
         
 
