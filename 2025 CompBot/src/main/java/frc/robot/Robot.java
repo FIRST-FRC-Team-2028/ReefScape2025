@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    //DataLogManager.start();
     PDH =new PowerDistribution(1, ModuleType.kRev);
     enableLiveWindowInTest(true);
     PathfindingCommand.warmupCommand().schedule();
@@ -123,6 +124,7 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
+    DataLogManager.stop();
     m_robotContainer.getMatchTimer().stopMatchTimer();
   }
 
