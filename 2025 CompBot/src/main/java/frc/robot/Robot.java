@@ -15,6 +15,8 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
 import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.math.filter.SlewRateLimiter;
 //import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.Joystick;
@@ -130,6 +132,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
+    DataLogManager.start();
     m_robotContainer.getMatchTimer().setMatchTimer(0);
     m_robotContainer.getMatchTimer().startMatchTimer();
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
@@ -146,6 +149,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    DataLogManager.start();
+    //Logs joysticks
+    DriverStation.startDataLog(DataLogManager.getLog());
     CommandScheduler.getInstance().enable();
     m_robotContainer.configureButtonBindings();
     m_robotContainer.getMatchTimer().setMatchTimer(0);
