@@ -148,6 +148,9 @@ public class RobotContainer {
     .onTrue(new InstantCommand(()-> algae = true))
     .onFalse(new InstantCommand(()-> algae = false));
 
+    new JoystickButton(mechJoytick2, 8)
+    .onTrue(new InstantCommand(()-> endRobotCode()));
+
     if (Constants.LIGHTS_AVALIBLE){
       /*new JoystickButton(driverJoytick, OIConstants.kBlueLight)
         .onTrue(new InstantCommand(()-> lights.blueLight(true)))
@@ -335,6 +338,7 @@ public class RobotContainer {
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.algaeShootSpeed, 1, false, true)));     //Barge using momentum from elevator
         
 
+
       /*new JoystickButton(mechJoytick1, OIConstants.kL1shoot)
         .onTrue(new SpitSequence(handlerSubsystem, elevatorSubsystem, HandlerConstants.intake, ElevatorConstants.L1));
 
@@ -434,6 +438,10 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return autoChooser.getSelected();
+  }
+  public void endRobotCode() {
+    double end;
+    end = 10/0;
   }
 
   public Drivetrain getDrivetrain(){
