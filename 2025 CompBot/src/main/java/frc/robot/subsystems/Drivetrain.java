@@ -299,7 +299,7 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Robot X Pos", m_poseEstimator.getEstimatedPosition().getX());
     SmartDashboard.putNumber("Robot Y Pos", m_poseEstimator.getEstimatedPosition().getY());
     SmartDashboard.putNumber("Robot Rotation", m_poseEstimator.getEstimatedPosition().getRotation().getDegrees());
-    SmartDashboard.putData("Robot Pose", (Sendable) m_poseEstimator.getEstimatedPosition());
+    //SmartDashboard.putData("Robot Pose", (Sendable) m_poseEstimator.getEstimatedPosition());
   }
 
   public SwerveModulePosition[] getModulePositions() {
