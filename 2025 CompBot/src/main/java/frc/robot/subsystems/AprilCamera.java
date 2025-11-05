@@ -44,6 +44,7 @@ public class AprilCamera extends SubsystemBase {
   AprilTagFieldLayout aprilTagFieldLayout;
   double distanceToTarget;
   double matchTime;
+  double areaConstant;
   Transform3d robotToCam;
   PhotonPoseEstimator photonPoseEstimator;
   Optional<Pose3d> targetPose;
@@ -349,6 +350,12 @@ public class AprilCamera extends SubsystemBase {
     double tagY = getTagPose(tagID).get().getY();
     return tagY + Units.inchesToMeters(38/2)*Math.sin(tagAngle);
   }
+  public double getAreaDistance(){
+    double areaConstant = Constants.CamConstants.targetArea/(
+                                                              4*Math.tan((Constants.CamConstants.camera_Horizantal_FOV))+Math.tan(Constants.CamConstants.camera_Vertical_FOV));
+   SmartDashboard.putNumber("constant", areaConstant);
+    return Math.sqrt(1./(getBestArea(targets).getArea()/100))*.399;
+  }
   
 
 
@@ -389,6 +396,8 @@ public class AprilCamera extends SubsystemBase {
       //SmartDashboard.putNumber("April Robot Pose Y", getPose3d().getY());
       SmartDashboard.putNumber("April Tag X", target.getFiducialId());
       SmartDashboard.putNumber("Pitch", target.getPitch());
+      SmartDashboard.putNumber("Area Distance", Units.metersToInches(getAreaDistance()));
+      SmartDashboard.putNumber("Area", target.getArea());
       //SmartDashboard.putNumber("Get Yaw", target.getYaw());
       SmartDashboard.putNumber("Get Distance Inches ", Units.metersToInches(getDistanceToTarget()));
       

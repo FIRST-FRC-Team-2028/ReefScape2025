@@ -26,10 +26,10 @@ import edu.wpi.first.wpilibj.TimedRobot;
  */
 public final class Constants {
   public static final boolean DRIVE_AVAILABLE = true;
-  public static final boolean CAMERA_AVAILABLE = true;
-  public static final boolean HANDLER_AVAILABLE = true;
-  public static final boolean ELEVATOR_AVALIBLE = true;
-  public static final boolean LIGHTS_AVALIBLE = true;
+  public static final boolean CAMERA_AVAILABLE = false;
+  public static final boolean HANDLER_AVAILABLE = false;
+  public static final boolean ELEVATOR_AVALIBLE = false;
+  public static final boolean LIGHTS_AVALIBLE = false;
 
 
 
@@ -290,7 +290,7 @@ public final class Constants {
     public static final int kLeftCoralStation = 3;
     public static final int kDriveToBarge = 4;
     public static final int kpathfindTopCoralStation =   4;
-    public static final int kDriverRobotOrientedButton = 6;
+    public static final int kDriverRobotOrientedButton = 5; //6
 
     //Gamemech Buttons
     public static final int kIntake =                    5;
@@ -348,6 +348,8 @@ public final class Constants {
       public static final double robotToCamZ = Units.inchesToMeters(3.);
       public static final double target_height = Units.inchesToMeters(6.5);
       public static final double camera_Vertical_FOV = Units.degreesToRadians(48.8);
+      public static final double camera_Horizantal_FOV = Units.degreesToRadians(67.2);
+      public static final double targetArea = Units.inchesToMeters(42.25);
       
 
 

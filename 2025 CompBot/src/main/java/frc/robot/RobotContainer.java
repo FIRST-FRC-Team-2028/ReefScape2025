@@ -212,9 +212,15 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new MeasuredDrive(driveSubsystem, 0, 6.5));
       //new JoystickButton(driverJoytick, 3)*/
-      //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    
+      if (Constants.CAMERA_AVAILABLE){
+        //  .whileTrue(new DriveToReefTag(driveSubsystem, april));    
       new JoystickButton(driverJoytick, 4)
-        .whileTrue(new DriveToReefTag(driveSubsystem, april));
+        .whileTrue(new DriveToReefTag(driveSubsystem, april)
+        .andThen(new InstantCommand(() -> SmartDashboard.putBoolean("Drive Finished", true))));
+      
+      new JoystickButton(driverJoytick, 4)
+        .onFalse(new InstantCommand(() -> SmartDashboard.putBoolean("Drive Finished", false))
+        .andThen(new MeasuredDrive(driveSubsystem, 20., 0)));
       
       /*new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
@@ -227,7 +233,7 @@ public class RobotContainer {
       new JoystickButton(driverJoytick, 2)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
         //.andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, -6.5)));
+        .andThen(new MeasuredDrive(driveSubsystem, 0., -6.75))); //11.5 //-6.5
         /*.andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
       /*new JoystickButton(driverJoytick, 3)
@@ -237,11 +243,11 @@ public class RobotContainer {
 
       new JoystickButton(driverJoytick, 3)
         .whileTrue(new DriveToReefTag(driveSubsystem, april)
-        .andThen(new MeasuredDrive(driveSubsystem, 0, 6.5)));
+        .andThen(new MeasuredDrive(driveSubsystem, 0., 6.75))); //11.5 
         //.andThen(new ElevatorPosition(elevatorSubsystem, ElevatorConstants.L3)));
        /* .andThen(new WaitCommand(.5))
         .andThen(new RunWheels(handlerSubsystem, HandlerConstants.outputSpeed, 1, false)));*/
-
+      }
       
       /*//Pathplanner drive to blue, right coral station
       new JoystickButton(driverJoytick, OIConstants.kRightCoralStation).and(()->DriverStation.getAlliance().get() == DriverStation.Alliance.Blue)

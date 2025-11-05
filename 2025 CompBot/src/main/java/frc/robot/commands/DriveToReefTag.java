@@ -27,6 +27,7 @@ public class DriveToReefTag extends Command {
   Integer tagID = -1;
   Timer timer;
   boolean hasTagAtStart = false;
+  double firstFaceDiff;
   /** Drive toward the april tag */
   public DriveToReefTag(Drivetrain drive, AprilCamera camera) {
     this.drive = drive;
@@ -50,7 +51,17 @@ public class DriveToReefTag extends Command {
       } else {
         tagAngle = (Math.toDegrees(camera.getTagPose(camera.getResult().getFiducialId()).get().getRotation().getAngle()));
       }
+      driveHeading = (drive.getHeading().getDegrees());
+      faceDiff = (tagAngle - driveHeading)%360;
+      faceDiff = (faceDiff<-180)?faceDiff+360:faceDiff;
+      faceDiff = (faceDiff>180)?faceDiff-360:faceDiff;
+      faceDiff = (Math.abs(faceDiff)>180)?0.:faceDiff;
+      firstFaceDiff = faceDiff;
+      SmartDashboard.putNumber("first Face Difference", firstFaceDiff);
     } else tagAngle = drive.getHeading().getDegrees()%360;
+    
+    
+
 
   }
 
@@ -76,7 +87,7 @@ public class DriveToReefTag extends Command {
       yaw = camera.tagYaw();
       pitch = camera.tagPitch();
       tagLostCount = 0;
-      xSpeed = XdriveController.calculate(pitch-6.0); //6.25
+      xSpeed = XdriveController.calculate(pitch-.25);//-4.7); //6.25
       //drive.driveComponent(xSpeed, YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
       drive.driveComponent(xSpeed, YdriveController.calculate(yaw), -turnController.calculate(faceDiff));
     }
@@ -85,8 +96,9 @@ public class DriveToReefTag extends Command {
       if(yaw !=0){
         ySpeed = (yaw<0)?-0.25:.25;
       }
-      xSpeed = 0.6;
+      xSpeed = 0.; //.6
       yaw = (yaw<-50.)?0.:yaw;
+      ySpeed= -Math.copySign(.5, firstFaceDiff);
     drive.driveComponent(xSpeed, ySpeed, -turnController.calculate(faceDiff));
   }
   pitch = (xSpeed<0.01)?6.0:pitch; //0.0095 6.25
@@ -112,10 +124,12 @@ public class DriveToReefTag extends Command {
   // Returns true when the command should end.    getDistance()
   @Override
   public boolean isFinished() {
+    return Math.abs(yaw)<.4 && pitch>=-.25 && Math.abs(faceDiff)<2.;
+    
     //return Math.abs(yaw)<.3 && drive.getDistance()<16. && Math.abs(faceDiff)<2.;
-    if (tagLostCount < 25.){
-    return Math.abs(yaw)<.4 && pitch>=6.00 && Math.abs(faceDiff)<2.; //Math.abs(yaw)<.3 pitch>=6.25
-    } else return true;   //if never started with tag end command
+    /*if (tagLostCount < 25.){
+    return Math.abs(yaw)<.4 && pitch>=-.25 && Math.abs(faceDiff)<2.; //Math.abs(yaw)<.3 pitch>=6.25
+    } else return true;*/   //if never started with tag end command
     //return Math.abs(yaw)<.3 && drive.getLoad() > 50. && Math.abs(faceDiff)<2.;
   }
 }

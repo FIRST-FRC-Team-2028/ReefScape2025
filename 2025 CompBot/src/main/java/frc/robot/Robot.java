@@ -182,7 +182,7 @@ public class Robot extends TimedRobot {
       m_robotContainer.getLights().blueLight(m_robotContainer.getHandler().doIHaveIt());
       }*/
       if (Constants.LIGHTS_AVALIBLE && Constants.ELEVATOR_AVALIBLE){
-        m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() <= 3.5);
+        m_robotContainer.getLights().blueLight(m_robotContainer.getElevator().getPosition() <= 3.5 && m_robotContainer.getHandler().getPivotPostition() <= 0.04);
       }
       if (Constants.LIGHTS_AVALIBLE){
         if(m_robotContainer.getMatchTimer().matchTime() >= 105){
